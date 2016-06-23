@@ -909,6 +909,8 @@ void thread_up(void) {
 	struct timespec send_time;
 	struct timespec recv_time;
 	
+	uint8_t loopcount = 0;
+	
 	MSG("INFO thread_up running\n");
 	/* set upstream socket RX timeout */
 	i = setsockopt(sock_up, SOL_SOCKET, SO_RCVTIMEO, (void *)&push_timeout_half, sizeof push_timeout_half);
@@ -926,10 +928,40 @@ void thread_up(void) {
 	while (!exit_sig && !quit_sig) {
 	
 		/* fetch packets */
+		
 		pthread_mutex_lock(&mx_concent);
+		loopcount++;
+		// This is fake rx data from node. just simulate already connected with node.
+		if((loopcount%100)==0)
+		{
+		   nb_pkt = 1;
+		   p = &rxpkt[0];
+		   p->freq_hz=470;	
+	       p->if_chain=10;
+	       p->status=STAT_CRC_OK;
+	       p->count_us= 1;
+	       p->rf_chain=4;
+	       p->modulation=MOD_LORA;
+	       p->bandwidth=BW_500KHZ;
+	       p->datarate=DR_LORA_SF7;
+	       p->coderate=CR_LORA_4_5;
+	       p->rssi=8;
+	       p->snr=5;
+	       p->snr_min=1;
+	       p->snr_max=10;
+	       p->crc=0;
+	       p->size = 4;
+	       p->payload[0] = loopcount;
+		   p->payload[1] = loopcount;
+		   p->payload[2] = loopcount;
+		   p->payload[3] = loopcount;
+		}else{
+		   nb_pkt = 0;
+		}
+	       
 		
 		// nb_pkt = lgw_receive(NB_PKT_MAX, rxpkt);
-		nb_pkt = 0;
+		
 		pthread_mutex_unlock(&mx_concent);
 		if (nb_pkt == LGW_HAL_ERROR) {
 			MSG("ERROR: [up] failed packet fetch, exiting\n");
@@ -1206,6 +1238,7 @@ void thread_up(void) {
 		
 		/* send datagram to server */
 		send(sock_up, (void *)buff_up, buff_index, 0);
+		MSG("thread_up send buff %d\n", loopcount);
 		clock_gettime(CLOCK_MONOTONIC, &send_time);
 		pthread_mutex_lock(&mx_meas_up);
 		meas_up_dgram_sent += 1;
