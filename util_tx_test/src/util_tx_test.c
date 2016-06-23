@@ -139,7 +139,7 @@ int main(int argc, char **argv)
     struct addrinfo hints;
     struct addrinfo *result; /* store result of getaddrinfo */
     struct addrinfo *q; /* pointer to move into *result data */
-    char serv_port[8] = "1680";
+    char serv_port[8] = "1681";
     char host_name[64];
     char port_name[64];
 
