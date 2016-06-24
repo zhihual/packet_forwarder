@@ -920,7 +920,7 @@ void thread_up(void) {
 	}
 	
 	/* pre-fill the data buffer with fixed fields */
-	buff_up[0] = PROTOCOL_VERSION;
+	buff_up[0] = 2;//PROTOCOL_VERSION;
 	buff_up[3] = PKT_PUSH_DATA;
 	*(uint32_t *)(buff_up + 4) = net_mac_h;
 	*(uint32_t *)(buff_up + 8) = net_mac_l;
@@ -1315,7 +1315,7 @@ void thread_down(void) {
 	}
 	
 	/* pre-fill the pull request buffer with fixed fields */
-	buff_req[0] = PROTOCOL_VERSION;
+	buff_req[0] = 2;//PROTOCOL_VERSION;
 	buff_req[3] = PKT_PULL_DATA;
 	*(uint32_t *)(buff_req + 4) = net_mac_h;
 	*(uint32_t *)(buff_req + 8) = net_mac_l;
