@@ -956,7 +956,7 @@ void thread_up(void) {
 	       p->snr_min=1;
 	       p->snr_max=10;
 	       p->crc=0;
-	       p->size = 4;
+	       p->size = 6;
 	       p->payload[0] = loopcount;
 		   p->payload[1] = loopcount;
 		   p->payload[2] = loopcount;
@@ -968,7 +968,7 @@ void thread_up(void) {
 		
 		//nb_pkt = lgw_receive(NB_PKT_MAX, rxpkt);
         nb_pkt = AR9331Drv_RecvPkt(NB_PKT_MAX, rxpkt);
-
+        
 		pthread_mutex_unlock(&mx_concent);
 		if (nb_pkt == LGW_HAL_ERROR) {
 			MSG("ERROR: [up] failed packet fetch, exiting\n");

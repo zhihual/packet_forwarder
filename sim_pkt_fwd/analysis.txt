@@ -1,0 +1,778 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 02 01 00 01 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, big endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       1
+  Type:                              EXEC (Executable file)
+  Machine:                           MIPS R3000
+  Version:                           0x1
+  Entry point address:               0x4021e0
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          86764 (bytes into file)
+  Flags:                             0x70001005, noreorder, cpic, o32, mips32r2
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         8
+  Size of section headers:           40 (bytes)
+  Number of section headers:         37
+  Section header string table index: 34
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .interp           PROGBITS        00400134 000134 000014 00   A  0   0  1
+  [ 2] .reginfo          MIPS_REGINFO    00400148 000148 000018 18   A  0   0  4
+  [ 3] .dynamic          DYNAMIC         00400160 000160 000138 08   A  6   0  4
+  [ 4] .hash             HASH            00400298 000298 000280 04   A  5   0  4
+  [ 5] .dynsym           DYNSYM          00400518 000518 0005b0 10   A  6   1  4
+  [ 6] .dynstr           STRTAB          00400ac8 000ac8 0004bb 00   A  0   0  1
+  [ 7] .gnu.version      VERSYM          00400f84 000f84 0000b6 02   A  5   0  2
+  [ 8] .gnu.version_r    VERNEED         0040103c 00103c 000040 00   A  6   1  4
+  [ 9] .rel.dyn          REL             0040107c 00107c 000018 08   A  5   0  4
+  [10] .rel.plt          REL             00401094 001094 000248 08   A  5  12  4
+  [11] .init             PROGBITS        004012dc 0012dc 000048 00  AX  0   0  4
+  [12] .plt              PROGBITS        00401340 001340 0004b0 00  AX  0   0 32
+  [13] .text             PROGBITS        004017f0 0017f0 009610 00  AX  0   0 16
+  [14] .MIPS.stubs       PROGBITS        0040ae00 00ae00 000020 00  AX  0   0  4
+  [15] .fini             PROGBITS        0040ae20 00ae20 000038 00  AX  0   0  4
+  [16] .rodata           PROGBITS        0040ae60 00ae60 0033a8 00   A  0   0 16
+  [17] .eh_frame         PROGBITS        0040e208 00e208 000004 00   A  0   0  4
+  [18] .ctors            PROGBITS        0041e20c 00e20c 000008 00  WA  0   0  4
+  [19] .dtors            PROGBITS        0041e214 00e214 000008 00  WA  0   0  4
+  [20] .data             PROGBITS        0041e220 00e220 006100 00  WA  0   0 16
+  [21] .rld_map          PROGBITS        00424320 014320 000004 00  WA  0   0  4
+  [22] .got.plt          PROGBITS        00424324 014324 00012c 00  WA  0   0  4
+  [23] .got              PROGBITS        00424450 014450 000018 04 WAp  0   0 16
+  [24] .sdata            PROGBITS        00424468 014468 000004 00 WAp  0   0  4
+  [25] .bss              NOBITS          00424470 01446c 0099c4 00  WA  0   0 16
+  [26] .comment          PROGBITS        00000000 01446c 000044 01  MS  0   0  1
+  [27] .pdr              PROGBITS        00000000 0144b0 000ba0 00      0   0  4
+  [28] .debug_aranges    MIPS_DWARF      00000000 015050 000020 00      0   0  8
+  [29] .debug_info       MIPS_DWARF      00000000 015070 0000b8 00      0   0  1
+  [30] .debug_abbrev     MIPS_DWARF      00000000 015128 000014 00      0   0  1
+  [31] .debug_line       MIPS_DWARF      00000000 01513c 00005c 00      0   0  1
+  [32] .gnu.attributes   LOOS+ffffff5    00000000 015198 000010 00      0   0  1
+  [33] .mdebug.abi32     PROGBITS        0042de34 0151a8 000000 00      0   0  1
+  [34] .shstrtab         STRTAB          00000000 0151a8 000141 00      0   0  1
+  [35] .symtab           SYMTAB          00000000 0158b4 001440 10     36 140  4
+  [36] .strtab           STRTAB          00000000 016cf4 000fbe 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings)
+  I (info), L (link order), G (group), T (TLS), E (exclude), x (unknown)
+  O (extra OS processing required) o (OS specific), p (processor specific)
+
+There are no section groups in this file.
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  PHDR           0x000034 0x00400034 0x00400034 0x00100 0x00100 R E 0x4
+  INTERP         0x000134 0x00400134 0x00400134 0x00014 0x00014 R   0x1
+      [Requesting program interpreter: /lib/ld-uClibc.so.0]
+  REGINFO        0x000148 0x00400148 0x00400148 0x00018 0x00018 R   0x4
+  LOAD           0x000000 0x00400000 0x00400000 0x0e20c 0x0e20c R E 0x10000
+  LOAD           0x00e20c 0x0041e20c 0x0041e20c 0x06260 0x0fc28 RW  0x10000
+  DYNAMIC        0x000160 0x00400160 0x00400160 0x00138 0x00138 RWE 0x4
+  GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RWE 0x4
+  NULL           0x000000 0x00000000 0x00000000 0x00000 0x00000     0x4
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     
+   01     .interp 
+   02     .reginfo 
+   03     .interp .reginfo .dynamic .hash .dynsym .dynstr .gnu.version .gnu.version_r .rel.dyn .rel.plt .init .plt .text .MIPS.stubs .fini .rodata .eh_frame 
+   04     .ctors .dtors .data .rld_map .got.plt .got .sdata .bss 
+   05     .dynamic 
+   06     
+   07     
+
+Dynamic section at offset 0x160 contains 34 entries:
+  Tag        Type                         Name/Value
+ 0x00000001 (NEEDED)                     Shared library: [librt.so.0]
+ 0x00000001 (NEEDED)                     Shared library: [libpthread.so.0]
+ 0x00000001 (NEEDED)                     Shared library: [libdl.so.0]
+ 0x00000001 (NEEDED)                     Shared library: [libgcc_s.so.1]
+ 0x00000001 (NEEDED)                     Shared library: [libc.so.0]
+ 0x0000000f (RPATH)                      Library rpath: [/home/share/lora/OpenWrt-Toolchain-ar71xx-for-mips_34kc-gcc-4.8-linaro_uClibc-0.9.33.2/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin//../../lib:/home/share/lora/OpenWrt-Toolchain-ar71xx-for-mips_34kc-gcc-4.8-linaro_uClibc-0.9.33.2/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin//../../usr/lib]
+ 0x0000000c (INIT)                       0x4012dc
+ 0x0000000d (FINI)                       0x40ae20
+ 0x00000004 (HASH)                       0x400298
+ 0x00000005 (STRTAB)                     0x400ac8
+ 0x00000006 (SYMTAB)                     0x400518
+ 0x0000000a (STRSZ)                      1211 (bytes)
+ 0x0000000b (SYMENT)                     16 (bytes)
+ 0x70000016 (MIPS_RLD_MAP)               0x424320
+ 0x00000015 (DEBUG)                      0x0
+ 0x00000003 (PLTGOT)                     0x424450
+ 0x00000011 (REL)                        0x40107c
+ 0x00000012 (RELSZ)                      24 (bytes)
+ 0x00000013 (RELENT)                     8 (bytes)
+ 0x70000001 (MIPS_RLD_VERSION)           1
+ 0x70000005 (MIPS_FLAGS)                 NOTPOT
+ 0x70000006 (MIPS_BASE_ADDRESS)          0x400000
+ 0x7000000a (MIPS_LOCAL_GOTNO)           5
+ 0x70000011 (MIPS_SYMTABNO)              91
+ 0x70000012 (MIPS_UNREFEXTNO)            34
+ 0x70000013 (MIPS_GOTSYM)                0x5a
+ 0x00000014 (PLTREL)                     REL
+ 0x00000017 (JMPREL)                     0x401094
+ 0x00000002 (PLTRELSZ)                   584 (bytes)
+ 0x70000032 (MIPS_PLTGOT)                0x424324
+ 0x6ffffffe (VERNEED)                    0x40103c
+ 0x6fffffff (VERNEEDNUM)                 1
+ 0x6ffffff0 (VERSYM)                     0x400f84
+ 0x00000000 (NULL)                       0x0
+
+Relocation section '.rel.dyn' at offset 0x107c contains 3 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+00000000  00000000 R_MIPS_NONE      
+00424470  00000e7e R_MIPS_COPY       00424470   __ctype_b
+00424480  0000417e R_MIPS_COPY       00424480   stderr
+
+Relocation section '.rel.plt' at offset 0x1094 contains 73 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+0042432c  0000017f R_MIPS_JUMP_SLOT  00000000   clock_gettime
+00424330  0000027f R_MIPS_JUMP_SLOT  00000000   __divdi3
+00424334  0000037f R_MIPS_JUMP_SLOT  00000000   ioctl
+00424338  0000047f R_MIPS_JUMP_SLOT  00000000   printf
+0042433c  0000067f R_MIPS_JUMP_SLOT  00000000   __divdf3
+00424340  0000077f R_MIPS_JUMP_SLOT  00000000   recv
+00424344  0000087f R_MIPS_JUMP_SLOT  00000000   connect
+00424348  0000097f R_MIPS_JUMP_SLOT  00000000   pthread_create
+0042434c  00000a7f R_MIPS_JUMP_SLOT  00000000   sigemptyset
+00424350  00000b7f R_MIPS_JUMP_SLOT  00000000   strerror
+00424354  00000c7f R_MIPS_JUMP_SLOT  00000000   snprintf
+00424358  00000d7f R_MIPS_JUMP_SLOT  00000000   __divsf3
+0042435c  00000f7f R_MIPS_JUMP_SLOT  00000000   __subdf3
+00424360  0000117f R_MIPS_JUMP_SLOT  00000000   memcpy
+00424364  0000127f R_MIPS_JUMP_SLOT  00000000   pthread_cancel
+00424368  0000137f R_MIPS_JUMP_SLOT  00000000   puts
+0042436c  0000147f R_MIPS_JUMP_SLOT  00000000   malloc
+00424370  0000157f R_MIPS_JUMP_SLOT  00000000   __floatunsisf
+00424374  0000167f R_MIPS_JUMP_SLOT  00000000   socket
+00424378  0000177f R_MIPS_JUMP_SLOT  00000000   __floatsisf
+0042437c  0000187f R_MIPS_JUMP_SLOT  00000000   send
+00424380  0000197f R_MIPS_JUMP_SLOT  00000000   freeaddrinfo
+00424384  00001a7f R_MIPS_JUMP_SLOT  00000000   getnameinfo
+00424388  00001b7f R_MIPS_JUMP_SLOT  00000000   __floatunsidf
+0042438c  00001d7f R_MIPS_JUMP_SLOT  00000000   strtod
+00424390  00001e7f R_MIPS_JUMP_SLOT  00000000   gai_strerror
+00424394  00001f7f R_MIPS_JUMP_SLOT  00000000   write
+00424398  0000207f R_MIPS_JUMP_SLOT  00000000   __addsf3
+0042439c  0000217f R_MIPS_JUMP_SLOT  00000000   fprintf
+004243a0  0000227f R_MIPS_JUMP_SLOT  00000000   setsockopt
+004243a4  0000237f R_MIPS_JUMP_SLOT  00000000   fseek
+004243a8  0000267f R_MIPS_JUMP_SLOT  00000000   ferror
+004243ac  0000277f R_MIPS_JUMP_SLOT  00000000   strstr
+004243b0  0000287f R_MIPS_JUMP_SLOT  00000000   rand
+004243b4  0000297f R_MIPS_JUMP_SLOT  00000000   strncmp
+004243b8  00002a7f R_MIPS_JUMP_SLOT  00000000   strncpy
+004243bc  00002b7f R_MIPS_JUMP_SLOT  00000000   __floatsidf
+004243c0  00002c7f R_MIPS_JUMP_SLOT  00000000   realloc
+004243c4  00002e7f R_MIPS_JUMP_SLOT  00000000   memcmp
+004243c8  00002f7f R_MIPS_JUMP_SLOT  00000000   sscanf
+004243cc  0000307f R_MIPS_JUMP_SLOT  00000000   __truncdfsf2
+004243d0  0000317f R_MIPS_JUMP_SLOT  00000000   sigaction
+004243d4  0000327f R_MIPS_JUMP_SLOT  00000000   fread
+004243d8  0000347f R_MIPS_JUMP_SLOT  00000000   fopen
+004243dc  0000367f R_MIPS_JUMP_SLOT  00000000   memset
+004243e0  0000387f R_MIPS_JUMP_SLOT  00000000   __muldf3
+004243e4  0000397f R_MIPS_JUMP_SLOT  00000000   ftell
+004243e8  00003a7f R_MIPS_JUMP_SLOT  00000000   fclose
+004243ec  00003b7f R_MIPS_JUMP_SLOT  00000000   time
+004243f0  00003c7f R_MIPS_JUMP_SLOT  00000000   strcmp
+004243f4  00003d7f R_MIPS_JUMP_SLOT  00000000   shutdown
+004243f8  00003e7f R_MIPS_JUMP_SLOT  00000000   pthread_mutex_unlock
+004243fc  0000407f R_MIPS_JUMP_SLOT  00000000   __mulsf3
+00424400  0000427f R_MIPS_JUMP_SLOT  00000000   __fixdfsi
+00424404  0000437f R_MIPS_JUMP_SLOT  00000000   __adddf3
+00424408  0000447f R_MIPS_JUMP_SLOT  00000000   getaddrinfo
+0042440c  0000457f R_MIPS_JUMP_SLOT  00000000   strftime
+00424410  0000467f R_MIPS_JUMP_SLOT  00000000   fwrite
+00424414  0000477f R_MIPS_JUMP_SLOT  00000000   access
+00424418  00004b7f R_MIPS_JUMP_SLOT  00000000   __extendsfdf2
+0042441c  00004c7f R_MIPS_JUMP_SLOT  00000000   rewind
+00424420  00004d7f R_MIPS_JUMP_SLOT  00000000   pthread_mutex_lock
+00424424  00004e7f R_MIPS_JUMP_SLOT  00000000   __errno_location
+00424428  00004f7f R_MIPS_JUMP_SLOT  00000000   exit
+0042442c  0000507f R_MIPS_JUMP_SLOT  00000000   __fixunsdfsi
+00424430  0000517f R_MIPS_JUMP_SLOT  00000000   gmtime
+00424434  0000527f R_MIPS_JUMP_SLOT  00000000   strlen
+00424438  0000537f R_MIPS_JUMP_SLOT  00000000   open
+0042443c  0000547f R_MIPS_JUMP_SLOT  00000000   strchr
+00424440  0000557f R_MIPS_JUMP_SLOT  00000000   pthread_join
+00424444  0000567f R_MIPS_JUMP_SLOT  00000000   clock_nanosleep
+00424448  0000587f R_MIPS_JUMP_SLOT  00000000   close
+0042444c  0000597f R_MIPS_JUMP_SLOT  00000000   free
+
+There are no unwind sections in this file.
+
+Symbol table '.dynsym' contains 91 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00000000     0 FUNC    GLOBAL DEFAULT  UND clock_gettime
+     2: 00000000     0 FUNC    GLOBAL DEFAULT  UND __divdi3@GLIBC_2.0 (2)
+     3: 00000000     0 FUNC    GLOBAL DEFAULT  UND ioctl
+     4: 00000000     0 FUNC    GLOBAL DEFAULT  UND printf
+     5: 0041e220     0 NOTYPE  GLOBAL DEFAULT   20 _fdata
+     6: 00000000     0 FUNC    GLOBAL DEFAULT  UND __divdf3@GCC_3.0 (3)
+     7: 00000000     0 FUNC    GLOBAL DEFAULT  UND recv
+     8: 00000000     0 FUNC    GLOBAL DEFAULT  UND connect
+     9: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_create
+    10: 00000000     0 FUNC    GLOBAL DEFAULT  UND sigemptyset
+    11: 00000000     0 FUNC    GLOBAL DEFAULT  UND strerror
+    12: 00000000     0 FUNC    GLOBAL DEFAULT  UND snprintf
+    13: 00000000     0 FUNC    GLOBAL DEFAULT  UND __divsf3@GCC_3.0 (3)
+    14: 00424470     4 OBJECT  GLOBAL DEFAULT   25 __ctype_b
+    15: 00000000     0 FUNC    GLOBAL DEFAULT  UND __subdf3@GCC_3.0 (3)
+    16: 0042c440     0 NOTYPE  GLOBAL DEFAULT  ABS _gp
+    17: 00000000     0 FUNC    GLOBAL DEFAULT  UND memcpy
+    18: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_cancel
+    19: 00000000     0 FUNC    GLOBAL DEFAULT  UND puts
+    20: 00000000     0 FUNC    GLOBAL DEFAULT  UND malloc
+    21: 00000000     0 FUNC    GLOBAL DEFAULT  UND __floatunsisf@GCC_4.2.0 (4)
+    22: 00000000     0 FUNC    GLOBAL DEFAULT  UND socket
+    23: 00000000     0 FUNC    GLOBAL DEFAULT  UND __floatsisf@GCC_3.0 (3)
+    24: 00000000     0 FUNC    GLOBAL DEFAULT  UND send
+    25: 00000000     0 FUNC    GLOBAL DEFAULT  UND freeaddrinfo
+    26: 00000000     0 FUNC    GLOBAL DEFAULT  UND getnameinfo
+    27: 00000000     0 FUNC    GLOBAL DEFAULT  UND __floatunsidf@GCC_4.2.0 (4)
+    28: 004012dc    28 FUNC    GLOBAL DEFAULT   11 _init
+    29: 00000000     0 FUNC    GLOBAL DEFAULT  UND strtod
+    30: 00000000     0 FUNC    GLOBAL DEFAULT  UND gai_strerror
+    31: 00000000     0 FUNC    GLOBAL DEFAULT  UND write
+    32: 00000000     0 FUNC    GLOBAL DEFAULT  UND __addsf3@GCC_3.0 (3)
+    33: 00000000     0 FUNC    GLOBAL DEFAULT  UND fprintf
+    34: 00000000     0 FUNC    GLOBAL DEFAULT  UND setsockopt
+    35: 00000000     0 FUNC    GLOBAL DEFAULT  UND fseek
+    36: 00000000     0 NOTYPE  WEAK   DEFAULT  UND _ITM_registerTMCloneTable
+    37: 004017f0     0 NOTYPE  GLOBAL DEFAULT   13 _ftext
+    38: 00000000     0 FUNC    GLOBAL DEFAULT  UND ferror
+    39: 00000000     0 FUNC    GLOBAL DEFAULT  UND strstr
+    40: 00000000     0 FUNC    GLOBAL DEFAULT  UND rand
+    41: 00000000     0 FUNC    GLOBAL DEFAULT  UND strncmp
+    42: 00000000     0 FUNC    GLOBAL DEFAULT  UND strncpy
+    43: 00000000     0 FUNC    GLOBAL DEFAULT  UND __floatsidf@GCC_3.0 (3)
+    44: 00000000     0 FUNC    GLOBAL DEFAULT  UND realloc
+    45: 00424320     0 OBJECT  GLOBAL DEFAULT   21 __RLD_MAP
+    46: 00000000     0 FUNC    GLOBAL DEFAULT  UND memcmp
+    47: 00000000     0 FUNC    GLOBAL DEFAULT  UND sscanf
+    48: 00000000     0 FUNC    GLOBAL DEFAULT  UND __truncdfsf2@GCC_3.0 (3)
+    49: 00000000     0 FUNC    GLOBAL DEFAULT  UND sigaction
+    50: 00000000     0 FUNC    GLOBAL DEFAULT  UND fread
+    51: 00000000     0 NOTYPE  WEAK   DEFAULT  UND _ITM_deregisterTMCloneTab
+    52: 00000000     0 FUNC    GLOBAL DEFAULT  UND fopen
+    53: 0042446c     0 NOTYPE  GLOBAL DEFAULT  ABS __bss_start
+    54: 00000000     0 FUNC    GLOBAL DEFAULT  UND memset
+    55: 004017f0  2540 FUNC    GLOBAL DEFAULT   13 main
+    56: 00000000     0 FUNC    GLOBAL DEFAULT  UND __muldf3@GCC_3.0 (3)
+    57: 00000000     0 FUNC    GLOBAL DEFAULT  UND ftell
+    58: 00000000     0 FUNC    GLOBAL DEFAULT  UND fclose
+    59: 00000000     0 FUNC    GLOBAL DEFAULT  UND time
+    60: 00000000     0 FUNC    GLOBAL DEFAULT  UND strcmp
+    61: 00000000     0 FUNC    GLOBAL DEFAULT  UND shutdown
+    62: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_mutex_unlock
+    63: 0040ae20    28 FUNC    GLOBAL DEFAULT   15 _fini
+    64: 00000000     0 FUNC    GLOBAL DEFAULT  UND __mulsf3@GCC_3.0 (3)
+    65: 00424480     4 OBJECT  GLOBAL DEFAULT   25 stderr
+    66: 00000000     0 FUNC    GLOBAL DEFAULT  UND __fixdfsi@GCC_3.0 (3)
+    67: 00000000     0 FUNC    GLOBAL DEFAULT  UND __adddf3@GCC_3.0 (3)
+    68: 00000000     0 FUNC    GLOBAL DEFAULT  UND getaddrinfo
+    69: 00000000     0 FUNC    GLOBAL DEFAULT  UND strftime
+    70: 00000000     0 FUNC    GLOBAL DEFAULT  UND fwrite
+    71: 00000000     0 FUNC    GLOBAL DEFAULT  UND access
+    72: 0042446c     0 NOTYPE  GLOBAL DEFAULT  ABS _edata
+    73: 00424450     0 OBJECT  GLOBAL DEFAULT  ABS _GLOBAL_OFFSET_TABLE_
+    74: 0042de34     0 NOTYPE  GLOBAL DEFAULT  ABS _end
+    75: 00000000     0 FUNC    GLOBAL DEFAULT  UND __extendsfdf2@GCC_3.0 (3)
+    76: 00000000     0 FUNC    GLOBAL DEFAULT  UND rewind
+    77: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_mutex_lock
+    78: 00000000     0 FUNC    GLOBAL DEFAULT  UND __errno_location
+    79: 00000000     0 FUNC    GLOBAL DEFAULT  UND exit
+    80: 00000000     0 FUNC    GLOBAL DEFAULT  UND __fixunsdfsi@GCC_3.0 (3)
+    81: 00000000     0 FUNC    GLOBAL DEFAULT  UND gmtime
+    82: 00000000     0 FUNC    GLOBAL DEFAULT  UND strlen
+    83: 00000000     0 FUNC    GLOBAL DEFAULT  UND open
+    84: 00000000     0 FUNC    GLOBAL DEFAULT  UND strchr
+    85: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_join
+    86: 00000000     0 FUNC    GLOBAL DEFAULT  UND clock_nanosleep
+    87: 0042446c     0 NOTYPE  GLOBAL DEFAULT  ABS _fbss
+    88: 00000000     0 FUNC    GLOBAL DEFAULT  UND close
+    89: 00000000     0 FUNC    GLOBAL DEFAULT  UND free
+    90: 0040ae00     0 FUNC    GLOBAL DEFAULT  UND __uClibc_main
+
+Symbol table '.symtab' contains 324 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00400134     0 SECTION LOCAL  DEFAULT    1 
+     2: 00400148     0 SECTION LOCAL  DEFAULT    2 
+     3: 00400160     0 SECTION LOCAL  DEFAULT    3 
+     4: 00400298     0 SECTION LOCAL  DEFAULT    4 
+     5: 00400518     0 SECTION LOCAL  DEFAULT    5 
+     6: 00400ac8     0 SECTION LOCAL  DEFAULT    6 
+     7: 00400f84     0 SECTION LOCAL  DEFAULT    7 
+     8: 0040103c     0 SECTION LOCAL  DEFAULT    8 
+     9: 0040107c     0 SECTION LOCAL  DEFAULT    9 
+    10: 00401094     0 SECTION LOCAL  DEFAULT   10 
+    11: 004012dc     0 SECTION LOCAL  DEFAULT   11 
+    12: 00401340     0 SECTION LOCAL  DEFAULT   12 
+    13: 004017f0     0 SECTION LOCAL  DEFAULT   13 
+    14: 0040ae00     0 SECTION LOCAL  DEFAULT   14 
+    15: 0040ae20     0 SECTION LOCAL  DEFAULT   15 
+    16: 0040ae60     0 SECTION LOCAL  DEFAULT   16 
+    17: 0040e208     0 SECTION LOCAL  DEFAULT   17 
+    18: 0041e20c     0 SECTION LOCAL  DEFAULT   18 
+    19: 0041e214     0 SECTION LOCAL  DEFAULT   19 
+    20: 0041e220     0 SECTION LOCAL  DEFAULT   20 
+    21: 00424320     0 SECTION LOCAL  DEFAULT   21 
+    22: 00424324     0 SECTION LOCAL  DEFAULT   22 
+    23: 00424450     0 SECTION LOCAL  DEFAULT   23 
+    24: 00424468     0 SECTION LOCAL  DEFAULT   24 
+    25: 00424470     0 SECTION LOCAL  DEFAULT   25 
+    26: 00000000     0 SECTION LOCAL  DEFAULT   26 
+    27: 00000000     0 SECTION LOCAL  DEFAULT   27 
+    28: 00000000     0 SECTION LOCAL  DEFAULT   28 
+    29: 00000000     0 SECTION LOCAL  DEFAULT   29 
+    30: 00000000     0 SECTION LOCAL  DEFAULT   30 
+    31: 00000000     0 SECTION LOCAL  DEFAULT   31 
+    32: 00000000     0 SECTION LOCAL  DEFAULT   32 
+    33: 0042de34     0 SECTION LOCAL  DEFAULT   33 
+    34: 00402234     0 NOTYPE  LOCAL  DEFAULT   13 hlt
+    35: 00000000     0 FILE    LOCAL  DEFAULT  ABS initfini.c
+    36: 00000000     0 FILE    LOCAL  DEFAULT  ABS crtstuff.c
+    37: 0041e20c     0 OBJECT  LOCAL  DEFAULT   18 __CTOR_LIST__
+    38: 0041e214     0 OBJECT  LOCAL  DEFAULT   19 __DTOR_LIST__
+    39: 00402240     0 FUNC    LOCAL  DEFAULT   13 deregister_tm_clones
+    40: 0040227c     0 FUNC    LOCAL  DEFAULT   13 register_tm_clones
+    41: 004022c4     0 FUNC    LOCAL  DEFAULT   13 __do_global_dtors_aux
+    42: 00424490     1 OBJECT  LOCAL  DEFAULT   25 completed.5717
+    43: 00424494     4 OBJECT  LOCAL  DEFAULT   25 dtor_idx.5719
+    44: 00402370     0 FUNC    LOCAL  DEFAULT   13 frame_dummy
+    45: 00000000     0 FILE    LOCAL  DEFAULT  ABS crtstuff.c
+    46: 0041e210     0 OBJECT  LOCAL  DEFAULT   18 __CTOR_END__
+    47: 0040e208     0 OBJECT  LOCAL  DEFAULT   17 __FRAME_END__
+    48: 0040adb0     0 FUNC    LOCAL  DEFAULT   13 __do_global_ctors_aux
+    49: 00000000     0 FILE    LOCAL  DEFAULT  ABS initfini.c
+    50: 00000000     0 FILE    LOCAL  DEFAULT  ABS pktfwd.c
+    51: 00402380    76 FUNC    LOCAL  DEFAULT   13 sig_handler
+    52: 004023cc  2912 FUNC    LOCAL  DEFAULT   13 parse_SX1301_configuratio
+    53: 00402f2c  1200 FUNC    LOCAL  DEFAULT   13 parse_gateway_configurati
+    54: 00424540     8 OBJECT  LOCAL  DEFAULT   25 lgwm
+    55: 0041e258    64 OBJECT  LOCAL  DEFAULT   20 serv_addr
+    56: 0041e250     8 OBJECT  LOCAL  DEFAULT   20 serv_port_up
+    57: 0041e248     8 OBJECT  LOCAL  DEFAULT   20 serv_port_down
+    58: 0041e244     4 OBJECT  LOCAL  DEFAULT   20 keepalive_time
+    59: 0041e240     4 OBJECT  LOCAL  DEFAULT   20 stat_interval
+    60: 0041e238     8 OBJECT  LOCAL  DEFAULT   20 push_timeout_half
+    61: 0041e298     1 OBJECT  LOCAL  DEFAULT   20 fwd_valid_pkt
+    62: 00424549     1 OBJECT  LOCAL  DEFAULT   25 fwd_error_pkt
+    63: 00424548     1 OBJECT  LOCAL  DEFAULT   25 fwd_nocrc_pkt
+    64: 004244a4     4 OBJECT  LOCAL  DEFAULT   25 autoquit_threshold
+    65: 00424534     4 OBJECT  LOCAL  DEFAULT   25 sock_up
+    66: 0042453c     4 OBJECT  LOCAL  DEFAULT   25 net_mac_h
+    67: 00424538     4 OBJECT  LOCAL  DEFAULT   25 net_mac_l
+    68: 00424518    24 OBJECT  LOCAL  DEFAULT   25 mx_concent
+    69: 00424500    24 OBJECT  LOCAL  DEFAULT   25 mx_meas_up
+    70: 004244fc     4 OBJECT  LOCAL  DEFAULT   25 meas_nb_rx_rcv
+    71: 004244f0     4 OBJECT  LOCAL  DEFAULT   25 meas_nb_rx_nocrc
+    72: 004244f8     4 OBJECT  LOCAL  DEFAULT   25 meas_nb_rx_ok
+    73: 004244ec     4 OBJECT  LOCAL  DEFAULT   25 meas_up_pkt_fwd
+    74: 004244e4     4 OBJECT  LOCAL  DEFAULT   25 meas_up_payload_byte
+    75: 004244f4     4 OBJECT  LOCAL  DEFAULT   25 meas_nb_rx_bad
+    76: 004244e0     4 OBJECT  LOCAL  DEFAULT   25 meas_up_dgram_sent
+    77: 004244e8     4 OBJECT  LOCAL  DEFAULT   25 meas_up_network_byte
+    78: 004244dc     4 OBJECT  LOCAL  DEFAULT   25 meas_up_ack_rcv
+    79: 00424530     4 OBJECT  LOCAL  DEFAULT   25 sock_down
+    80: 0041e230     8 OBJECT  LOCAL  DEFAULT   20 pull_timeout
+    81: 004244c4    24 OBJECT  LOCAL  DEFAULT   25 mx_meas_dw
+    82: 004244c0     4 OBJECT  LOCAL  DEFAULT   25 meas_dw_pull_sent
+    83: 004244b4     4 OBJECT  LOCAL  DEFAULT   25 meas_dw_network_byte
+    84: 004244b8     4 OBJECT  LOCAL  DEFAULT   25 meas_dw_dgram_rcv
+    85: 004244b0     4 OBJECT  LOCAL  DEFAULT   25 meas_dw_payload_byte
+    86: 004244ac     4 OBJECT  LOCAL  DEFAULT   25 meas_nb_tx_ok
+    87: 004244bc     4 OBJECT  LOCAL  DEFAULT   25 meas_dw_ack_rcv
+    88: 004244a8     4 OBJECT  LOCAL  DEFAULT   25 meas_nb_tx_fail
+    89: 00000000     0 FILE    LOCAL  DEFAULT  ABS parson.c
+    90: 00404e10   224 FUNC    LOCAL  DEFAULT   13 read_file
+    91: 00404ef0    96 FUNC    LOCAL  DEFAULT   13 parson_strndup
+    92: 00404f50   848 FUNC    LOCAL  DEFAULT   13 get_processed_string
+    93: 004052a0   140 FUNC    LOCAL  DEFAULT   13 json_object_resize
+    94: 0040532c   204 FUNC    LOCAL  DEFAULT   13 json_object_nget_value
+    95: 004053f8   380 FUNC    LOCAL  DEFAULT   13 remove_comments
+    96: 00405e0c  2256 FUNC    LOCAL  DEFAULT   13 parse_value
+    97: 00000000     0 FILE    LOCAL  DEFAULT  ABS base64.c
+    98: 00000000     0 FILE    LOCAL  DEFAULT  ABS ar9331drv.c
+    99: 0040d0b0     8 OBJECT  LOCAL  DEFAULT   16 __func__.2837
+   100: 00424554    24 OBJECT  LOCAL  DEFAULT   25 mux_readpkt
+   101: 00000000     0 FILE    LOCAL  DEFAULT  ABS loragw_hal.c
+   102: 00407390   196 FUNC    LOCAL  DEFAULT   13 sx125x_write.part.0
+   103: 00424590     1 OBJECT  LOCAL  DEFAULT   25 rf_clkout
+   104: 004245e4     8 OBJECT  LOCAL  DEFAULT   25 rf_radio_type
+   105: 00424600     2 OBJECT  LOCAL  DEFAULT   25 rf_enable
+   106: 00424591     1 OBJECT  LOCAL  DEFAULT   25 lorawan_public
+   107: 00424602     1 OBJECT  LOCAL  DEFAULT   25 lgw_is_started
+   108: 004245f8     8 OBJECT  LOCAL  DEFAULT   25 rf_rx_freq
+   109: 004245f0     8 OBJECT  LOCAL  DEFAULT   25 rf_rssi_offset
+   110: 004245ec     2 OBJECT  LOCAL  DEFAULT   25 rf_tx_enable
+   111: 004245d8    10 OBJECT  LOCAL  DEFAULT   25 if_enable
+   112: 004245a4    40 OBJECT  LOCAL  DEFAULT   25 if_freq
+   113: 004245cc    10 OBJECT  LOCAL  DEFAULT   25 if_rf_chain
+   114: 0042459b     1 OBJECT  LOCAL  DEFAULT   25 lora_rx_bw
+   115: 0042459a     1 OBJECT  LOCAL  DEFAULT   25 lora_rx_sf
+   116: 00424599     1 OBJECT  LOCAL  DEFAULT   25 lora_rx_ppm_offset
+   117: 00424598     1 OBJECT  LOCAL  DEFAULT   25 fsk_rx_bw
+   118: 00424594     4 OBJECT  LOCAL  DEFAULT   25 fsk_rx_dr
+   119: 0041e2f8     8 OBJECT  LOCAL  DEFAULT   20 fsk_sync_word
+   120: 0041e300     1 OBJECT  LOCAL  DEFAULT   20 fsk_sync_word_size
+   121: 0042459c     8 OBJECT  LOCAL  DEFAULT   25 lora_multi_sfmask
+   122: 0041e2a0    81 OBJECT  LOCAL  DEFAULT   20 txgain_lut
+   123: 0041e304  8192 OBJECT  LOCAL  DEFAULT   20 cal_firmware
+   124: 00424588     8 OBJECT  LOCAL  DEFAULT   25 cal_offset_a_i
+   125: 00424580     8 OBJECT  LOCAL  DEFAULT   25 cal_offset_a_q
+   126: 00424578     8 OBJECT  LOCAL  DEFAULT   25 cal_offset_b_i
+   127: 00424570     8 OBJECT  LOCAL  DEFAULT   25 cal_offset_b_q
+   128: 00422304  8192 OBJECT  LOCAL  DEFAULT   20 arb_firmware
+   129: 00420304  8192 OBJECT  LOCAL  DEFAULT   20 agc_firmware
+   130: 0040d154    12 OBJECT  LOCAL  DEFAULT   16 CSWTCH.70
+   131: 0040d148    12 OBJECT  LOCAL  DEFAULT   16 CSWTCH.71
+   132: 00000000     0 FILE    LOCAL  DEFAULT  ABS loragw_reg.c
+   133: 00424614     1 OBJECT  LOCAL  DEFAULT   25 lgw_spi_mux_mode
+   134: 00424310     4 OBJECT  LOCAL  DEFAULT   20 lgw_regpage
+   135: 00000000     0 FILE    LOCAL  DEFAULT  ABS loragw_spi.native.c
+   136: 00000000     0 FILE    LOCAL  DEFAULT  ABS loragw_aux.c
+   137: 00400160     0 OBJECT  LOCAL  DEFAULT    3 _DYNAMIC
+   138: 00424468     0 OBJECT  LOCAL  DEFAULT   24 __dso_handle
+   139: 00401340     0 FUNC    LOCAL  DEFAULT   12 _PROCEDURE_LINKAGE_TABLE_
+   140: 00000000     0 FUNC    GLOBAL DEFAULT  UND clock_gettime
+   141: 0040e100     2 OBJECT  GLOBAL DEFAULT   16 FPGA_VERSION
+   142: 00000000     0 FUNC    GLOBAL DEFAULT  UND __divdi3@@GLIBC_2.0
+   143: 00000000     0 FUNC    GLOBAL DEFAULT  UND ioctl
+   144: 00000000     0 FUNC    GLOBAL DEFAULT  UND printf
+   145: 0041e220     0 NOTYPE  GLOBAL DEFAULT   20 _fdata
+   146: 00000000     0 FUNC    GLOBAL DEFAULT  UND __divdf3@@GCC_3.0
+   147: 00405574    56 FUNC    GLOBAL DEFAULT   13 json_object_get_value
+   148: 00000000     0 OBJECT  GLOBAL DEFAULT  UND _gp_disp
+   149: 00000000     0 FUNC    GLOBAL DEFAULT  UND recv
+   150: 00000000     0 FUNC    GLOBAL DEFAULT  UND connect
+   151: 00405cb0   348 FUNC    GLOBAL DEFAULT   13 json_value_free
+   152: 00405644    72 FUNC    GLOBAL DEFAULT   13 json_object_get_object
+   153: 00407348    68 FUNC    GLOBAL DEFAULT   13 AR9331Drv_Close
+   154: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_create
+   155: 00000000     0 FUNC    GLOBAL DEFAULT  UND sigemptyset
+   156: 00000000     0 FUNC    GLOBAL DEFAULT  UND strerror
+   157: 004072e0   104 FUNC    GLOBAL DEFAULT   13 AR9331Drv_Open
+   158: 00405c50    52 FUNC    GLOBAL DEFAULT   13 json_value_get_number
+   159: 00408000   264 FUNC    GLOBAL DEFAULT   13 lgw_txgain_setconf
+   160: 00000000     0 FUNC    GLOBAL DEFAULT  UND snprintf
+   161: 00000000     0 FUNC    GLOBAL DEFAULT  UND __divsf3@@GCC_3.0
+   162: 00405b38    92 FUNC    GLOBAL DEFAULT   13 json_array_get_boolean
+   163: 00424470     4 OBJECT  GLOBAL DEFAULT   25 __ctype_b
+   164: 004244a1     1 OBJECT  GLOBAL DEFAULT   25 exit_sig
+   165: 004033dc  3612 FUNC    GLOBAL DEFAULT   13 thread_up
+   166: 00000000     0 FUNC    GLOBAL DEFAULT  UND __subdf3@@GCC_3.0
+   167: 0042c440     0 NOTYPE  GLOBAL DEFAULT  ABS _gp
+   168: 0040571c   160 FUNC    GLOBAL DEFAULT   13 json_object_dotget_value
+   169: 00409c88    12 FUNC    GLOBAL DEFAULT   13 lgw_version_info
+   170: 00409ca0    72 FUNC    GLOBAL DEFAULT   13 page_switch
+   171: 00000000     0 FUNC    GLOBAL DEFAULT  UND memcpy
+   172: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_cancel
+   173: 00424324     0 OBJECT  GLOBAL HIDDEN    22 __TMC_END__
+   174: 0041e218     0 OBJECT  GLOBAL HIDDEN    19 __DTOR_END__
+   175: 004057bc    72 FUNC    GLOBAL DEFAULT   13 json_object_dotget_string
+   176: 00000000     0 FUNC    GLOBAL DEFAULT  UND puts
+   177: 004058e4    72 FUNC    GLOBAL DEFAULT   13 json_object_dotget_boolea
+   178: 00409e58    68 FUNC    GLOBAL DEFAULT   13 lgw_disconnect
+   179: 00000000     0 FUNC    GLOBAL DEFAULT  UND malloc
+   180: 0040705c   108 FUNC    GLOBAL DEFAULT   13 b64_to_bin
+   181: 00406890    80 FUNC    GLOBAL DEFAULT   13 json_parse_file_with_comm
+   182: 00405bb0    28 FUNC    GLOBAL DEFAULT   13 json_value_get_type
+   183: 00405a1c   100 FUNC    GLOBAL DEFAULT   13 json_array_get_number
+   184: 0040d178    10 OBJECT  GLOBAL DEFAULT   16 ifmod_config
+   185: 0040d160    16 OBJECT  GLOBAL DEFAULT   16 lgw_version_string
+   186: 004059c0    92 FUNC    GLOBAL DEFAULT   13 json_array_get_string
+   187: 00000000     0 FUNC    GLOBAL DEFAULT  UND __floatunsisf@@GCC_4.2.0
+   188: 00409c18    40 FUNC    GLOBAL DEFAULT   13 lgw_abort_tx
+   189: 00407698   612 FUNC    GLOBAL DEFAULT   13 setup_sx125x
+   190: 0040a16c   496 FUNC    GLOBAL DEFAULT   13 lgw_reg_r
+   191: 00000000     0 FUNC    GLOBAL DEFAULT  UND socket
+   192: 00409f10   604 FUNC    GLOBAL DEFAULT   13 lgw_reg_w
+   193: 004093c0  1944 FUNC    GLOBAL DEFAULT   13 lgw_send
+   194: 00000000     0 FUNC    GLOBAL DEFAULT  UND __floatsisf@@GCC_3.0
+   195: 004066dc    84 FUNC    GLOBAL DEFAULT   13 json_parse_string
+   196: 0040a528   272 FUNC    GLOBAL DEFAULT   13 lgw_reg_wb
+   197: 00000000     0 FUNC    GLOBAL DEFAULT  UND send
+   198: 00000000     0 FUNC    GLOBAL DEFAULT  UND freeaddrinfo
+   199: 0040abe8   288 FUNC    GLOBAL DEFAULT   13 lgw_spi_rb
+   200: 00000000     0 FUNC    GLOBAL DEFAULT  UND getnameinfo
+   201: 00000000     0 FUNC    GLOBAL DEFAULT  UND __floatunsidf@@GCC_4.2.0
+   202: 00407578    48 FUNC    GLOBAL DEFAULT   13 sx125x_write
+   203: 004012dc    28 FUNC    GLOBAL DEFAULT   11 _init
+   204: 004078fc   496 FUNC    GLOBAL DEFAULT   13 lgw_constant_adjust
+   205: 00424620 38932 OBJECT  GLOBAL DEFAULT   25 g_RecPool
+   206: 00406974   132 FUNC    GLOBAL DEFAULT   13 char_to_code
+   207: 004055f4    80 FUNC    GLOBAL DEFAULT   13 json_object_get_number
+   208: 00000000     0 FUNC    GLOBAL DEFAULT  UND strtod
+   209: 00000000     0 FUNC    GLOBAL DEFAULT  UND gai_strerror
+   210: 00000000     0 FUNC    GLOBAL DEFAULT  UND write
+   211: 00000000     0 FUNC    GLOBAL DEFAULT  UND __addsf3@@GCC_3.0
+   212: 00000000     0 FUNC    GLOBAL DEFAULT  UND fprintf
+   213: 00407aec    60 FUNC    GLOBAL DEFAULT   13 lgw_board_setconf
+   214: 00409b58   192 FUNC    GLOBAL DEFAULT   13 lgw_status
+   215: 00424550     4 OBJECT  GLOBAL DEFAULT   25 g_fd
+   216: 00409e9c   116 FUNC    GLOBAL DEFAULT   13 lgw_soft_reset
+   217: 00406780   272 FUNC    GLOBAL DEFAULT   13 json_parse_string_with_co
+   218: 004021e0    92 FUNC    GLOBAL DEFAULT   13 __start
+   219: 00000000     0 FUNC    GLOBAL DEFAULT  UND setsockopt
+   220: 00000000     0 FUNC    GLOBAL DEFAULT  UND fseek
+   221: 00000000     0 NOTYPE  WEAK   DEFAULT  UND _ITM_registerTMCloneTable
+   222: 0040714c   404 FUNC    GLOBAL DEFAULT   13 AR9331Drv_RecvPkt
+   223: 00408108  2908 FUNC    GLOBAL DEFAULT   13 lgw_start
+   224: 004017f0     0 NOTYPE  GLOBAL DEFAULT   13 _ftext
+   225: 00000000     0 FUNC    GLOBAL DEFAULT  UND ferror
+   226: 00000000     0 FUNC    GLOBAL DEFAULT  UND strstr
+   227: 00000000     0 FUNC    GLOBAL DEFAULT  UND rand
+   228: 00409ce8    32 FUNC    GLOBAL DEFAULT   13 check_fpga_version
+   229: 00405854    72 FUNC    GLOBAL DEFAULT   13 json_object_dotget_object
+   230: 0040592c    28 FUNC    GLOBAL DEFAULT   13 json_object_get_count
+   231: 00000000     0 FUNC    GLOBAL DEFAULT  UND strncmp
+   232: 00000000     0 FUNC    GLOBAL DEFAULT  UND strncpy
+   233: 00405c84    44 FUNC    GLOBAL DEFAULT   13 json_value_get_boolean
+   234: 00000000     0 FUNC    GLOBAL DEFAULT  UND __floatsidf@@GCC_3.0
+   235: 00407bd0  1072 FUNC    GLOBAL DEFAULT   13 lgw_rxif_setconf
+   236: 00000000     0 FUNC    GLOBAL DEFAULT  UND realloc
+   237: 00424320     0 OBJECT  GLOBAL DEFAULT   21 __RLD_MAP
+   238: 0040a35c   460 FUNC    GLOBAL DEFAULT   13 lgw_reg_check
+   239: 00000000     0 FUNC    GLOBAL DEFAULT  UND memcmp
+   240: 004056d4    72 FUNC    GLOBAL DEFAULT   13 json_object_get_boolean
+   241: 00000000     0 FUNC    GLOBAL DEFAULT  UND sscanf
+   242: 00000000     0 FUNC    GLOBAL DEFAULT  UND __truncdfsf2@@GCC_3.0
+   243: 00000000     0 FUNC    GLOBAL DEFAULT  UND sigaction
+   244: 00407454   292 FUNC    GLOBAL DEFAULT   13 load_firmware
+   245: 00000000     0 FUNC    GLOBAL DEFAULT  UND fread
+   246: 00405adc    92 FUNC    GLOBAL DEFAULT   13 json_array_get_array
+   247: 00405804    80 FUNC    GLOBAL DEFAULT   13 json_object_dotget_number
+   248: 00000000     0 NOTYPE  WEAK   DEFAULT  UND _ITM_deregisterTMCloneTab
+   249: 0040ae00     0 FUNC    GLOBAL DEFAULT  UND __uClibc_main
+   250: 0040a8c8    80 FUNC    GLOBAL DEFAULT   13 lgw_spi_close
+   251: 00424610     4 OBJECT  GLOBAL DEFAULT   25 lgw_spi_target
+   252: 00000000     0 FUNC    GLOBAL DEFAULT  UND fopen
+   253: 0042446c     0 NOTYPE  GLOBAL DEFAULT  ABS __bss_start
+   254: 00000000     0 FUNC    GLOBAL DEFAULT  UND memset
+   255: 00405a80    92 FUNC    GLOBAL DEFAULT   13 json_array_get_object
+   256: 004017f0  2540 FUNC    GLOBAL DEFAULT   13 main
+   257: 00000000     0 FUNC    GLOBAL DEFAULT  UND __muldf3@@GCC_3.0
+   258: 00000000     0 FUNC    GLOBAL DEFAULT  UND ftell
+   259: 00000000     0 FUNC    GLOBAL DEFAULT  UND fclose
+   260: 0040589c    72 FUNC    GLOBAL DEFAULT   13 json_object_dotget_array
+   261: 00408c94  1836 FUNC    GLOBAL DEFAULT   13 lgw_receive
+   262: 00405bf8    44 FUNC    GLOBAL DEFAULT   13 json_value_get_array
+   263: 00000000     0 FUNC    GLOBAL DEFAULT  UND time
+   264: 00406f34   296 FUNC    GLOBAL DEFAULT   13 bin_to_b64
+   265: 00409d08   336 FUNC    GLOBAL DEFAULT   13 lgw_connect
+   266: 0040a740   392 FUNC    GLOBAL DEFAULT   13 lgw_spi_open
+   267: 00000000     0 FUNC    GLOBAL DEFAULT  UND strcmp
+   268: 00000000     0 FUNC    GLOBAL DEFAULT  UND shutdown
+   269: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_mutex_unlock
+   270: 0041e220     0 OBJECT  WEAK   DEFAULT   20 data_start
+   271: 004055ac    72 FUNC    GLOBAL DEFAULT   13 json_object_get_string
+   272: 004070d0   124 FUNC    GLOBAL DEFAULT   13 AR9331Drv_SendPkt
+   273: 0040ae20    28 FUNC    GLOBAL DEFAULT   15 _fini
+   274: 0040ad10   160 FUNC    GLOBAL DEFAULT   13 wait_ms
+   275: 00000000     0 FUNC    GLOBAL DEFAULT  UND __mulsf3@@GCC_3.0
+   276: 00406730    80 FUNC    GLOBAL DEFAULT   13 json_parse_file
+   277: 0040aac0   296 FUNC    GLOBAL DEFAULT   13 lgw_spi_wb
+   278: 00405948    60 FUNC    GLOBAL DEFAULT   13 json_object_get_name
+   279: 00424480     4 OBJECT  GLOBAL DEFAULT   25 stderr
+   280: 0040d170     8 OBJECT  GLOBAL DEFAULT   16 rf_rx_bandwidth
+   281: 00405b94    28 FUNC    GLOBAL DEFAULT   13 json_array_get_count
+   282: 0040a918   196 FUNC    GLOBAL DEFAULT   13 lgw_spi_w
+   283: 00000000     0 FUNC    GLOBAL DEFAULT  UND __fixdfsi@@GCC_3.0
+   284: 004041f8  3088 FUNC    GLOBAL DEFAULT   13 thread_down
+   285: 00405984    60 FUNC    GLOBAL DEFAULT   13 json_array_get_value
+   286: 00409c40    72 FUNC    GLOBAL DEFAULT   13 lgw_get_trigcnt
+   287: 00000000     0 FUNC    GLOBAL DEFAULT  UND __adddf3@@GCC_3.0
+   288: 00000000     0 FUNC    GLOBAL DEFAULT  UND getaddrinfo
+   289: 004068e0   148 FUNC    GLOBAL DEFAULT   13 code_to_char
+   290: 00000000     0 FUNC    GLOBAL DEFAULT  UND strftime
+   291: 004075a8   240 FUNC    GLOBAL DEFAULT   13 sx125x_read
+   292: 00407b28   168 FUNC    GLOBAL DEFAULT   13 lgw_rxrf_setconf
+   293: 00000000     0 FUNC    GLOBAL DEFAULT  UND fwrite
+   294: 00000000     0 FUNC    GLOBAL DEFAULT  UND access
+   295: 0042446c     0 NOTYPE  GLOBAL DEFAULT  ABS _edata
+   296: 00424450     0 OBJECT  GLOBAL DEFAULT  ABS _GLOBAL_OFFSET_TABLE_
+   297: 0042de34     0 NOTYPE  GLOBAL DEFAULT  ABS _end
+   298: 00405c24    44 FUNC    GLOBAL DEFAULT   13 json_value_get_string
+   299: 0040a638   264 FUNC    GLOBAL DEFAULT   13 lgw_reg_rb
+   300: 00000000     0 FUNC    GLOBAL DEFAULT  UND __extendsfdf2@@GCC_3.0
+   301: 00000000     0 FUNC    GLOBAL DEFAULT  UND rewind
+   302: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_mutex_lock
+   303: 004244a0     1 OBJECT  GLOBAL DEFAULT   25 quit_sig
+   304: 004069f8   648 FUNC    GLOBAL DEFAULT   13 bin_to_b64_nopad
+   305: 00000000     0 FUNC    GLOBAL DEFAULT  UND __errno_location
+   306: 00000000     0 FUNC    GLOBAL DEFAULT  UND exit
+   307: 00405bcc    44 FUNC    GLOBAL DEFAULT   13 json_value_get_object
+   308: 00000000     0 FUNC    GLOBAL DEFAULT  UND __fixunsdfsi@@GCC_3.0
+   309: 0040d1b8  3912 OBJECT  GLOBAL DEFAULT   16 loregs
+   310: 00000000     0 FUNC    GLOBAL DEFAULT  UND gmtime
+   311: 0040a9dc   228 FUNC    GLOBAL DEFAULT   13 lgw_spi_r
+   312: 00000000     0 FUNC    GLOBAL DEFAULT  UND strlen
+   313: 00000000     0 FUNC    GLOBAL DEFAULT  UND open
+   314: 00000000     0 FUNC    GLOBAL DEFAULT  UND strchr
+   315: 0040568c    72 FUNC    GLOBAL DEFAULT   13 json_object_get_array
+   316: 0041e220     0 OBJECT  GLOBAL DEFAULT   20 __data_start
+   317: 00406c80   692 FUNC    GLOBAL DEFAULT   13 b64_to_bin_nopad
+   318: 00000000     0 FUNC    GLOBAL DEFAULT  UND pthread_join
+   319: 00000000     0 FUNC    GLOBAL DEFAULT  UND clock_nanosleep
+   320: 0042446c     0 NOTYPE  GLOBAL DEFAULT  ABS _fbss
+   321: 00000000     0 FUNC    GLOBAL DEFAULT  UND close
+   322: 00408c64    48 FUNC    GLOBAL DEFAULT   13 lgw_stop
+   323: 00000000     0 FUNC    GLOBAL DEFAULT  UND free
+
+Histogram for bucket list length (total of 67 buckets):
+ Length  Number     % of total  Coverage
+      0  20         ( 29.9%)
+      1  19         ( 28.4%)     21.1%
+      2  16         ( 23.9%)     56.7%
+      3  9          ( 13.4%)     86.7%
+      4  3          (  4.5%)    100.0%
+
+Version symbols section '.gnu.version' contains 91 entries:
+ Addr: 0000000000400f84  Offset: 0x000f84  Link: 5 (.dynsym)
+  000:   0 (*local*)       0 (*local*)       2 (GLIBC_2.0)     0 (*local*)    
+  004:   0 (*local*)       1 (*global*)      3 (GCC_3.0)       0 (*local*)    
+  008:   0 (*local*)       0 (*local*)       0 (*local*)       0 (*local*)    
+  00c:   0 (*local*)       3 (GCC_3.0)       0 (*local*)       3 (GCC_3.0)    
+  010:   1 (*global*)      0 (*local*)       0 (*local*)       0 (*local*)    
+  014:   0 (*local*)       4 (GCC_4.2.0)     0 (*local*)       3 (GCC_3.0)    
+  018:   0 (*local*)       0 (*local*)       0 (*local*)       4 (GCC_4.2.0)  
+  01c:   1 (*global*)      0 (*local*)       0 (*local*)       0 (*local*)    
+  020:   3 (GCC_3.0)       0 (*local*)       0 (*local*)       0 (*local*)    
+  024:   0 (*local*)       1 (*global*)      0 (*local*)       0 (*local*)    
+  028:   0 (*local*)       0 (*local*)       0 (*local*)       3 (GCC_3.0)    
+  02c:   0 (*local*)       1 (*global*)      0 (*local*)       0 (*local*)    
+  030:   3 (GCC_3.0)       0 (*local*)       0 (*local*)       0 (*local*)    
+  034:   0 (*local*)       1 (*global*)      0 (*local*)       1 (*global*)   
+  038:   3 (GCC_3.0)       0 (*local*)       0 (*local*)       0 (*local*)    
+  03c:   0 (*local*)       0 (*local*)       0 (*local*)       1 (*global*)   
+  040:   3 (GCC_3.0)       0 (*local*)       3 (GCC_3.0)       3 (GCC_3.0)    
+  044:   0 (*local*)       0 (*local*)       0 (*local*)       0 (*local*)    
+  048:   1 (*global*)      1 (*global*)      1 (*global*)      3 (GCC_3.0)    
+  04c:   0 (*local*)       0 (*local*)       0 (*local*)       0 (*local*)    
+  050:   3 (GCC_3.0)       0 (*local*)       0 (*local*)       0 (*local*)    
+  054:   0 (*local*)       0 (*local*)       0 (*local*)       1 (*global*)   
+  058:   0 (*local*)       0 (*local*)       0 (*local*)    
+
+Version needs section '.gnu.version_r' contains 1 entries:
+ Addr: 0x000000000040103c  Offset: 0x00103c  Link: 6 (.dynstr)
+  000000: Version: 1  File: libgcc_s.so.1  Cnt: 3
+  0x0010:   Name: GCC_4.2.0  Flags: none  Version: 4
+  0x0020:   Name: GCC_3.0  Flags: none  Version: 3
+  0x0030:   Name: GLIBC_2.0  Flags: none  Version: 2
+Attribute Section: gnu
+File Attributes
+  Tag_GNU_MIPS_ABI_FP: Soft float
+
+Primary GOT:
+ Canonical gp value: 0042c440
+
+ Reserved entries:
+   Address     Access  Initial Purpose
+  00424450 -32752(gp) 00000000 Lazy resolver
+  00424454 -32748(gp) 80000000 Module pointer (GNU extension)
+
+ Local entries:
+   Address     Access  Initial
+  00424458 -32744(gp) 004017f0
+  0042445c -32740(gp) 004012dc
+  00424460 -32736(gp) 0040ae20
+
+ Global entries:
+   Address     Access  Initial Sym.Val. Type    Ndx Name
+  00424464 -32732(gp) 0040ae00 0040ae00 FUNC    UND __uClibc_main
+
+
+PLT GOT:
+
+ Reserved entries:
+   Address  Initial Purpose
+  00424324 00000000 PLT lazy resolver
+  00424328 00000000 Module pointer
+
+ Entries:
+   Address  Initial Sym.Val. Type    Ndx Name
+  0042432c 00401340 00000000 FUNC    UND clock_gettime
+  00424330 00401340 00000000 FUNC    UND __divdi3
+  00424334 00401340 00000000 FUNC    UND ioctl
+  00424338 00401340 00000000 FUNC    UND printf
+  0042433c 00401340 00000000 FUNC    UND __divdf3
+  00424340 00401340 00000000 FUNC    UND recv
+  00424344 00401340 00000000 FUNC    UND connect
+  00424348 00401340 00000000 FUNC    UND pthread_create
+  0042434c 00401340 00000000 FUNC    UND sigemptyset
+  00424350 00401340 00000000 FUNC    UND strerror
+  00424354 00401340 00000000 FUNC    UND snprintf
+  00424358 00401340 00000000 FUNC    UND __divsf3
+  0042435c 00401340 00000000 FUNC    UND __subdf3
+  00424360 00401340 00000000 FUNC    UND memcpy
+  00424364 00401340 00000000 FUNC    UND pthread_cancel
+  00424368 00401340 00000000 FUNC    UND puts
+  0042436c 00401340 00000000 FUNC    UND malloc
+  00424370 00401340 00000000 FUNC    UND __floatunsisf
+  00424374 00401340 00000000 FUNC    UND socket
+  00424378 00401340 00000000 FUNC    UND __floatsisf
+  0042437c 00401340 00000000 FUNC    UND send
+  00424380 00401340 00000000 FUNC    UND freeaddrinfo
+  00424384 00401340 00000000 FUNC    UND getnameinfo
+  00424388 00401340 00000000 FUNC    UND __floatunsidf
+  0042438c 00401340 00000000 FUNC    UND strtod
+  00424390 00401340 00000000 FUNC    UND gai_strerror
+  00424394 00401340 00000000 FUNC    UND write
+  00424398 00401340 00000000 FUNC    UND __addsf3
+  0042439c 00401340 00000000 FUNC    UND fprintf
+  004243a0 00401340 00000000 FUNC    UND setsockopt
+  004243a4 00401340 00000000 FUNC    UND fseek
+  004243a8 00401340 00000000 FUNC    UND ferror
+  004243ac 00401340 00000000 FUNC    UND strstr
+  004243b0 00401340 00000000 FUNC    UND rand
+  004243b4 00401340 00000000 FUNC    UND strncmp
+  004243b8 00401340 00000000 FUNC    UND strncpy
+  004243bc 00401340 00000000 FUNC    UND __floatsidf
+  004243c0 00401340 00000000 FUNC    UND realloc
+  004243c4 00401340 00000000 FUNC    UND memcmp
+  004243c8 00401340 00000000 FUNC    UND sscanf
+  004243cc 00401340 00000000 FUNC    UND __truncdfsf2
+  004243d0 00401340 00000000 FUNC    UND sigaction
+  004243d4 00401340 00000000 FUNC    UND fread
+  004243d8 00401340 00000000 FUNC    UND fopen
+  004243dc 00401340 00000000 FUNC    UND memset
+  004243e0 00401340 00000000 FUNC    UND __muldf3
+  004243e4 00401340 00000000 FUNC    UND ftell
+  004243e8 00401340 00000000 FUNC    UND fclose
+  004243ec 00401340 00000000 FUNC    UND time
+  004243f0 00401340 00000000 FUNC    UND strcmp
+  004243f4 00401340 00000000 FUNC    UND shutdown
+  004243f8 00401340 00000000 FUNC    UND pthread_mutex_unlock
+  004243fc 00401340 00000000 FUNC    UND __mulsf3
+  00424400 00401340 00000000 FUNC    UND __fixdfsi
+  00424404 00401340 00000000 FUNC    UND __adddf3
+  00424408 00401340 00000000 FUNC    UND getaddrinfo
+  0042440c 00401340 00000000 FUNC    UND strftime
+  00424410 00401340 00000000 FUNC    UND fwrite
+  00424414 00401340 00000000 FUNC    UND access
+  00424418 00401340 00000000 FUNC    UND __extendsfdf2
+  0042441c 00401340 00000000 FUNC    UND rewind
+  00424420 00401340 00000000 FUNC    UND pthread_mutex_lock
+  00424424 00401340 00000000 FUNC    UND __errno_location
+  00424428 00401340 00000000 FUNC    UND exit
+  0042442c 00401340 00000000 FUNC    UND __fixunsdfsi
+  00424430 00401340 00000000 FUNC    UND gmtime
+  00424434 00401340 00000000 FUNC    UND strlen
+  00424438 00401340 00000000 FUNC    UND open
+  0042443c 00401340 00000000 FUNC    UND strchr
+  00424440 00401340 00000000 FUNC    UND pthread_join
+  00424444 00401340 00000000 FUNC    UND clock_nanosleep
+  00424448 00401340 00000000 FUNC    UND close
+  0042444c 00401340 00000000 FUNC    UND free
+

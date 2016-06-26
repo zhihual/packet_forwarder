@@ -4,6 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 #include <pthread.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -11,14 +12,24 @@
 #include <signal.h>
 #include <linux/ioctl.h>
 
-#include "AR9331drv.h"
 
-#include <pthread.h>
+#include <stdint.h>		/* C99 types */
+#include <stdbool.h>	/* bool type */
+#include <stdio.h>		/* printf fprintf */
+#include <string.h>		/* memcpy */
+
+#include "parson.h"
+#include "base64.h"
 #include "loragw_hal.h"
 #include "loragw_aux.h"
 
+#include "ar9331drv.h"
 
-int g_fd = 0;
+#define F_SETOWN        8
+#define FASYNC          00020000
+
+
+struct FILE * g_fd = 0;
 
 static pthread_mutex_t mux_readpkt = PTHREAD_MUTEX_INITIALIZER; /* control readbuf */
 
@@ -41,6 +52,7 @@ struct PktArray {
 
 struct PktArray g_RecPool;
 
+#if 0
 static void calcTestDataPER(uint8* buff, uint32 length)
 {
     int i;
@@ -66,8 +78,9 @@ static void calcTestDataPER(uint8* buff, uint32 length)
 
     return;
 }
+#endif
 
-static uint32 getTotalMemSize(int fd)
+static uint32 getTotalMemSize(struct FILE* fd)
 {
     int cmd;	
     uint32 size;
@@ -87,13 +100,13 @@ static int GetReadyBufNum()
    return g_RecPool.readyNum;
 }
 
-static int PutPktIntoArray(pRxMem, rx_length,read_len)
+static int PutPktIntoArray(uint8* pRxMem, int rx_length, int read_len)
 {
    struct PktArrayItem* p = NULL;
    int writeIndex = 0;
    int ret = 0;
    
-   if(g_RecPool.readyNum >= g_RecPool)
+   if(g_RecPool.readyNum >= ARRAY_SIZE)
    {
      printf("recev pool is fully, skip in pool\n");
    }
@@ -101,9 +114,9 @@ static int PutPktIntoArray(pRxMem, rx_length,read_len)
    if(g_RecPool.lastWriteIdx >= (ARRAY_SIZE-1) )
      writeIndex = 0;
    else
-     writeIndex = g_RecPool.lastWriteId+1;
+     writeIndex = g_RecPool.lastWriteIdx+1;
 
-   p = g_RecPool.Item[writeIndex];
+   p = &g_RecPool.Item[writeIndex];
 
    if(p->waitRead)
    {
@@ -111,6 +124,9 @@ static int PutPktIntoArray(pRxMem, rx_length,read_len)
      return -1;
    }
 
+   rx_length = rx_length;
+
+   printf("write %d \n", writeIndex);
    memcpy(p->pkt.payload, pRxMem, read_len);
    p->pkt.size = read_len;
    p->waitRead = 1; // set flag
@@ -135,7 +151,7 @@ static int PutPktIntoArray(pRxMem, rx_length,read_len)
    p->pkt.snr_max=10;
    p->pkt.crc=0;
 
-   return 0;
+   return ret;
 }
 
 static int PopPktFromArray(int num, struct lgw_pkt_rx_s *pkt_data)
@@ -151,11 +167,12 @@ static int PopPktFromArray(int num, struct lgw_pkt_rx_s *pkt_data)
 
    for(i=0; i<num; i++)
    {
-      readInx = g_RecPool.lastReadIdx;
+      readInx = g_RecPool.lastReadIdx+1;
       if(readInx >= (ARRAY_SIZE-1))
         readInx = 0;
 
-      src = g_RecPool.Item[readInx];
+      printf("readinx :%d\n", readInx);
+      src = &g_RecPool.Item[readInx];
 
       if(!src->waitRead)
       {
@@ -164,10 +181,10 @@ static int PopPktFromArray(int num, struct lgw_pkt_rx_s *pkt_data)
         return ret;
       }
 
-      memcpy(dst,src.pkt, sizeof(struct lgw_pkt_rx_s));
+      memcpy((void*)dst,(void*)&src->pkt, sizeof(struct lgw_pkt_rx_s));
 
       dst++;
-      src.waitRead = 0;
+      src->waitRead = 0;
 
       g_RecPool.OutNum++;
       g_RecPool.readyNum--;
@@ -187,38 +204,44 @@ static void rx_input_handler(int num)
    int i;
         
    rx_length = getTotalMemSize(g_fd);
-   printf("%s, rx_length = %d\n",__func__,rx_length);
+   //printf("%s, rx_length = %d\n",__func__,rx_length);
 
    pRxMem = malloc(rx_length);
    memset(pRxMem,0,rx_length);
    //printf("APP got mem, length = %d\n",total_mem_size);
 
    read_len = read(g_fd, pRxMem, rx_length);
+   if (rx_length ||read_len)
    printf("%s, rx_length = %d, read_len = %d\n",__func__,rx_length,read_len);
 
    // can dump packet here
 
-   usleep(40000);  //sleep xx ms to make sender switch to RX ready.  5ms for 30Kbps,40ms for 10Kbps, 500ms for 1Kbps,
+   usleep(400000);  //sleep xx ms to make sender switch to RX ready.  5ms for 30Kbps,40ms for 10Kbps, 500ms for 1Kbps,
                    //if we used the high rate send and low rate receive, then we could comment the delay...
-
+   
+   
    // call into output here
    //pktHandler(globalSiFd,pRxMem,read_len);
-   pthread_mutex_lock(&mux_readpkt);
-   PutPktIntoArray(pRxMem, rx_length,read_len);                  
-   pthread_mutex_unlock(&mux_readpkt);
-
+   if(read_len)
+   {
+     pthread_mutex_lock(&mux_readpkt);
+     PutPktIntoArray(pRxMem, rx_length,read_len);                  
+     pthread_mutex_unlock(&mux_readpkt);
+   }
    free(pRxMem);
         
 }
 
 static void rxSignalInit(int fd)
 {
+#if 1
    int oflags;
 
    signal(SIGIO, rx_input_handler);    
    fcntl(fd, F_SETOWN, getpid());    
    oflags = fcntl(fd, F_GETFL);
    fcntl(fd, F_SETFL, oflags | FASYNC);  
+#endif
 }
 
 static int SendPkt(int fd,int length, uint8* buff)
@@ -248,20 +271,22 @@ int AR9331Drv_SendPkt(struct lgw_pkt_tx_s pkt_data)
 int AR9331Drv_RecvPkt(uint8 max_pkt, struct lgw_pkt_rx_s *pkt_data)
 {
    uint8*p = NULL;
-   int size = 0;
    int readNum = 0;
    pthread_mutex_lock(&mux_readpkt);
    readNum = GetReadyBufNum();
    
    if(readNum > 0)
    {
+      printf("readNum = %d\n", readNum);
       if (readNum >max_pkt)
         readNum = max_pkt;
-      PopPktFromArray(readNum,struct lgw_pkt_rx_s *pkt_data);
+      PopPktFromArray(readNum,pkt_data);
    }
-
- 
+    
    pthread_mutex_unlock(&mux_readpkt);
+
+   rx_input_handler(0);
+   return readNum;
 }
 
 #if 0
@@ -282,7 +307,7 @@ void AR9331Drv_EnableCCAmode(int fd)
 
 int AR9331Drv_Open()
 {
-  int fd = NULL;		
+  struct FILE * fd = NULL;		
         
   if((fd=open("/dev/spidev",O_RDWR)) == -1)
   {
@@ -298,6 +323,12 @@ int AR9331Drv_Open()
  
   g_fd = fd;
 
+  g_RecPool.InNum = 0;
+  g_RecPool.lastReadIdx =-1;
+  g_RecPool.lastWriteIdx = -1;
+  g_RecPool.OutNum = 0;
+  g_RecPool.readyNum = 0;
+
   return 0;
 }
 
@@ -306,11 +337,13 @@ int AR9331Drv_Close()
   int ret = 0;
   if(g_fd)
   {
-    fclose(*g_fd);
+    fclose(g_fd);
     g_fd = 0;
   }else{
     ret = -1;
   } 
+
+  
   
   return ret;
 }

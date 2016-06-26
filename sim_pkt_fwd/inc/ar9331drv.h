@@ -26,8 +26,8 @@ typedef unsigned long uint32;
 
 
 // Export Interface
-int AR9331Drv_Open(int* pfd);
-int AR9331Drv_Close(int* fd);
+int AR9331Drv_Open();
+int AR9331Drv_Close();
 
 int AR9331Drv_SendPkt(struct lgw_pkt_tx_s pkt_data);
 int AR9331Drv_RecvPkt(uint8 max_pkt, struct lgw_pkt_rx_s *pkt_data);

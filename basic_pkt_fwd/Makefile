@@ -6,7 +6,7 @@ APP_NAME := basic_pkt_fwd
 
 LGW_PATH ?= ../../lora_gateway/libloragw
 ARCH ?=
-CROSS_COMPILE ?=
+CROSS_COMPILE ?= mips-openwrt-linux-
 
 OBJDIR = obj
 INCLUDES = $(wildcard inc/*.h)
@@ -37,7 +37,7 @@ LGW_INC += $(LGW_PATH)/inc/loragw_hal.h
 
 ### Linking options
 
-LIBS := -lloragw -lrt -lpthread
+LIBS := -lloragw -lrt -lpthread -ldl
 
 ### General build targets
 
