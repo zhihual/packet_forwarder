@@ -48,6 +48,8 @@ Maintainer: Sylvain Miermont
 #include "loragw_hal.h"
 #include "loragw_aux.h"
 
+#include "ar9331drv.h"
+
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE MACROS ------------------------------------------------------- */
 
@@ -745,7 +747,9 @@ int main(void)
 	
 	/* starting the concentrator */
 	//i = lgw_start();
-	i = LGW_HAL_SUCCESS; // zliu fake connect with HAL layer
+
+    i = AR9331Drv_Open();
+    
 	if (i == LGW_HAL_SUCCESS) {
 		MSG("INFO: [main] concentrator started, packet can now be received\n");
 	} else {
@@ -867,7 +871,8 @@ int main(void)
 		shutdown(sock_up, SHUT_RDWR);
 		shutdown(sock_down, SHUT_RDWR);
 		/* stop the hardware */
-		i = lgw_stop();
+		//i = lgw_stop();
+		i = AR9331Drv_Close();
 		if (i == LGW_HAL_SUCCESS) {
 			MSG("INFO: concentrator stopped successfully\n");
 		} else {
@@ -930,11 +935,12 @@ void thread_up(void) {
 		/* fetch packets */
 		
 		pthread_mutex_lock(&mx_concent);
-		loopcount++;
+
+        loopcount++;
 		// This is fake rx data from node. just simulate already connected with node.
 		if((loopcount%100)==0)
 		{
-		   nb_pkt = 1;
+		   nb_pkt = 0;
 		   p = &rxpkt[0];
 		   p->freq_hz=470;	
 	       p->if_chain=10;
@@ -960,8 +966,9 @@ void thread_up(void) {
 		}
 	       
 		
-		// nb_pkt = lgw_receive(NB_PKT_MAX, rxpkt);
-		
+		//nb_pkt = lgw_receive(NB_PKT_MAX, rxpkt);
+        nb_pkt = AR9331Drv_RecvPkt(NB_PKT_MAX, rxpkt);
+
 		pthread_mutex_unlock(&mx_concent);
 		if (nb_pkt == LGW_HAL_ERROR) {
 			MSG("ERROR: [up] failed packet fetch, exiting\n");
@@ -1621,7 +1628,7 @@ void thread_down(void) {
 			/* transfer data and metadata to the concentrator, and schedule TX */
 			pthread_mutex_lock(&mx_concent); /* may have to wait for a fetch to finish */
 			//i = lgw_send(txpkt);
-			i = 0;
+			i = AR9331Drv_SendPkt(txpkt);
 			pthread_mutex_unlock(&mx_concent); /* free concentrator ASAP */
 			if (i == LGW_HAL_ERROR) {
 				meas_nb_tx_fail += 1;
