@@ -884,10 +884,11 @@ int main(void)
 
 void thread_up(void) {
 	int i, j; /* loop variables */
+    int k =0;
 	unsigned pkt_in_dgram; /* nb on Lora packet in the current datagram */
 	
 	/* allocate memory for packet fetching and processing */
-	struct lgw_pkt_rx_s rxpkt[NB_PKT_MAX]; /* array containing inbound packets + metadata */
+	struct lgw_pkt_rx_s rxpkt[NB_PKT_MAX]={0}; /* array containing inbound packets + metadata */
 	struct lgw_pkt_rx_s *p; /* pointer on a RX packet */
 	int nb_pkt;
 	
@@ -918,7 +919,9 @@ void thread_up(void) {
 		MSG("ERROR: [up] setsockopt returned %s\n", strerror(errno));
 		exit(EXIT_FAILURE);
 	}
-	
+
+    //memset(rxpkt, 0x5, NB_PKT_MAX*sizeof(struct lgw_pkt_rx_s));
+    
 	/* pre-fill the data buffer with fixed fields */
 	buff_up[0] = 2;//PROTOCOL_VERSION;
 	buff_up[3] = PKT_PUSH_DATA;
@@ -936,25 +939,37 @@ void thread_up(void) {
 		{
 		   nb_pkt = 1;
 		   p = &rxpkt[0];
-		   p->freq_hz=470;	
+		   p->freq_hz=903000000;	
 	       p->if_chain=10;
 	       p->status=STAT_CRC_OK;
 	       p->count_us= 1;
 	       p->rf_chain=4;
 	       p->modulation=MOD_LORA;
 	       p->bandwidth=BW_500KHZ;
-	       p->datarate=DR_LORA_SF7;
+	       p->datarate=DR_LORA_SF8;
 	       p->coderate=CR_LORA_4_5;
 	       p->rssi=8;
 	       p->snr=5;
 	       p->snr_min=1;
 	       p->snr_max=10;
 	       p->crc=0;
-	       p->size = 4;
-	       p->payload[0] = loopcount;
-		   p->payload[1] = loopcount;
-		   p->payload[2] = loopcount;
-		   p->payload[3] = loopcount;
+	       p->size = 26;
+           p->payload[0] = 0x40; //UnconfirmedDataUp
+           p->payload[4] = 0x7;  // Dev Addr
+           p->payload[3] = 0xba;
+           p->payload[2] = 0x88;
+           p->payload[1] = 0x88;
+           p->payload[5] = 0; // Fctrl
+           p->payload[6] = (uint8_t)k++;  //  Fcnt
+           p->payload[7] = 0; // Fopt
+	       p->payload[8] = 1; // Fport
+           p->payload[9] = 1; // payload format, direction
+           p->payload[10] = 0;
+           p->payload[11] = 0;
+           p->payload[12] = 0;
+           p->payload[13] = 0;
+           p->payload[14] = 1; // DIR
+           
 		}else{
 		   nb_pkt = 0;
 		}
