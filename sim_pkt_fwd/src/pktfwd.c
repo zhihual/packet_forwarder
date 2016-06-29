@@ -955,10 +955,10 @@ void thread_up(void) {
 	       p->crc=0;
 	       p->size = 26;
            p->payload[0] = 0x40; //UnconfirmedDataUp
-           p->payload[4] = 0x7;  // Dev Addr
-           p->payload[3] = 0xba;
-           p->payload[2] = 0x88;
-           p->payload[1] = 0x88;
+           p->payload[4] = 0x06;//0x7;  // Dev Addr
+           p->payload[3] = 0xd8;//0xba;
+           p->payload[2] = 0xeb;//0x88;
+           p->payload[1] = 0xbd;//0x88;
            p->payload[5] = 0; // Fctrl
            p->payload[6] = (uint8_t)k++;  //  Fcnt
            p->payload[7] = 0; // Fopt
