@@ -48,6 +48,7 @@ Maintainer: Sylvain Miermont
 #include "loragw_hal.h"
 #include "loragw_aux.h"
 
+
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE MACROS ------------------------------------------------------- */
 
@@ -579,6 +580,7 @@ static double difftimespec(struct timespec end, struct timespec beginning) {
 
 int main(void)
 {
+#if 0
 	struct sigaction sigact; /* SIGQUIT&SIGINT&SIGTERM signal handling */
 	int i; /* loop variable and temporary variable for return value */
 	
@@ -877,6 +879,12 @@ int main(void)
 	
 	MSG("INFO: Exiting packet forwarder program\n");
 	exit(EXIT_SUCCESS);
+#else
+
+    begintest();
+   
+
+#endif
 }
 
 /* -------------------------------------------------------------------------- */
