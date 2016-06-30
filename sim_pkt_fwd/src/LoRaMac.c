@@ -65,8 +65,8 @@ static uint8_t *LoRaMacAppKey;
  */
 static uint8_t LoRaMacNwkSKey[] =
 {
-    0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,
-    0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01
+ 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02,
+    0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02
 };
 
 /*!
@@ -74,8 +74,9 @@ static uint8_t LoRaMacNwkSKey[] =
  */
 static uint8_t LoRaMacAppSKey[] =
 {
-    0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02,
-    0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02
+   
+        0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,
+    0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01
 };
 
 /*!
@@ -117,12 +118,12 @@ static bool RepeaterSupport;
 /*!
  * Buffer containing the data to be sent or received.
  */
-static uint8_t LoRaMacBuffer[LORAMAC_PHY_MAXPAYLOAD];
+ uint8_t LoRaMacBuffer[LORAMAC_PHY_MAXPAYLOAD];
 
 /*!
  * Length of packet in LoRaMacBuffer
  */
-static uint16_t LoRaMacBufferPktLen = 0;
+ uint16_t LoRaMacBufferPktLen = 0;
 
 /*!
  * Buffer containing the upper layer data.
@@ -134,13 +135,13 @@ static uint8_t LoRaMacRxPayload[LORAMAC_PHY_MAXPAYLOAD];
  * LoRaMAC frame counter. Each time a packet is sent the counter is incremented.
  * Only the 16 LSB bits are sent
  */
-static uint32_t UpLinkCounter = 1;
+static uint32_t UpLinkCounter = 0;
 
 /*!
  * LoRaMAC frame counter. Each time a packet is received the counter is incremented.
  * Only the 16 LSB bits are received
  */
-static uint32_t DownLinkCounter = 1;
+static uint32_t DownLinkCounter = 0; 
 
 /*!
  * IsPacketCounterFixed enables the MIC field tests by fixing the
@@ -1263,11 +1264,11 @@ void begintest()
     fCtrl.Bits.AdrAckReq     = false;
     fCtrl.Bits.Adr           = 0;
   
-  
+    printf("Tx .. %d %d %d %d %d %d %d %d\n", payload[0],payload[1],payload[2],payload[3],payload[4],payload[5],payload[6],payload[7]);
     PrepareFrame(&macHdr, &fCtrl, fPort, payload, payloadsize);
-    printf("Tx Finish\n");
+    printf("Tx Finish %d %d %d %d %d %d %d %d\n", payload[0],payload[1],payload[2],payload[3],payload[4],payload[5],payload[6],payload[7]);
    
-    OnRadioRxDone(LoRaMacBuffer,LoRaMacBufferPktLen, 10, 8);
+   // OnRadioRxDone(LoRaMacBuffer,LoRaMacBufferPktLen, 10, 8);
     printf("Rx Finish\n");
 }
 
@@ -2585,6 +2586,7 @@ LoRaMacStatus_t PrepareFrame( LoRaMacHeader_t *macHdr, LoRaMacFrameCtrl_t *fCtrl
             LoRaMacBufferPktLen += LORAMAC_MFR_LEN;
 
             printf("Mic=0x%x\n", mic);
+            UpLinkCounter++;
 
             break;
         case FRAME_TYPE_PROPRIETARY:

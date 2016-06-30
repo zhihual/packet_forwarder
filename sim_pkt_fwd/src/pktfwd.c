@@ -580,7 +580,7 @@ static double difftimespec(struct timespec end, struct timespec beginning) {
 
 int main(void)
 {
-#if 0
+#if 1
 	struct sigaction sigact; /* SIGQUIT&SIGINT&SIGTERM signal handling */
 	int i; /* loop variable and temporary variable for return value */
 	
@@ -890,6 +890,14 @@ int main(void)
 /* -------------------------------------------------------------------------- */
 /* --- THREAD 1: RECEIVING PACKETS AND FORWARDING THEM ---------------------- */
 
+extern uint8_t LoRaMacBuffer[255];
+
+/*!
+ * Length of packet in LoRaMacBuffer
+ */
+extern uint16_t LoRaMacBufferPktLen;
+
+
 void thread_up(void) {
 	int i, j; /* loop variables */
     int k =0;
@@ -961,6 +969,8 @@ void thread_up(void) {
 	       p->snr_min=1;
 	       p->snr_max=10;
 	       p->crc=0;
+           
+#if 0
 	       p->size = 26;
            p->payload[0] = 0x40; //UnconfirmedDataUp
            p->payload[4] = 0x06;//0x7;  // Dev Addr
@@ -977,7 +987,12 @@ void thread_up(void) {
            p->payload[12] = 0;
            p->payload[13] = 0;
            p->payload[14] = 1; // DIR
-           
+#endif     
+           begintest();
+           p->size = LoRaMacBufferPktLen;
+           memcpy(p->payload, LoRaMacBuffer,LoRaMacBufferPktLen);
+
+
 		}else{
 		   nb_pkt = 0;
 		}
