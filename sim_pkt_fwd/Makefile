@@ -6,7 +6,7 @@ APP_NAME := pktfwd
 
 LGW_PATH ?= ../../lora_gateway/libloragw
 ARCH ?=
-CROSS_COMPILE ?=
+CROSS_COMPILE ?= mips-openwrt-linux-
 
 OBJDIR = obj
 INCLUDES = $(wildcard inc/*.h)
@@ -22,7 +22,7 @@ RELEASE_VERSION := `cat ../VERSION`
 CC := $(CROSS_COMPILE)gcc
 AR := $(CROSS_COMPILE)ar
 
-CFLAGS := -Wall -Wextra -std=c99 -g -Iinc -I.
+CFLAGS := -Wall -Wextra -std=c99 -g -Iinc -I. -I/home/share/lora/OpenWrt-Toolchain-ar71xx-for-mips_34kc-gcc-4.8-linaro_uClibc-0.9.33.2/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/include
 VFLAG := -D VERSION_STRING="\"$(RELEASE_VERSION)\""
 
 ### Constants for Lora concentrator HAL library
@@ -37,7 +37,7 @@ LGW_INC += $(LGW_PATH)/inc/loragw_hal.h
 
 ### Linking options
 
-LIBS := -lloragw -lrt -lpthread
+LIBS := -lloragw -lrt -lpthread -ldl
 
 ### General build targets
 
