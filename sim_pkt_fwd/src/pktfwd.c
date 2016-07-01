@@ -74,7 +74,7 @@ Maintainer: Sylvain Miermont
 #define PULL_TIMEOUT_MS		200
 #define FETCH_SLEEP_MS		10	/* nb of ms waited when a fetch return no packets */
 
-#define	PROTOCOL_VERSION	1
+#define	PROTOCOL_VERSION	2
 
 #define PKT_PUSH_DATA	0
 #define PKT_PUSH_ACK	1
@@ -151,6 +151,15 @@ static uint32_t meas_nb_tx_fail = 0; /* count packets were TX failed for other r
 
 /* auto-quit function */
 static uint32_t autoquit_threshold = 0; /* enable auto-quit after a number of non-acknowledged PULL_DATA (0 = disabled)*/
+
+
+#define ACTION_NOTHING           0
+#define ACTION_SEND_JOINREQ      1
+#define ACTION_RECV_JOINRESP     2
+#define ACTION_SEND_UDATA        3
+#define ACTION_SEND_DATA         4
+#define ACTION_RECV_DATA         5
+#define ACTION_RECV_UDATA_ACK    6
 
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE FUNCTIONS DECLARATION ---------------------------------------- */
@@ -575,6 +584,8 @@ static double difftimespec(struct timespec end, struct timespec beginning) {
 	return x;
 }
 
+
+
 /* -------------------------------------------------------------------------- */
 /* --- MAIN FUNCTION -------------------------------------------------------- */
 
@@ -671,7 +682,7 @@ int main(void)
 	/* process some of the configuration variables */
 	net_mac_h = htonl((uint32_t)(0xFFFFFFFF & (lgwm>>32)));
 	net_mac_l = htonl((uint32_t)(0xFFFFFFFF &  lgwm  ));
-	MSG("MAIN net_mac_h=0x%x net_mac_l=0x%x\n",net_mac_h, net_mac_l);
+	MSG("MAIN gateway network address : mac_h=0x%x net_mac_l=0x%x\n",net_mac_h, net_mac_l);
 	
 	/* prepare hints to open network sockets */
 	memset(&hints, 0, sizeof hints);
@@ -684,6 +695,7 @@ int main(void)
 		MSG("ERROR: [up] getaddrinfo on address %s (PORT %s) returned %s\n", serv_addr, serv_port_up, gai_strerror(i));
 		exit(EXIT_FAILURE);
 	}
+
 	
 	/* try to open socket for upstream traffic */
 	for (q=result; q!=NULL; q=q->ai_next) {
@@ -754,7 +766,9 @@ int main(void)
 		MSG("ERROR: [main] failed to start the concentrator\n");
 		exit(EXIT_FAILURE);
 	}
-	
+
+    initLoraMac();
+
 	/* spawn threads to manage upstream and downstream */
 	i = pthread_create( &thrid_up, NULL, (void * (*)(void *))thread_up, NULL);
 	if (i != 0) {
@@ -927,6 +941,7 @@ void thread_up(void) {
 	struct timespec recv_time;
 	
 	uint8_t loopcount = 0;
+
 	
 	MSG("INFO thread_up running\n");
 	/* set upstream socket RX timeout */
@@ -939,23 +954,27 @@ void thread_up(void) {
     //memset(rxpkt, 0x5, NB_PKT_MAX*sizeof(struct lgw_pkt_rx_s));
     
 	/* pre-fill the data buffer with fixed fields */
-	buff_up[0] = 2;//PROTOCOL_VERSION;
+	buff_up[0] = PROTOCOL_VERSION;
 	buff_up[3] = PKT_PUSH_DATA;
 	*(uint32_t *)(buff_up + 4) = net_mac_h;
 	*(uint32_t *)(buff_up + 8) = net_mac_l;
+
+
 	
 	while (!exit_sig && !quit_sig) {
 	
 		/* fetch packets */
 		
 		pthread_mutex_lock(&mx_concent);
+
+
 		loopcount++;
 		// This is fake rx data from node. just simulate already connected with node.
 		if((loopcount%100)==0)
 		{
 		   nb_pkt = 1;
 		   p = &rxpkt[0];
-		   p->freq_hz=903000000;	
+		   p->freq_hz=903000000;
 	       p->if_chain=10;
 	       p->status=STAT_CRC_OK;
 	       p->count_us= 1;
@@ -969,37 +988,40 @@ void thread_up(void) {
 	       p->snr_min=1;
 	       p->snr_max=10;
 	       p->crc=0;
-           
-#if 0
-	       p->size = 26;
-           p->payload[0] = 0x40; //UnconfirmedDataUp
-           p->payload[4] = 0x06;//0x7;  // Dev Addr
-           p->payload[3] = 0xd8;//0xba;
-           p->payload[2] = 0xeb;//0x88;
-           p->payload[1] = 0xbd;//0x88;
-           p->payload[5] = 0; // Fctrl
-           p->payload[6] = (uint8_t)k++;  //  Fcnt
-           p->payload[7] = 0; // Fopt
-	       p->payload[8] = 1; // Fport
-           p->payload[9] = 1; // payload format, direction
-           p->payload[10] = 0;
-           p->payload[11] = 0;
-           p->payload[12] = 0;
-           p->payload[13] = 0;
-           p->payload[14] = 1; // DIR
-#endif     
+
+#if 0           
            begintest();
            p->size = LoRaMacBufferPktLen;
            memcpy(p->payload, LoRaMacBuffer,LoRaMacBufferPktLen);
+#else
 
+           if(IsLinkUp() == false)
+           {
+             if (RunStateMachine(ACTION_SEND_JOINREQ,p->payload, &p->size) != 0)
+             {
+               nb_pkt = 0;
+               //printf("StateMachine skip send\n");
+             }
+           }
+           else
+           {
+             if (RunStateMachine(ACTION_SEND_UDATA, p->payload, &p->size) !=0)
+             {
+               
+               nb_pkt = 0;
+               //printf("do not send out\n");
+             
 
+             }
+           }
+
+#endif
 		}else{
 		   nb_pkt = 0;
 		}
 	       
-		
+		// This should be real code, just get packet from hw. actually from client side.
 		// nb_pkt = lgw_receive(NB_PKT_MAX, rxpkt);
-		
 		pthread_mutex_unlock(&mx_concent);
 		if (nb_pkt == LGW_HAL_ERROR) {
 			MSG("ERROR: [up] failed packet fetch, exiting\n");
@@ -1300,6 +1322,7 @@ void thread_up(void) {
 				continue;
 			} else {
 				MSG("INFO: [up] PUSH_ACK received in %i ms\n", (int)(1000 * difftimespec(recv_time, send_time)));
+				RunStateMachine(ACTION_RECV_UDATA_ACK, NULL, 0);
 				meas_up_ack_rcv += 1;
 				break;
 			}
@@ -1353,7 +1376,7 @@ void thread_down(void) {
 	}
 	
 	/* pre-fill the pull request buffer with fixed fields */
-	buff_req[0] = 2;//PROTOCOL_VERSION;
+	buff_req[0] = PROTOCOL_VERSION;
 	buff_req[3] = PKT_PULL_DATA;
 	*(uint32_t *)(buff_req + 4) = net_mac_h;
 	*(uint32_t *)(buff_req + 8) = net_mac_l;
@@ -1372,7 +1395,7 @@ void thread_down(void) {
 		token_l = (uint8_t)rand(); /* random token */
 		buff_req[1] = token_h;
 		buff_req[2] = token_l;
-		MSG("thread_down token_h=%d, token_l=%d\n", token_h, token_l);
+		MSG("[down]Send PKT_PULL_DATA\n");
 		/* send PULL request and record time */
 		send(sock_down, (void *)buff_req, sizeof buff_req, 0);
 		clock_gettime(CLOCK_MONOTONIC, &send_time);
@@ -1397,7 +1420,7 @@ void thread_down(void) {
 				//MSG("WARNING: [down] recv returned %s\n", strerror(errno)); /* too verbose */
 				continue;
 			}
-			
+			MSG("[down] Got Server Respose Data\n");
 			/* if the datagram does not respect protocol, just ignore it */
 			if ((msg_len < 4) || (buff_down[0] != PROTOCOL_VERSION) || ((buff_down[3] != PKT_PULL_RESP) && (buff_down[3] != PKT_PULL_ACK))) {
 				MSG("WARNING: [down] ignoring invalid packet\n");
@@ -1415,7 +1438,7 @@ void thread_down(void) {
 						pthread_mutex_lock(&mx_meas_dw);
 						meas_dw_ack_rcv += 1;
 						pthread_mutex_unlock(&mx_meas_dw);
-						MSG("INFO: [down] PULL_ACK received in %i ms\n", (int)(1000 * difftimespec(recv_time, send_time)));
+						MSG("INFO: [down] PKT_PULL_DATA_ACK received in %i ms\n", (int)(1000 * difftimespec(recv_time, send_time)));
 					}
 				} else { /* out-of-sync token */
 					MSG("INFO: [down] received out-of-sync ACK\n");
@@ -1658,8 +1681,17 @@ void thread_down(void) {
 			
 			/* transfer data and metadata to the concentrator, and schedule TX */
 			pthread_mutex_lock(&mx_concent); /* may have to wait for a fetch to finish */
+
+            // here to handle rx packet.
+
 			//i = lgw_send(txpkt);
-			i = 0;
+			//i = 0;
+            if ( RunStateMachine(ACTION_RECV_DATA, txpkt.payload, &txpkt.size) == 0)
+            {
+               printf("rece data finished\n"); 
+            }
+
+
 			pthread_mutex_unlock(&mx_concent); /* free concentrator ASAP */
 			if (i == LGW_HAL_ERROR) {
 				meas_nb_tx_fail += 1;

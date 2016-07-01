@@ -35,6 +35,7 @@ Maintainer: Miguel Luis ( Semtech ), Gregory Cristian ( Semtech ) and Daniel Jä
 #include "radio.h"
 #include "utilities.h"
 
+
 /*!
  * Maximum PHY layer payload size
  */
@@ -994,7 +995,7 @@ void OnRadioRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr )
             break;
         case FRAME_TYPE_DATA_CONFIRMED_DOWN:
         case FRAME_TYPE_DATA_UNCONFIRMED_DOWN:
-        case FRAME_TYPE_DATA_UNCONFIRMED_UP:
+        //case FRAME_TYPE_DATA_UNCONFIRMED_UP:
             {
                 
                 printf("RX1\n");
@@ -1054,8 +1055,8 @@ void OnRadioRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr )
                 if( sequenceCounterDiff < ( 1 << 15 ) )
                 {
                     downLinkCounter += sequenceCounterDiff;
-                    //LoRaMacComputeMic( payload, size - LORAMAC_MFR_LEN, nwkSKey, address, DOWN_LINK, downLinkCounter, &mic );
-                    LoRaMacComputeMic( payload, size - LORAMAC_MFR_LEN, nwkSKey, address, UP_LINK, downLinkCounter, &mic );
+                    LoRaMacComputeMic( payload, size - LORAMAC_MFR_LEN, nwkSKey, address, DOWN_LINK, downLinkCounter, &mic );
+                    //LoRaMacComputeMic( payload, size - LORAMAC_MFR_LEN, nwkSKey, address, UP_LINK, downLinkCounter, &mic );
                     printf("micA=%x\n", mic);
                     if( micRx == mic )
                     {
@@ -1181,7 +1182,7 @@ void OnRadioRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr )
                                                    frameLen,
                                                    appSKey,
                                                    address,
-                                                  UP_LINK,// DOWN_LINK,
+                                                   DOWN_LINK,
                                                    downLinkCounter,
                                                    LoRaMacRxPayload );
 
@@ -1233,6 +1234,8 @@ void OnRadioRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr )
 }
 
 
+
+
 void begintest()
 {
   // This is the mac tx/rx testing code.
@@ -1270,6 +1273,240 @@ void begintest()
    
    // OnRadioRxDone(LoRaMacBuffer,LoRaMacBufferPktLen, 10, 8);
     printf("Rx Finish\n");
+}
+
+typedef enum LoraClientState
+{
+    LoraC_DISCONNECT_State  = 0,
+    LoraC_WaitJoinResq_State =1,
+    LoraC_JoinOk_State = 2,
+    LoraC_JoinFail_State = 3,
+    LoraC_Timeou_State =4,
+    LoraC_WaitUDataAck_State = 5,
+    LoraC_Invalid_State = 0xFF,
+}LoraClientState_t;
+
+#define ACTION_NOTHING           0
+#define ACTION_SEND_JOINREQ      1
+#define ACTION_RECV_JOINRESP     2
+#define ACTION_SEND_UDATA        3
+#define ACTION_SEND_DATA         4
+#define ACTION_RECV_DATA         5
+#define ACTION_RECV_UDATA_ACK    6
+/*!
+ * Device IEEE EUI
+ */
+static uint8_t DevEui[] = 
+{
+    0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08
+};
+
+/*!
+ * Application IEEE EUI
+ */
+static uint8_t AppEui[] = 
+{
+    0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00 
+};
+
+/*!
+ * AES encryption/decryption cipher application key
+ */
+static uint8_t AppKey[] = 
+{
+ 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16
+};
+
+
+LoraClientState_t LoraC_CurState = LoraC_DISCONNECT_State;
+
+
+void myMacMcpsConfirm( McpsConfirm_t *McpsConfirm )
+{
+   printf("myMacMcpsConfirm \n");
+}
+
+void myMacMcpsIndication( McpsIndication_t *McpsIndication )
+{
+   printf("myMacMcpsIndication \n");
+}
+
+void myMacMlmeConfirm( MlmeConfirm_t *MlmeConfirm )
+{
+   printf("myMacMlmeConfirm \n");
+}
+
+uint8_t myGetBatteryLevel( void )
+{
+   printf("myGetBatteryLevel \n");
+   return 100;
+}
+
+void initLoraMac()
+{
+    printf("Init LoraCLientMac\n");
+    LoRaMacPrimitives_t primitives;
+    LoRaMacCallback_t callbacks;
+
+    primitives.MacMcpsConfirm = myMacMcpsConfirm;
+    primitives.MacMcpsIndication = myMacMcpsIndication;
+    primitives.MacMlmeConfirm = myMacMlmeConfirm;
+
+    callbacks.GetBatteryLevel = myGetBatteryLevel;
+
+    
+    if (LoRaMacInitialization(&primitives, &callbacks) != 0)
+	{
+        printf("LoRaMacInitialization Failed\n");
+	}
+	
+}
+
+bool IsLinkUp()
+{
+   return IsLoRaMacNetworkJoined;
+}
+
+uint8_t dataIndex = 0;
+
+int8_t RunStateMachine(uint8_t action, uint8_t* pAppData, uint8_t *pSize )
+{
+    int8_t ret = 0;
+    LoraClientState_t nextState;
+    LoraClientState_t curState;
+
+    MlmeReq_t mlmeReq;
+    McpsReq_t mcpsReq;
+
+    uint8_t payload[9]={'l','o','r','a','t','e','s','t',0};
+    uint8_t payloadsize = 9;
+
+    
+    curState = LoraC_CurState;
+    nextState = curState;
+ 
+    switch(curState){
+    
+      case LoraC_DISCONNECT_State:
+
+           if (action == ACTION_SEND_JOINREQ )
+           {
+               printf("IDLE(IDSC), pack and send JoinReq\n");
+               IsLoRaMacNetworkJoined = false;
+               dataIndex = 0;
+
+               mlmeReq.Type = MLME_JOIN;
+               mlmeReq.Req.Join.DevEui = DevEui;
+               mlmeReq.Req.Join.AppEui = AppEui;
+               mlmeReq.Req.Join.AppKey = AppKey;
+               if( LoRaMacMlmeRequest( &mlmeReq ) == LORAMAC_STATUS_OK )
+               {
+                 printf("Service started successfully. Waiting for the Mlme-Confirm event\n");
+                 nextState = LoraC_WaitJoinResq_State;
+                 memcpy(pAppData, LoRaMacBuffer,LoRaMacBufferPktLen);
+                 *pSize = LoRaMacBufferPktLen;
+                 ret = 0;
+               }else{
+                 printf("Send Join Request Failed\n");
+                 nextState = LoraC_DISCONNECT_State;
+                 ret = -1;
+               }
+           }
+           break;
+      case LoraC_WaitJoinResq_State:
+           if (action == ACTION_RECV_JOINRESP)
+           {
+             printf("Received JoinResp Frame. Succss Join\n");
+             nextState = LoraC_JoinOk_State;
+             ret = 0;
+             IsLoRaMacNetworkJoined = true;
+           }
+
+           if (action == ACTION_RECV_DATA)
+           {
+             printf("recv data in LoraC_WaitJoinResq_State State\n");
+             OnRadioRxDone(pAppData, *pSize, 10, 20);
+
+             if (MlmeConfirm.Status == LORAMAC_EVENT_INFO_STATUS_OK)
+             {
+                printf("Join ok\n");
+                nextState = LoraC_JoinOk_State;
+                ret = 0;
+                IsLoRaMacNetworkJoined = true;
+             }
+            }
+
+            if (action == ACTION_SEND_JOINREQ)
+            {
+               ret = -2;
+               nextState = LoraC_WaitJoinResq_State;
+            }
+           
+           break;
+
+      case LoraC_JoinOk_State:
+           if (action == ACTION_SEND_UDATA)
+           {
+               payload[8] = dataIndex++;
+
+               mcpsReq.Type = MCPS_UNCONFIRMED;
+               mcpsReq.Req.Unconfirmed.fPort = 1;
+               mcpsReq.Req.Unconfirmed.fBuffer = payload;
+               mcpsReq.Req.Unconfirmed.fBufferSize = 9;
+               printf("Sending UData in LoraC_JoinOk_State\n");
+               if( LoRaMacMcpsRequest( &mcpsReq ) == LORAMAC_STATUS_OK )
+               {
+                  printf("Prepare up data success\n");
+                  *pSize = LoRaMacBufferPktLen;
+                  memcpy(pAppData, LoRaMacBuffer,LoRaMacBufferPktLen);
+                  nextState = LoraC_WaitUDataAck_State;
+                  ret = 0;
+               }
+               else
+               {
+                  nextState = LoraC_JoinOk_State;
+                  printf("Prepare UData data fail\n");
+                  ret = -1;
+               }
+           }
+           if (action == ACTION_RECV_DATA)
+           {
+              printf("receving data in JoinOK State\n");
+              OnRadioRxDone(pAppData, *pSize, 10, 20);
+              nextState = LoraC_JoinOk_State;
+              ret = 0;
+           }
+
+
+           break;
+       case LoraC_WaitUDataAck_State:
+           if (action == ACTION_RECV_DATA)
+           {
+              printf("receving data in LoraC_WaitUDataAck_State\n");
+              OnRadioRxDone(pAppData, *pSize, 10, 20);
+              nextState = LoraC_WaitUDataAck_State;
+              ret = 0;
+           }
+           else if( action == ACTION_RECV_UDATA_ACK)
+           {
+              printf("receving PUSH ACK in LoraC_WaitUDataAck_State\n");
+              nextState = LoraC_JoinOk_State;
+              ret = 0;
+              
+           }
+           else
+           {
+              nextState = LoraC_WaitUDataAck_State;
+              ret = -2;
+           }
+
+           break;
+
+    }
+
+    LoraC_CurState = nextState;
+
+    return ret;
 }
 
 
@@ -2400,7 +2637,7 @@ LoRaMacStatus_t Send( LoRaMacHeader_t *macHdr, uint8_t fPort, void *fBuffer, uin
     McpsConfirm.AckReceived = false;
     McpsConfirm.UpLinkCounter = UpLinkCounter;
 
-    status = ScheduleTx( );
+    //status = ScheduleTx( );
 
     return status;
 }
@@ -2459,6 +2696,8 @@ LoRaMacStatus_t PrepareFrame( LoRaMacHeader_t *macHdr, LoRaMacFrameCtrl_t *fCtrl
     uint8_t payloadSize = fBufferSize;
     uint8_t framePort = fPort;
 
+    uint32_t Rand1, Rand2;
+
     LoRaMacBufferPktLen = 0;
 
     NodeAckRequested = false;
@@ -2483,8 +2722,10 @@ LoRaMacStatus_t PrepareFrame( LoRaMacHeader_t *macHdr, LoRaMacFrameCtrl_t *fCtrl
             memcpyr( LoRaMacBuffer + LoRaMacBufferPktLen, LoRaMacDevEui, 8 );
             LoRaMacBufferPktLen += 8;
 
-           // LoRaMacDevNonce = Radio.Random( );
-            LoRaMacDevNonce = 1;
+            Rand1 = rand();
+            Rand2 = rand();
+            //LoRaMacDevNonce = Radio.Random( );
+            LoRaMacDevNonce = (uint16_t)(Rand1*Rand2);
 
             LoRaMacBuffer[LoRaMacBufferPktLen++] = LoRaMacDevNonce & 0xFF;
             LoRaMacBuffer[LoRaMacBufferPktLen++] = ( LoRaMacDevNonce >> 8 ) & 0xFF;
@@ -2501,7 +2742,7 @@ LoRaMacStatus_t PrepareFrame( LoRaMacHeader_t *macHdr, LoRaMacFrameCtrl_t *fCtrl
             NodeAckRequested = true;
             //Intentional falltrough
         case FRAME_TYPE_DATA_UNCONFIRMED_UP:
-            printf("T1\n");
+            printf("Prepare FRAME_TYPE_DATA_UNCONFIRMED_UP\n");
             if( IsLoRaMacNetworkJoined == false )
             {
                 

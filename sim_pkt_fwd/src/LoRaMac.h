@@ -149,6 +149,10 @@
  */
 #define LORA_MAC_PUBLIC_SYNCWORD                    0x34
 
+
+
+
+
  /*!
  * LoRaMac internal state
  */
