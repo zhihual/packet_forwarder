@@ -48,6 +48,8 @@ Maintainer: Sylvain Miermont
 #include "loragw_hal.h"
 #include "loragw_aux.h"
 
+#include "ar9331drv.h"
+
 
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE MACROS ------------------------------------------------------- */
@@ -759,7 +761,9 @@ int main(void)
 	
 	/* starting the concentrator */
 	//i = lgw_start();
-	i = LGW_HAL_SUCCESS; // zliu fake connect with HAL layer
+	i = AR9331Drv_Open();
+    
+	//i = LGW_HAL_SUCCESS; // zliu fake connect with HAL layer
 	if (i == LGW_HAL_SUCCESS) {
 		MSG("INFO: [main] concentrator started, packet can now be received\n");
 	} else {
@@ -883,7 +887,8 @@ int main(void)
 		shutdown(sock_up, SHUT_RDWR);
 		shutdown(sock_down, SHUT_RDWR);
 		/* stop the hardware */
-		i = lgw_stop();
+		//i = lgw_stop();
+		i = AR9331Drv_Close();
 		if (i == LGW_HAL_SUCCESS) {
 			MSG("INFO: concentrator stopped successfully\n");
 		} else {
@@ -988,12 +993,14 @@ void thread_up(void) {
 	       p->snr_min=1;
 	       p->snr_max=10;
 	       p->crc=0;
+      
 
 #if 0           
            begintest();
            p->size = LoRaMacBufferPktLen;
            memcpy(p->payload, LoRaMacBuffer,LoRaMacBufferPktLen);
-#else
+#endif           
+#if 0
 
            if(IsLinkUp() == false)
            {
@@ -1022,6 +1029,9 @@ void thread_up(void) {
 	       
 		// This should be real code, just get packet from hw. actually from client side.
 		// nb_pkt = lgw_receive(NB_PKT_MAX, rxpkt);
+
+        nb_pkt = AR9331Drv_RecvPkt(NB_PKT_MAX, rxpkt);
+
 		pthread_mutex_unlock(&mx_concent);
 		if (nb_pkt == LGW_HAL_ERROR) {
 			MSG("ERROR: [up] failed packet fetch, exiting\n");
@@ -1686,11 +1696,13 @@ void thread_down(void) {
 
 			//i = lgw_send(txpkt);
 			//i = 0;
+			i = AR9331Drv_SendPkt(txpkt);
+#if 0            
             if ( RunStateMachine(ACTION_RECV_DATA, txpkt.payload, &txpkt.size) == 0)
             {
                printf("rece data finished\n"); 
             }
-
+#endif
 
 			pthread_mutex_unlock(&mx_concent); /* free concentrator ASAP */
 			if (i == LGW_HAL_ERROR) {
