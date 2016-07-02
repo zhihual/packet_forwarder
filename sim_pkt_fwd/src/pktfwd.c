@@ -1332,7 +1332,7 @@ void thread_up(void) {
 				continue;
 			} else {
 				MSG("INFO: [up] PUSH_ACK received in %i ms\n", (int)(1000 * difftimespec(recv_time, send_time)));
-				RunStateMachine(ACTION_RECV_UDATA_ACK, NULL, 0);
+				//RunStateMachine(ACTION_RECV_UDATA_ACK, NULL, 0);
 				meas_up_ack_rcv += 1;
 				break;
 			}
