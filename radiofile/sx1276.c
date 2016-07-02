@@ -35,25 +35,25 @@ static unsigned char SpiInOut(unsigned char data)
 	{				
 		if (data & 0x80)
 			//MOSI = 1;
-                        gpio_set_value(SX1276_MOSI_GPIO, 1); 
+            gpio_set_value(SX1276_MOSI_GPIO, 1); 
 		else
 			//MOSI = 0;
-                        gpio_set_value(SX1276_MOSI_GPIO, 0); 
+            gpio_set_value(SX1276_MOSI_GPIO, 0); 
 			
 		data <<= 1;
 		//SCK = 1;
-                gpio_set_value(SX1276_SCK_GPIO, 1); 
-                //mdelay(1);
+        gpio_set_value(SX1276_SCK_GPIO, 1); 
+        //mdelay(1);
 		
 		//if (MISO)
-                if(gpio_get_value(SX1276_MISO_GPIO))
+        if(gpio_get_value(SX1276_MISO_GPIO))
 			data |= 0x01;
 		else
 			data &= 0xfe;
 			
 		//SCK = 0;
-                gpio_set_value(SX1276_SCK_GPIO, 0); 
-                //mdelay(1);
+        gpio_set_value(SX1276_SCK_GPIO, 0); 
+        //mdelay(1);
 	}	
 	return (data);	
 }
@@ -69,14 +69,14 @@ void SPIWriteReg(unsigned char addr, unsigned char value)
         gpio_set_value(SX1276_NSS_GPIO, 0); 
 
 	SpiInOut(addr);		// write register address
-	SpiInOut(value);		// write register value
+	SpiInOut(value);	// write register value
 
 	//SCK=0;
-        gpio_set_value(SX1276_SCK_GPIO, 0); 
+    gpio_set_value(SX1276_SCK_GPIO, 0); 
 	//MOSI=1;
-        gpio_set_value(SX1276_MOSI_GPIO, 1); 
+    gpio_set_value(SX1276_MOSI_GPIO, 1); 
 	//nCS=1;
-        gpio_set_value(SX1276_NSS_GPIO, 1); 
+    gpio_set_value(SX1276_NSS_GPIO, 1); 
     
 }
 
@@ -86,17 +86,17 @@ static unsigned char SPIReadReg(unsigned char addr)
 	unsigned char data; 
 	
 	//MOSI=0;
-        gpio_set_value(SX1276_MOSI_GPIO, 0); 
+    gpio_set_value(SX1276_MOSI_GPIO, 0); 
 	//SCK=0;
-        gpio_set_value(SX1276_SCK_GPIO, 0); 
+    gpio_set_value(SX1276_SCK_GPIO, 0); 
 	
 	//nCS=0;
-        gpio_set_value(SX1276_NSS_GPIO, 0); 
+    gpio_set_value(SX1276_NSS_GPIO, 0); 
     
 	SpiInOut(addr);		// write register address
 	data = SpiInOut(0);		// read register value
 	//nCS=1;
-        gpio_set_value(SX1276_NSS_GPIO, 1); 
+    gpio_set_value(SX1276_NSS_GPIO, 1); 
 	return(data);
 }
 
@@ -221,7 +221,7 @@ void reset_sx1276(void)
 	//rx_en=0;
 
 	//RF_RST=0;
-        gpio_set_value(SX1276_NRESET_GPIO,0);
+    gpio_set_value(SX1276_NRESET_GPIO,0);
 	//delay_x10ms(1);		// delay 10ms
 	msleep(10);
 	//RF_RST=1;
@@ -280,26 +280,26 @@ static uint8 calcTimeOut(uint8 datasize)
 
 static void waitSentDone(uint8 datasize)
 {
-        int ret;
-        uint8 timeout = calcTimeOut(datasize);
+    int ret;
+    uint8 timeout = calcTimeOut(datasize);
         
-        //recordStartTime();
+    //recordStartTime();
 
 	ret = wait_event_timeout(txdone_wait_queue,(1 == txSentDone),timeout);  //
 	if((1 == ret) || (0 == ret))
 	{
-                printk("*");
+        printk("wiat tx timeout ret=%d\n", ret);
 		//printk("%s, timeout %dms, keep sending\n",__func__,TX_TIME_OUT*10);
-                SPIWriteReg(LR_RegIrqFlags,0xff);	// clear interrupt
-                //SPIWriteReg(LR_RegOpMode,0x09);		// enter Standby mode
-                sx1276LoRaSetOpMode(RFLR_OPMODE_STANDBY);   // enter Standby mode
-                reset_sx1276();						// reset RF
-                SX1276_Config();  			// initialize RF module
+        SPIWriteReg(LR_RegIrqFlags,0xff);	// clear interrupt
+        //SPIWriteReg(LR_RegOpMode,0x09);		// enter Standby mode
+        sx1276LoRaSetOpMode(RFLR_OPMODE_STANDBY);   // enter Standby mode
+        reset_sx1276();						// reset RF
+        SX1276_Config();  			// initialize RF module
 	}
 	
 	txSentDone = 0;
     
-        //recordEndTime(1);
+    //recordEndTime(1);
 	return;
 }
 
@@ -320,7 +320,7 @@ static void sx1276_tx(uint8 *txbuf, unsigned int length)
 
 	addr = SPIReadReg(LR_RegFifoTxBaseAddr);		// read TxBaseAddr      
 	addr =0x0;
-        SPIWriteReg(LR_RegFifoTxBaseAddr,addr);	
+    SPIWriteReg(LR_RegFifoTxBaseAddr,addr);	
 	//printk("LR_RegFifoTxBaseAddr = 0x%02x\n",addr);
 
 	SPIWriteReg(LR_RegFifoAddrPtr,addr);			// TxBaseAddr->FifoAddrPtr          
@@ -329,7 +329,7 @@ static void sx1276_tx(uint8 *txbuf, unsigned int length)
 	//SPIWriteReg(LR_RegOpMode,0x0b);					// enter tx mode
 	sx1276LoRaSetOpMode(RFLR_OPMODE_TRANSMITTER);                          // enter tx mode
 
-        waitSentDone(length);
+    waitSentDone(length);
         
 	//SPIWriteReg(LR_RegOpMode,0x09);  			// enter standby mode
 	sx1276LoRaSetOpMode(RFLR_OPMODE_STANDBY);    // enter standby mode
@@ -338,19 +338,20 @@ static void sx1276_tx(uint8 *txbuf, unsigned int length)
 
 void sx1276_Send_Packet(uint8 *txbuf, unsigned int length)
 {
-        int i;
-        
 #if 0
-        printk("------------------buff_len(%d)-----------------\n",length);
-        for(i=0;i<length;i++)
-        {
-            printk("%02d\t",txbuf[i]);
-            if((i+1)%8 == 0) printk("\n");
-        }
-        printk("\n");
-        printk("---------------------------------------------\n");
+     int i;
+        
+
+     printk("------------------buff_len(%d)-----------------\n",length);
+     for(i=0;i<length;i++)
+     {
+       printk("%02d\t",txbuf[i]);
+       if((i+1)%8 == 0) printk("\n");
+     }
+     printk("\n");
+     printk("---------------------------------------------\n");
 #endif
-        sx1276_tx(txbuf,length);
+     sx1276_tx(txbuf,length);
 
 }
 
@@ -359,8 +360,8 @@ void sx1276_Send_Packet(uint8 *txbuf, unsigned int length)
 void rx_init(void)
 {
 	unsigned char addr; 
-        uint8 RegDioMapping1;
-        uint8 RegIrqFlagsMask;
+    uint8 RegDioMapping1;
+    uint8 RegIrqFlagsMask;
 	
 	//tx_en=0;
 	//rx_en=1;						// open rx antenna switch
@@ -368,41 +369,41 @@ void rx_init(void)
 	//Flag.is_tx = 0;
 	    
 	//SPIWriteReg(REG_LR_DIOMAPPING1,0x01);			//DIO0=00, DIO1=00, DIO2=00, DIO3=01  DIO0=00--RXDONE
-	                                        // RxDone                   RxTimeout                   FhssChangeChannel           CadDone
-        RegDioMapping1 = RFLR_DIOMAPPING1_DIO0_00 | RFLR_DIOMAPPING1_DIO1_00 | RFLR_DIOMAPPING1_DIO2_00 | RFLR_DIOMAPPING1_DIO3_00;
-        SPIWriteReg(REG_LR_DIOMAPPING1,RegDioMapping1);
+	// RxDone                   RxTimeout                   FhssChangeChannel           CadDone
+    RegDioMapping1 = RFLR_DIOMAPPING1_DIO0_00 | RFLR_DIOMAPPING1_DIO1_00 | RFLR_DIOMAPPING1_DIO2_00 | RFLR_DIOMAPPING1_DIO3_00;
+    SPIWriteReg(REG_LR_DIOMAPPING1,RegDioMapping1);
 	  
 	//SPIWriteReg(LR_RegIrqFlagsMask,0x3f);			// enable rxdone and rxtimeout
 
-        RegIrqFlagsMask = //RFLR_IRQFLAGS_RXTIMEOUT |
-                                    //RFLR_IRQFLAGS_RXDONE |
-                                    RFLR_IRQFLAGS_PAYLOADCRCERROR |
-                                    RFLR_IRQFLAGS_VALIDHEADER |
-                                    RFLR_IRQFLAGS_TXDONE |
-                                    RFLR_IRQFLAGS_CADDONE |
-                                    RFLR_IRQFLAGS_FHSSCHANGEDCHANNEL; // |
-                                    RFLR_IRQFLAGS_CADDETECTED;
+    RegIrqFlagsMask = //RFLR_IRQFLAGS_RXTIMEOUT |
+                      //RFLR_IRQFLAGS_RXDONE |
+                      RFLR_IRQFLAGS_PAYLOADCRCERROR |
+                      RFLR_IRQFLAGS_VALIDHEADER |
+                      RFLR_IRQFLAGS_TXDONE |
+                      RFLR_IRQFLAGS_CADDONE |
+                      RFLR_IRQFLAGS_FHSSCHANGEDCHANNEL; // |
+                      RFLR_IRQFLAGS_CADDETECTED;
                                     
-        SPIWriteReg( LR_RegIrqFlagsMask, RegIrqFlagsMask );
+    SPIWriteReg( LR_RegIrqFlagsMask, RegIrqFlagsMask );
 	SPIWriteReg(LR_RegIrqFlags,0xff);			// clear interrupt
 
-	addr = SPIReadReg(LR_RegFifoRxBaseAddr);		// read RxBaseAddr
+	addr = SPIReadReg(LR_RegFifoRxBaseAddr);	// read RxBaseAddr
 	addr = 0x0;
-        SPIWriteReg(LR_RegFifoRxBaseAddr,addr);
+    SPIWriteReg(LR_RegFifoRxBaseAddr,addr);
 	//printk("LR_RegFifoRxBaseAddr = 0x%02x\n",addr);
-	SPIWriteReg(LR_RegFifoAddrPtr,addr);			// RxBaseAddr->FifoAddrPtr
-	//SPIWriteReg(LR_RegOpMode,0x0d);				// enter rx continuous mode
-	sx1276LoRaSetOpMode(RFLR_OPMODE_RECEIVER);				// enter rx continuous mode
+	SPIWriteReg(LR_RegFifoAddrPtr,addr);		// RxBaseAddr->FifoAddrPtr
+	//SPIWriteReg(LR_RegOpMode,0x0d);			// enter rx continuous mode
+	sx1276LoRaSetOpMode(RFLR_OPMODE_RECEIVER);	// enter rx continuous mode
 }
 
 
 
 uint8 sx1276_test()
 {
-        uint8 temp;
-        int i;
-        temp=SPIReadReg(REG_LR_VERSION);
-        printk("REG_LR_VERSION = 0x%02x\n",temp);
+   uint8 temp;
+   int i;
+   temp=SPIReadReg(REG_LR_VERSION);
+   printk("REG_LR_VERSION = 0x%02x\n",temp);
 /*
         SPIWriteReg(REG_LR_DIOMAPPING1,0x55);
         temp=SPIReadReg(REG_LR_DIOMAPPING1);
@@ -432,7 +433,7 @@ void SX1276_Config(void)
 	SPIWriteReg(REG_LR_TCXO,0x09);		// external Crystal
 	SPIWriteReg(LR_RegOpMode,0x88);		// lora mode
 
-	SPIWriteReg(LR_RegFrMsb,0x7A);         // 0x75 -> 470MHz   0x6c->434MHz, 0x7A -> 490MHz
+	SPIWriteReg(LR_RegFrMsb,0x7A);      // 0x75 -> 470MHz   0x6c->434MHz, 0x7A -> 490MHz
 	SPIWriteReg(LR_RegFrMid,0x80);
 	SPIWriteReg(LR_RegFrLsb,0x00);		// frequency：434Mhz					 
 
@@ -454,8 +455,8 @@ void SX1276_Config(void)
 	SPIWriteReg(LR_RegHopPeriod,0x00);      // no hopping
 
 	SPIWriteReg(REG_LR_DIOMAPPING2,0x01);   // DIO5=ModeReady,DIO4=CadDetected
-	//SPIWriteReg(LR_RegOpMode,0x09);         // standby mode
-	sx1276LoRaSetOpMode(RFLR_OPMODE_STANDBY);         // standby mode
+	//SPIWriteReg(LR_RegOpMode,0x09);       // standby mode
+	sx1276LoRaSetOpMode(RFLR_OPMODE_STANDBY); // standby mode
 }
 
 
@@ -491,30 +492,39 @@ void sx1276_cad_init(void)
 
 static void sx1276StatusInit(void)
 {
-        sx1276_status.currState = 0x00;
+   sx1276_status.currState = 0x00;
 }
 
 
 
 void sx1276_init(void)
 {
-        sx1276_GPIO_Init();
-        initGPIO_IRQ();
-        
-        reset_sx1276();		// reset RF module
-        sx1276StatusInit();
-        SX1276_Config();        
-        
-        ath79_gpio_irq_enable(SX1276_nIRQ_GPIO);  //enable the gpio interrupt
-        sx1276_test();
+  printk("Init GPIO...\n");
+  sx1276_GPIO_Init();
+  printk("Init IRQ....\n");
+  initGPIO_IRQ();
+  printk("Reset SX1276...\n");
+  
+  reset_sx1276();		// reset RF module
+  sx1276StatusInit();
+
+
+  printk("Init Radio Config...\n");
+  SX1276_Config();        
+
+  printk("Enable IRQ...\n");
+  ath79_gpio_irq_enable(SX1276_nIRQ_GPIO);  //enable the gpio interrupt
+
+  printk("fetch ID to make sure connect ok\n");
+  sx1276_test();
 }
 
 
 
 void sx1276_release(void)
 {
-        sx1276_GPIO_Release();
-        freeGPIO_irq();
+  sx1276_GPIO_Release();
+  freeGPIO_irq();
 }
 
 
@@ -621,12 +631,12 @@ void sx1276_getRSSIValue(struct _rssi_value *rssi_value)
 
 static void receiveHandler(unsigned long dev_id)
 {	
-        uint8 temp;
-        uint8 packet_size;
-        struct _rssi_value rssi;
+    uint8 temp;
+    uint8 packet_size;
+    struct _rssi_value rssi;
         
-        //printk("%s\n",__func__);
-        temp = SPIReadReg(LR_RegFifoRxCurrentaddr);	// read RxCurrentaddr
+    //printk("%s\n",__func__);
+    temp = SPIReadReg(LR_RegFifoRxCurrentaddr);	// read RxCurrentaddr
 	SPIWriteReg(LR_RegFifoAddrPtr,temp);		// RxCurrentaddr -> FiFoAddrPtr
 
 	packet_size = SPIReadReg(LR_RegRxNbBytes);	// read length of packet  
@@ -634,32 +644,32 @@ static void receiveHandler(unsigned long dev_id)
 	printk("rx packet_size = %d rssi = %d.%d dBm\n",packet_size,rssi.integer,rssi.fraction);
 
 fail_receive:
-        rx_init();
-        return;
+    rx_init();
+    return;
 }
 
 void sx1276_getRecvBuff(uint8 *p,uint8 length)
 {
-        SPIBurstRead(0x00, p, length);     // read from fifo
+    SPIBurstRead(0x00, p, length);     // read from fifo
         
 #if 0
-                printk("%s, rx_length = %d\n",__func__,rx_length);
+    printk("%s, rx_length = %d\n",__func__,rx_length);
         
-                for(i=0;i<rx_length;i++)
-                {
-                        printk("%02d\t",rxBuff[i]);
-                        if((i+1)%8 == 0) printk("\n");
-                }
-                printk("\n");
+    for(i=0;i<rx_length;i++)
+    {
+       printk("%02d\t",rxBuff[i]);
+       if((i+1)%8 == 0) printk("\n");
+    }
+    printk("\n");
 #endif
 }
 
 
 uint8 sx1276_getRXLength(void)
 {
-        uint8 temp;
-        uint8 packet_size;
-        temp = SPIReadReg(LR_RegFifoRxCurrentaddr);	// read RxCurrentaddr
+    uint8 temp;
+    uint8 packet_size;
+    temp = SPIReadReg(LR_RegFifoRxCurrentaddr);	// read RxCurrentaddr
 	SPIWriteReg(LR_RegFifoAddrPtr,temp);		// RxCurrentaddr -> FiFoAddrPtr
 
 	packet_size = SPIReadReg(LR_RegRxNbBytes);	// read length of packet  
@@ -668,15 +678,15 @@ uint8 sx1276_getRXLength(void)
 
 static irqreturn_t PA0IntHandler(int irq, void *dev_id)
 {
-        uint8 t=0;
-        int rssi = 0;
+    uint8 t=0;
+    int rssi = 0;
 
-        //spin_lock_irqsave(&ath79_gpio_lock, flags);
-        // clear the GPIO interrupt status
-        unsigned long stat = __raw_readl(base + AR71XX_GPIO_REG_INT_PENDING);
-        unsigned long gpio_level = 0x1 & (__raw_readl(base + AR71XX_GPIO_REG_IN)>>SX1276_nIRQ_GPIO);
-        //unsigned long gpio_level = gpio_get_value(Si4463_nIRQ_GPIO);
-        //printk("Irq=%d stat = 0x%x,\t(%d)gpio_lvl = 0x%x\n",irq,stat,SX1276_nIRQ_GPIO,gpio_level); 
+    //spin_lock_irqsave(&ath79_gpio_lock, flags);
+    // clear the GPIO interrupt status
+    unsigned long stat = __raw_readl(base + AR71XX_GPIO_REG_INT_PENDING);
+    unsigned long gpio_level = 0x1 & (__raw_readl(base + AR71XX_GPIO_REG_IN)>>SX1276_nIRQ_GPIO);
+    //unsigned long gpio_level = gpio_get_value(Si4463_nIRQ_GPIO);
+    //printk("Irq=%d stat = 0x%x,\t(%d)gpio_lvl = 0x%x\n",irq,stat,SX1276_nIRQ_GPIO,gpio_level); 
 
 	if((gpio_level == 1)&& \ 
 		((stat & (1 << SX1276_nIRQ_GPIO)) == (1 << SX1276_nIRQ_GPIO)))
@@ -685,12 +695,12 @@ static irqreturn_t PA0IntHandler(int irq, void *dev_id)
                 //printk("LR_RegIrqFlags = 0x%02x\n",t);
                 if(t & RFLR_IRQFLAGS_TXDONE)
                 {
-                        //printk("tx done!\n");
-                        SPIWriteReg(LR_RegIrqFlags,RFLR_IRQFLAGS_TXDONE);  //clear irq
-                        txSentDone = 1;
-			wake_up(&txdone_wait_queue);
-                }else if(t & RFLR_IRQFLAGS_RXDONE)
-                {
+                    //printk("tx done!\n");
+                    SPIWriteReg(LR_RegIrqFlags,RFLR_IRQFLAGS_TXDONE);  //clear irq
+                    txSentDone = 1;
+			        wake_up(&txdone_wait_queue);
+                }else if(t & RFLR_IRQFLAGS_RXDONE){
+                
                         //printk("rx done!\n");
                         
                         //printk("rx done 0x%02x\n", t);
@@ -701,8 +711,8 @@ static irqreturn_t PA0IntHandler(int irq, void *dev_id)
                         tasklet_schedule(&rxtasklet); //调度底半部
                         //此时，底半部在合适时机运行与软中断上下文               
 #endif
-                }else if(t & RFLR_IRQFLAGS_CADDONE)
-                {
+                }else if(t & RFLR_IRQFLAGS_CADDONE){
+                
                         printk("Intr CAD Done!\n");
                         SPIWriteReg(LR_RegIrqFlags,RFLR_IRQFLAGS_CADDONE);  //clear irq
                         

@@ -29,8 +29,8 @@ typedef struct rx_node
 typedef struct __hal_state
 {
 	uint8 total_pkt; 
-        uint8 last_seq_number;
-        uint32 mem_size;
+    uint8 last_seq_number;
+    uint32 mem_size;
 }hal_state_type;
 
 

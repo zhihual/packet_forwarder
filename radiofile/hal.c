@@ -57,17 +57,19 @@ static rxDescriptor* getRxDescByIndex(uint32 index)
 
 void hal_state_reset(void)
 {
-        hal_state.total_pkt = 0;
-        hal_state.last_seq_number = 0;
-        hal_state.mem_size = 0;
+    hal_state.total_pkt = 0;
+    hal_state.last_seq_number = 0;
+    hal_state.mem_size = 0;
 }
 
 void hal_init(void)
 {
-        sx1276_init();
-        createRxDescriptorArray();
-        hal_state_reset();
+    sx1276_init();
+    
+    createRxDescriptorArray();
 
+
+    hal_state_reset();
 }
 
 void hal_release(void)
@@ -247,30 +249,32 @@ int createTxDescriptorList(uint8 *p, uint32 mem_size)
 
 int hal_tx(uint8 *tx_mem, int size)
 {
-        int result = 0;
+  int result = 0;
     
-        if(size <= 0){
-                printk("mem_size is invalid size = %d \n",size);
-                return -EINVAL;
-        }
+  if(size <= 0){
+     printk("mem_size is invalid size = %d \n",size);
+     return -EINVAL;
+  }
 
-        if(size >= MAX_RX_MEM_SIZE)
-        {
-                printk("mem_size(%d) overload the MAX_RX_MEM_SIZE(%d)\n",size,MAX_RX_MEM_SIZE);
-                return -EINVAL;
-        }
+  if(size >= MAX_RX_MEM_SIZE)
+  {
+    printk("mem_size(%d) overload the MAX_RX_MEM_SIZE(%d)\n",size,MAX_RX_MEM_SIZE);
+    return -EINVAL;
+  }
         
-        //allocate tx_descriptor linked list
-        createTxHead();
-        createTxDescriptorList(tx_mem,size);
-        //printTxDescriptorList();
-        sendTxDesciprotList();
-        //destroy txNodeList
-        destroyTxNodeList();
+  //allocate tx_descriptor linked list
+  createTxHead();
+  createTxDescriptorList(tx_mem,size);
+  //printTxDescriptorList();
+  printk("Kick off send....\n");
+  sendTxDesciprotList();
+  //destroy txNodeList
+  destroyTxNodeList();
     
-        //after sent done, go back to RX status
-        hal_start_rx(); 
-        return result;
+  //after sent done, go back to RX status
+  printk("Done, turn to receive\n");
+  hal_start_rx(); 
+  return result;
 }
 
 static rxDescriptor *copyRxBuff2RxMem(uint8 rx_length)
@@ -316,8 +320,9 @@ static void lastPktHandle(rxDescriptor *rxDesc)
 
 	hal_state.total_pkt = rxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX] + 1;
 	hal_state.mem_size = (hal_state.total_pkt - 1)*PKT_PAYLOAD_MAX_SIZE + (rxDesc->length - PKT_HEADER_SIZE);
-	signalRX();
 
+    printk("notify app to fetch buffer\n");
+    signalRX();
 	
 	return;
 }
@@ -359,7 +364,7 @@ void hal_rx(unsigned long dev_id)
         {
                 goto fail_receive;
         }
-        printk("|%d-%d-%d|",rxDesc->pRxMem[RX_HEADER_TYPE_INDEX], \
+        printk("|%d-%d-%d|\n",rxDesc->pRxMem[RX_HEADER_TYPE_INDEX], \
                                             rxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX],\
                                             rxDesc->length);
 
@@ -370,24 +375,22 @@ void hal_rx(unsigned long dev_id)
 	{
 		//printRxDescriptorList();
 		lastPktHandle(rxDesc);
-                /*****
-                    print pkt RSSI
-                ******/
-                //s46_Get_RSSI(&(tr_status.rssi1),&(tr_status.rssi2),1);
+        /***** print pkt RSSI ******/
+        //s46_Get_RSSI(&(tr_status.rssi1),&(tr_status.rssi2),1);
                 
-                rssi = SX1276LoRaReadRssi();
-                printk("-> (%d dBm)\n", rssi);			//print rssi
+        rssi = SX1276LoRaReadRssi();
+        printk("recv-> (%d dBm)\n", rssi);			//print rssi
 	}
         
 
 fail_receive:
-        //go back to receive mode
-        hal_start_rx();
+    //go back to receive mode
+    hal_start_rx();
 }
 
 void hal_start_rx(void)
 {
-        rx_init();
+    rx_init();
 }
 
 static ktime_t ktime;
@@ -414,8 +417,8 @@ enum hrtimer_restart my_hrtimer_callback( struct hrtimer *timer )
 	//printk( "my_hrtimer_callback called (%ld) -> %d.\n", jiffies ,clk_count++);
 	timeout = 1;
         //wake_up(&timeout_wait_queue);
-        rssi = SX1276LoRaReadRssi();
-        printk("rssi = %d dBm\n",rssi);
+    rssi = SX1276LoRaReadRssi();
+    printk("rssi = %d dBm\n",rssi);
 
 	return HRTIMER_NORESTART;  //HRTIMER_RESTART
 }

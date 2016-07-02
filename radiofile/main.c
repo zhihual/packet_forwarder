@@ -23,7 +23,7 @@
 #define GLOBALMEM_SIZE MAX_RX_MEM_SIZE  /*全局内存最大 ...*/
 
 #define MEM_CLEAR_CMD 0x1 /*清零全局内存*/
-#define GLOBALMEM_MAJOR 251 /*预设的 globalmem 的主设备号*/
+#define GLOBALMEM_MAJOR 252 /*预设的 globalmem 的主设备号*/
 
 int8    rssi1           = 0;                                    // 接收信号强度整数部分数据
 uint8   rssi2           = 0;                                    // 接收信号强度小数部分数据
@@ -51,10 +51,10 @@ struct globalmem_dev *globalmem_devp; /*设备结构体指针*/
 /*文件打开函数*/
 int globalmem_open(struct inode *inode, struct file *filp)
 {
-	printk("***%s***\n",__func__);
+	printk("%s +\n",__func__);
 	/*将设备结构体指针赋值给文件私有数据指针*/
 	filp->private_data = globalmem_devp;
-	
+	printk("%s -\n",__func__);
 
 	return 0;
 }
@@ -62,7 +62,8 @@ int globalmem_open(struct inode *inode, struct file *filp)
 /*文件释放函数*/
 int globalmem_release(struct inode *inode, struct file *filp)
 {
-	//printk("***%s***\n",__func__);
+	printk("%s \n",__func__);
+    filp->private_data = NULL;
 	return 0;
 }
 
@@ -118,8 +119,9 @@ static ssize_t globalmem_read(struct file *filp, char __user *buf, size_t size,l
         /*申请失败*/
         if (!p_mem)
         {
-                ret = -ENOMEM;
-                return ret;
+           printk("globalmem_read  alloc memory fail\n");
+           ret = -ENOMEM;
+           return ret;
         }
         memset(p_mem,0,total_mem_size);
             
@@ -138,8 +140,9 @@ static ssize_t globalmem_read(struct file *filp, char __user *buf, size_t size,l
         /*
                 ret 是实际收到的有效数据长度
         */
-#if 0
-        printk("kernel read :\n");
+
+        printk("kernel read len %d:\n", ret);
+#if 0        
         for(i=0;i<total_mem_size;i++)
         {
             printk("0x%02x\t",p_mem[i]);
@@ -150,11 +153,12 @@ static ssize_t globalmem_read(struct file *filp, char __user *buf, size_t size,l
         /*内核空间→用户空间*/
         if (copy_to_user(buf, (void*)(p_mem), ret)) /*返回不能复制的字节数*/
         {
-                ret = EFAULT;
+           printk("io_read pop to userspace error\n");
+           ret = EFAULT;
         }
         else
         {
-                printk(KERN_INFO "read %d bytes(s) from %d\n", ret, p);
+           printk("read %d bytes(s) to %d\n", ret, buf);
         }
         hal_state_reset();
         kfree(p_mem);
@@ -165,29 +169,35 @@ static ssize_t globalmem_read(struct file *filp, char __user *buf, size_t size,l
 
 static ssize_t globalmem_write(struct file *filp, const char __user *buf, size_t size, loff_t *ppos)
 {
-        uint8 *p_mem;
+    uint8 *p_mem;
 	int ret = 0;
 
-        //printk("***%s***\n",__func__);
+    printk("%s+\n",__func__);
 	/* 申请 内存*/
 	p_mem = kmalloc(size, GFP_KERNEL);
 	/*申请失败*/
 	if (!p_mem)
 	{
+	    printk("write alloc mem fail\n");
 		ret = -ENOMEM;
 		return ret;
 	}
 
 	/*用户空间→内核空间*/
 	if (copy_from_user(p_mem, buf, size))
+	{
+	    printk("write copy to usersapce fail\n");
 		ret = EFAULT;
+	}
 	else
+	{
 		ret = size;
+	}
 
-        ret = hal_tx(p_mem,size); 
+    ret = hal_tx(p_mem,size); 
         
-        kfree(p_mem);
-        return ret;    
+    kfree(p_mem);
+    return ret;    
 }
 
 
@@ -212,7 +222,7 @@ static void globalmem_setup_cdev(struct globalmem_dev *dev, int index)
 	dev->cdev.ops = &globalmem_fops;
 	err = cdev_add(&dev->cdev, devno, 1);
 	if (err)
-		printk(KERN_NOTICE "Error %d adding LED%d", err, index);
+		printk(KERN_NOTICE "Error %d adding device %d", err, index);
 }
 
 
@@ -225,10 +235,10 @@ int globalmem_init(void)
 	dev_t devno = MKDEV(globalmem_major, 0);
 	/* 申请设备号*/
 	if (globalmem_major)
-		result = register_chrdev_region(devno, 1, "globalmem");
+		result = register_chrdev_region(devno, 1, "loramem");
 	else /* 动态申请设备号 */
 	{
-		result = alloc_chrdev_region(&devno, 0, 1, "globalmem");
+		result = alloc_chrdev_region(&devno, 0, 1, "loramem");
 		globalmem_major = MAJOR(devno);
 	}
 	if (result < 0)
@@ -247,9 +257,10 @@ int globalmem_init(void)
 	globalmem_setup_cdev(globalmem_devp, 0);
         printk("%s, %s\n",__func__,THIS_MODULE->name);
 
-        hal_init();
-        hal_start_rx();
+    hal_init();
 
+    printk("put into rx default\n");
+    hal_start_rx();
 
 	return 0;
 fail_malloc: unregister_chrdev_region(devno, 1);
