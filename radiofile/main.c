@@ -128,20 +128,24 @@ static ssize_t globalmem_read(struct file *filp, char __user *buf, size_t size,l
         for(i = 0; i < getTotalPktNumber();i++)
         {
             pRxDesc = getRxDesc(i);
-            seq_num = pRxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX];
+            seq_num = 0 ;//= pRxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX];
             //if pRxDesc->length <= PKT_HEADER_SIZE, usually 0, that means the pkt is an invalid pkt, skip it.
             if(pRxDesc->length > PKT_HEADER_SIZE)
             {
+                    /*
                     memcpy(p_mem+seq_num*PKT_PAYLOAD_MAX_SIZE,\
                             (uint8 *)(pRxDesc->pRxMem+PKT_HEADER_SIZE),(pRxDesc->length-PKT_HEADER_SIZE));
                     ret += pRxDesc->length-PKT_HEADER_SIZE;
+                    */
+                     memcpy(p_mem,(uint8 *)(pRxDesc->pRxMem),pRxDesc->length);
+                    ret += pRxDesc->length;
             }
         }
         /*
                 ret 是实际收到的有效数据长度
         */
-
-        printk("kernel read len %d:\n", ret);
+        if (ret != 0)
+           printk("kernel read len %d:\n", ret);
 #if 0        
         for(i=0;i<total_mem_size;i++)
         {
@@ -158,7 +162,11 @@ static ssize_t globalmem_read(struct file *filp, char __user *buf, size_t size,l
         }
         else
         {
-           printk("read %d bytes(s) to %d\n", ret, buf);
+           if (ret != 0)
+           {
+            printk("read %d bytes(s) to %d\n", ret, buf);
+
+           }
         }
         hal_state_reset();
         kfree(p_mem);

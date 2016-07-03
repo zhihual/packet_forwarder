@@ -650,14 +650,16 @@ fail_receive:
 
 void sx1276_getRecvBuff(uint8 *p,uint8 length)
 {
+
+    int i;
     SPIBurstRead(0x00, p, length);     // read from fifo
         
-#if 0
-    printk("%s, rx_length = %d\n",__func__,rx_length);
+#if 1
+    printk("rx_length = %d\n",length);
         
-    for(i=0;i<rx_length;i++)
+    for(i=0;i<length;i++)
     {
-       printk("%02d\t",rxBuff[i]);
+       printk("%02x\t",p[i]);
        if((i+1)%8 == 0) printk("\n");
     }
     printk("\n");

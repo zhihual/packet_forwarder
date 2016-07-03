@@ -105,6 +105,7 @@ static int PutPktIntoArray(uint8* pRxMem, int rx_length, int read_len)
    struct PktArrayItem* p = NULL;
    int writeIndex = 0;
    int ret = 0;
+   int i;
    
    if(g_RecPool.readyNum >= ARRAY_SIZE)
    {
@@ -128,6 +129,14 @@ static int PutPktIntoArray(uint8* pRxMem, int rx_length, int read_len)
 
    printf("write %d \n", writeIndex);
    memcpy(p->pkt.payload, pRxMem, read_len);
+
+   for(i=0; i<read_len; i++)
+   {
+      printf("%x ", pRxMem[i]);
+      if( i%16 ==0) printf("\n");
+   }
+   printf("\n");
+   
    p->pkt.size = read_len;
    p->waitRead = 1; // set flag
    
@@ -157,6 +166,8 @@ static int PutPktIntoArray(uint8* pRxMem, int rx_length, int read_len)
 static int PopPktFromArray(int num, struct lgw_pkt_rx_s *pkt_data)
 {
    int i = 0;
+
+ 
    struct lgw_pkt_rx_s* dst = NULL;
    struct PktArrayItem* src = NULL;
    int ret = 0;
@@ -182,6 +193,7 @@ static int PopPktFromArray(int num, struct lgw_pkt_rx_s *pkt_data)
       }
 
       memcpy((void*)dst,(void*)&src->pkt, sizeof(struct lgw_pkt_rx_s));
+    
 
       dst++;
       src->waitRead = 0;
@@ -213,7 +225,7 @@ static void rx_input_handler(int num)
    read_len = read(g_fd, pRxMem, rx_length);
    if (rx_length ||read_len)
    printf("%s, rx_length = %d, read_len = %d\n",__func__,rx_length,read_len);
-
+   
    // can dump packet here
 
    usleep(400000);  //sleep xx ms to make sender switch to RX ready.  5ms for 30Kbps,40ms for 10Kbps, 500ms for 1Kbps,
@@ -309,7 +321,7 @@ int AR9331Drv_Open()
 {
   struct FILE * fd = NULL;		
         
-  if((fd=open("/dev/spidev",O_RDWR)) == -1)
+  if((fd=open("/dev/loradio",O_RDWR)) == -1)
   {
 	printf("open SPI WRONG!\n");
     return -1;

@@ -141,9 +141,11 @@ void sendTxDescriptor(txDescriptor* tx_desc)
 	uint8 buff[sx1276_BUFF_LEN];
 	int i;
 
-#if 1
+#if 0
 	memcpy(buff,&(tx_desc->header),PKT_HEADER_SIZE);
 	memcpy(buff+PKT_HEADER_SIZE,tx_desc->pPayload,(tx_desc->pkt_length - PKT_HEADER_SIZE));
+#else
+    memcpy(buff,tx_desc->pPayload,(tx_desc->pkt_length - PKT_HEADER_SIZE));
 #endif
 
 #if 0
@@ -156,7 +158,7 @@ void sendTxDescriptor(txDescriptor* tx_desc)
 	printk("---------------------------------------------\n");
 #endif
 
-	sx1276_Send_Packet(buff,tx_desc->pkt_length);
+	sx1276_Send_Packet(buff,tx_desc->pkt_length-PKT_HEADER_SIZE);
 
 	return;
 }
@@ -192,7 +194,7 @@ int createTxDescriptorList(uint8 *p, uint32 mem_size)
 	int result = 0;
 	txDescriptor *txDesc = NULL;
 	uint32 total_cnt = 0;
-	
+
 	integer = mem_size/PKT_PAYLOAD_MAX_SIZE;
 	mod = mem_size%PKT_PAYLOAD_MAX_SIZE;
 	printk("--> integer = %d, mod = %d\n",integer,mod);
@@ -286,7 +288,7 @@ static rxDescriptor *copyRxBuff2RxMem(uint8 rx_length)
         
         sx1276_getRecvBuff(rxBuff,rx_length);
         
-        seq_number = rxBuff[RX_HEADER_SEQ_NUMBER_INDEX];
+        seq_number = 0;// = rxBuff[RX_HEADER_SEQ_NUMBER_INDEX];
         rxDesc = getRxDescByIndex(seq_number);
         if(NULL == rxDesc)
         {
@@ -295,6 +297,9 @@ static rxDescriptor *copyRxBuff2RxMem(uint8 rx_length)
         }
         memcpy(rxDesc->pRxMem,rxBuff,rx_length);
         rxDesc->length = rx_length;
+
+
+        
         hal_state.last_seq_number = seq_number;
 
 end_loop:
@@ -318,8 +323,8 @@ static bool isSingleOrLastPkt(rxDescriptor *rxDesc)
 static void lastPktHandle(rxDescriptor *rxDesc)
 {
 
-	hal_state.total_pkt = rxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX] + 1;
-	hal_state.mem_size = (hal_state.total_pkt - 1)*PKT_PAYLOAD_MAX_SIZE + (rxDesc->length - PKT_HEADER_SIZE);
+	hal_state.total_pkt = 1;//rxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX] + 1;
+	hal_state.mem_size = rxDesc->length; //(hal_state.total_pkt - 1)*PKT_PAYLOAD_MAX_SIZE + (rxDesc->length - PKT_HEADER_SIZE);
 
     printk("notify app to fetch buffer\n");
     signalRX();
@@ -364,14 +369,14 @@ void hal_rx(unsigned long dev_id)
         {
                 goto fail_receive;
         }
-        printk("|%d-%d-%d|\n",rxDesc->pRxMem[RX_HEADER_TYPE_INDEX], \
-                                            rxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX],\
-                                            rxDesc->length);
+        
+        printk("recv=%d\n",rx_length);
 
         /*****
             last pkt handle
         *****/
-        if(isSingleOrLastPkt(rxDesc))
+#if 1
+   //     if(isSingleOrLastPkt(rxDesc))
 	{
 		//printRxDescriptorList();
 		lastPktHandle(rxDesc);
@@ -381,7 +386,7 @@ void hal_rx(unsigned long dev_id)
         rssi = SX1276LoRaReadRssi();
         printk("recv-> (%d dBm)\n", rssi);			//print rssi
 	}
-        
+ #endif       
 
 fail_receive:
     //go back to receive mode
