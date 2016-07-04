@@ -34,10 +34,15 @@ uint8     rf_mode         = 1;                                    // π§◊˜ƒ£ Ω±Í÷
 uint8   sendout_status  = 1;                                    //  ˝æ›∑¢ÀÕ◊¥Ã¨±Í÷æ(1~4)
 uint8     sendout_flag    = 0;                                    //  ˝æ›∑¢ÀÕ∂® ±±Í÷æ
 
-static globalmem_major = GLOBALMEM_MAJOR;
+static int globalmem_major = GLOBALMEM_MAJOR;
 
 static int timer_cnt = 8;
 
+extern int lastWIdx;
+extern int lastRIdx;
+extern int RecvPktCnt;
+
+extern void desctoryRxDescriptorArray(void);
 
 /*globalmem …Ë±∏Ω·ππÃÂ*/
 struct globalmem_dev
@@ -137,7 +142,7 @@ static ssize_t globalmem_read(struct file *filp, char __user *buf, size_t size,l
            
             if(seq_num >=RX_MEM_BLK_TOTAL_NUMBER )
             {
-               printf("[DrvRx]ReadIdx overloop\n");
+               printk("[DrvRx]ReadIdx overloop\n");
                seq_num = 0;
             }
             
@@ -293,7 +298,7 @@ void globalmem_exit(void)
 	s46_GPIO_Release();
 #endif
 	/* Õ∑≈…Ë±∏Ω·ππÃÂƒ⁄¥Ê*/
-	desctoryRxDescriptorArray()
+	desctoryRxDescriptorArray();
 	kfree(globalmem_devp);
 	unregister_chrdev_region(MKDEV(globalmem_major, 0), 1); /* Õ∑≈±∏∫≈*/
 }

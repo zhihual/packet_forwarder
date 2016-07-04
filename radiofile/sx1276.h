@@ -184,17 +184,17 @@ struct _sx1276_status{
 };
 
 
-void sx1276_GPIO_Release();
-void sx1276_GPIO_Init();
+void sx1276_GPIO_Release(void);
+void sx1276_GPIO_Init(void);
 void reset_sx1276(void);
-uint8 sx1276_test();
+uint8 sx1276_test(void);
 void SX1276_Config(void);
 
 void sx1276_init(void);
 void sx1276_release(void);
 uint8 SX1276_GetOpMode( void );
-void freeGPIO_irq();
-void initGPIO_IRQ();
+void freeGPIO_irq(void);
+void initGPIO_IRQ(void);
 void ath79_gpio_irq_enable(int gpio);
 void ath79_gpio_irq_disable(int gpio);
 void sx1276_getRSSIValue(struct _rssi_value *rssi_value);

@@ -26,7 +26,7 @@ int lastRIdx = -1;
 int RecvPktCnt = 0;
 
 // we build a rx descriptor array firstly, 
-static int createRxDescriptorArray()
+static int createRxDescriptorArray(void)
 {
 	uint32 i;
 
@@ -50,7 +50,7 @@ static int createRxDescriptorArray()
 	return 0;
 }
 
-void desctoryRxDescriptorArray()
+void desctoryRxDescriptorArray(void)
 {
     uint32 i;
 
@@ -61,7 +61,7 @@ void desctoryRxDescriptorArray()
 		
 		if (gRxDescArray[i].pRxMem)
 		{
-		   free(gRxDescArray[i].pRxMem);
+		   kfree(gRxDescArray[i].pRxMem);
 		}
 	
 	}
@@ -103,7 +103,7 @@ void hal_init(void)
 void hal_release(void)
 {
    sx1276_release();
-   desctoryRxDescriptorArray()
+   desctoryRxDescriptorArray();
 }
 
 
@@ -146,7 +146,7 @@ static rxDescriptor *copyRxBuff2RxMem(uint8 rx_length)
         if(seq_number>=RX_MEM_BLK_TOTAL_NUMBER)
         {
            seq_number = 0;
-           printf("[DrvRx] writindx roveover\n");
+           printk("[DrvRx] writindx roveover\n");
         }
 
         
@@ -159,7 +159,7 @@ static rxDescriptor *copyRxBuff2RxMem(uint8 rx_length)
         }
         else
         {
-            printf("[DrvRx] Rec Data Idx=%d\n", seq_number);
+            printk("[DrvRx] Rec Data Idx=%d\n", seq_number);
             rxDesc->flag = FLAG_READ_OK;
 
             memcpy(rxDesc->pRxMem,rxBuff,rx_length);
@@ -185,6 +185,9 @@ static void lastPktHandle(rxDescriptor *rxDesc)
 
 uint32 getTotalMemSize()
 {
+    int seq;
+
+    rxDescriptor * pRxDesc = NULL;
     if(RecvPktCnt>0)
     {
        hal_state.total_pkt = 1;
@@ -195,7 +198,7 @@ uint32 getTotalMemSize()
        {
           seq = 0;
        }
-       printf("[DrvRx]Refill to read seq=%d\n", seq);
+       printk("[DrvRx]Refill to read seq=%d\n", seq);
        pRxDesc = getRxDesc(seq);
        hal_state.mem_size = pRxDesc->length;
     }

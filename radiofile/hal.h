@@ -1,3 +1,7 @@
+#ifndef _HAL_H_
+
+#define _HAL_H_
+
 #include "sx1276.h"
 
 
@@ -30,7 +34,7 @@ typedef struct __hal_state
 //#define PKT_PAYLOAD_MAX_SIZE (sx1276_BUFF_LEN - PKT_HEADER_SIZE)
 
 //#define K (1024)
-#define MAX_RX_MEM_SIZE  (RX_MEM_BLK_TOTAL_NUMBER*sx1276_BUFF_LEN)
+#define MAX_RX_MEM_SIZE  (63750)
 //#define RX_MEM_BLK_TOTAL_NUMBER  (MAX_RX_MEM_SIZE/sx1276_BUFF_LEN)
 
 #define RX_MEM_BLK_TOTAL_NUMBER  250
@@ -41,12 +45,12 @@ void hal_release(void);
 int hal_tx(uint8 *tx_mem, int size);
 void hal_start_rx(void);
 void hal_rx(unsigned long dev_id);
-uint32 getTotalMemSize();
-uint8 getTotalPktNumber();
+uint32 getTotalMemSize(void);
+uint8 getTotalPktNumber(void);
 rxDescriptor *getRxDesc(uint8 index);
 void hal_state_reset(void);
 void hal_cca(void);
 
-
+#endif
 
 
