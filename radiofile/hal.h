@@ -1,25 +1,14 @@
 #include "sx1276.h"
 
-typedef struct PKT_HEADER_SIZE
-{
-	//uint8 length;      //length + type + seq_number + payload
-	uint8 type;
-	uint8 seq_number;  //16K Bytes Maxism
-}pktHeader;
 
-typedef struct tx_node
-{
-	int index;
-	uint8 pkt_length;
-	pktHeader header;
-	uint8 *pPayload;
-	struct tx_node* pNext;
-}txDescriptor;
+
+#define FLAG_WRITE_OK 0
+#define FLAG_READ_OK  1
 
 typedef struct rx_node
 {
 	int index;
-	pktHeader header;
+	int flag;  
 	uint8 *pPayload;
 	uint8 length;
 	uint8 *pRxMem;
@@ -35,30 +24,17 @@ typedef struct __hal_state
 
 
 
-typedef enum 
-{
-	A1_AGGREGATION = 1,   //audio talking
-	
-	A1_AGGREGATION_END = 2,
-	
-	A1_SINGLE = 3,	
-
-	LP_AGGREGATION,   //loopback test
-	
-	LP_AGGREGATION_END,
-	
-	LP_SINGLE,	
-
-	A1_INVALID,
-}PKT_TYPE;
 
 
-#define PKT_HEADER_SIZE sizeof(pktHeader)   
-#define PKT_PAYLOAD_MAX_SIZE (sx1276_BUFF_LEN - PKT_HEADER_SIZE)
+//#define PKT_HEADER_SIZE sizeof(pktHeader)   
+//#define PKT_PAYLOAD_MAX_SIZE (sx1276_BUFF_LEN - PKT_HEADER_SIZE)
 
-#define K (1024)
-#define MAX_RX_MEM_SIZE  (15*K)
-#define RX_MEM_BLK_TOTAL_NUMBER  (MAX_RX_MEM_SIZE/sx1276_BUFF_LEN)
+//#define K (1024)
+#define MAX_RX_MEM_SIZE  (RX_MEM_BLK_TOTAL_NUMBER*sx1276_BUFF_LEN)
+//#define RX_MEM_BLK_TOTAL_NUMBER  (MAX_RX_MEM_SIZE/sx1276_BUFF_LEN)
+
+#define RX_MEM_BLK_TOTAL_NUMBER  250
+
 
 void hal_init(void);
 void hal_release(void);

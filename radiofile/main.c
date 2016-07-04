@@ -103,7 +103,8 @@ static ssize_t globalmem_read(struct file *filp, char __user *buf, size_t size,l
         unsigned long p = *ppos;
         unsigned int count = size;
         int ret = 0;
-        uint32 total_mem_size = getTotalMemSize();
+        // uint32 total_mem_size = getTotalMemSize();
+        uint32 total_mem_size = size;
         uint8 *p_mem;
         int i = 0;
         uint8 seq_num;
@@ -124,35 +125,36 @@ static ssize_t globalmem_read(struct file *filp, char __user *buf, size_t size,l
            return ret;
         }
         memset(p_mem,0,total_mem_size);
+
+        
             
-        for(i = 0; i < getTotalPktNumber();i++)
+        for(i = 0; i < 1;i++)
         {
-            pRxDesc = getRxDesc(i);
-            seq_num = 0 ;//= pRxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX];
+            seq_num = lastRIdx+1;
+            pRxDesc = getRxDesc(seq_num);
+            //seq_num = 0 ;//= pRxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX];
             //if pRxDesc->length <= PKT_HEADER_SIZE, usually 0, that means the pkt is an invalid pkt, skip it.
-            if(pRxDesc->length > PKT_HEADER_SIZE)
+           
+            if(seq_num >=RX_MEM_BLK_TOTAL_NUMBER )
             {
-                    /*
-                    memcpy(p_mem+seq_num*PKT_PAYLOAD_MAX_SIZE,\
-                            (uint8 *)(pRxDesc->pRxMem+PKT_HEADER_SIZE),(pRxDesc->length-PKT_HEADER_SIZE));
-                    ret += pRxDesc->length-PKT_HEADER_SIZE;
-                    */
-                     memcpy(p_mem,(uint8 *)(pRxDesc->pRxMem),pRxDesc->length);
-                    ret += pRxDesc->length;
+               printf("[DrvRx]ReadIdx overloop\n");
+               seq_num = 0;
+            }
+            
+            if(pRxDesc->length > 0)
+            {
+               memcpy(p_mem,(uint8 *)(pRxDesc->pRxMem),pRxDesc->length);
+               ret += pRxDesc->length;
+               printk("[DrvRx]Pop to APP len %d:\n", ret);
+               lastRIdx = seq_num;
+               RecvPktCnt--;
+               pRxDesc->flag = FLAG_WRITE_OK;
+               memset(pRxDesc->pRxMem, 0,pRxDesc->length);
             }
         }
         /*
                 ret 是实际收到的有效数据长度
         */
-        if (ret != 0)
-           printk("kernel read len %d:\n", ret);
-#if 0        
-        for(i=0;i<total_mem_size;i++)
-        {
-            printk("0x%02x\t",p_mem[i]);
-        }
-        printk("\n");
-#endif
         
         /*内核空间→用户空间*/
         if (copy_to_user(buf, (void*)(p_mem), ret)) /*返回不能复制的字节数*/
@@ -291,6 +293,7 @@ void globalmem_exit(void)
 	s46_GPIO_Release();
 #endif
 	/*释放设备结构体内存*/
+	desctoryRxDescriptorArray()
 	kfree(globalmem_devp);
 	unregister_chrdev_region(MKDEV(globalmem_major, 0), 1); /*释放备号*/
 }

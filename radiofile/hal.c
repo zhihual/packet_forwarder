@@ -17,9 +17,13 @@
 #include "common.h"
 
 
-static txDescriptor *txHead = NULL;
+
 static rxDescriptor gRxDescArray[RX_MEM_BLK_TOTAL_NUMBER] = {0};
 static hal_state_type hal_state;
+
+int lastWIdx = -1;
+int lastRIdx = -1;
+int RecvPktCnt = 0;
 
 // we build a rx descriptor array firstly, 
 static int createRxDescriptorArray()
@@ -41,9 +45,28 @@ static int createRxDescriptorArray()
 		//to clear the pRxMem, avoid the random value
 		memset(gRxDescArray[i].pRxMem, 0, sx1276_BUFF_LEN);
 	}
-
+    lastWIdx = -1;
+    lastRIdx = -1;
 	return 0;
 }
+
+void desctoryRxDescriptorArray()
+{
+    uint32 i;
+
+	
+	//allocate the mem firstly to the rx_mem
+	for(i = 0;i < RX_MEM_BLK_TOTAL_NUMBER; i++)
+	{
+		
+		if (gRxDescArray[i].pRxMem)
+		{
+		   free(gRxDescArray[i].pRxMem);
+		}
+	
+	}
+}
+
 
 static rxDescriptor* getRxDescByIndex(uint32 index)
 {
@@ -57,9 +80,14 @@ static rxDescriptor* getRxDescByIndex(uint32 index)
 
 void hal_state_reset(void)
 {
+    int seq;
+    rxDescriptor * pRxDesc; 
+
     hal_state.total_pkt = 0;
     hal_state.last_seq_number = 0;
     hal_state.mem_size = 0;
+
+   
 }
 
 void hal_init(void)
@@ -74,179 +102,9 @@ void hal_init(void)
 
 void hal_release(void)
 {
-        sx1276_release();
+   sx1276_release();
+   desctoryRxDescriptorArray()
 }
-
-bool createTxHead(void)
-{
-	txHead = (txDescriptor*)kmalloc(sizeof(txDescriptor),GFP_KERNEL);
-	if(NULL == txHead)
-	{
-		printk("%s: txHead is NULL\n",__func__);
-		return false;
-	}
-	else
-	{
-		txHead->index = -1;
-		txHead->pNext = NULL;
-		return true;
-	}
-}
-
-bool addNode(txDescriptor* tx_desc)
-{
-	if(NULL == txHead)
-	{
-		printk("%s: txHead is NULL\n",__func__);
-		return false;
-	}
-	txDescriptor* p = txHead->pNext;
-	txDescriptor* q = txHead;
-	while(NULL != p)
-	{
-		q = p;
-		p = p->pNext;
-	}
-	q->pNext = tx_desc;
-	tx_desc->pNext = NULL;
-	return true;	
-}
-
-void destroyTxNodeList()
-{
-	if(NULL == txHead)
-	{
-		return;
-	}
-	if(NULL == txHead->pNext)
-	{
-		kfree(txHead);
-		txHead = NULL;
-		return;
-	}
-	txDescriptor* p = txHead->pNext;
-	while(NULL != p)
-	{
-		txDescriptor* tmp = p;
-		p = p->pNext;
-		kfree(tmp);
-	}
-	kfree(txHead);
-	txHead = NULL;
-}
-
-
-void sendTxDescriptor(txDescriptor* tx_desc)
-{
-	uint8 buff[sx1276_BUFF_LEN];
-	int i;
-
-#if 0
-	memcpy(buff,&(tx_desc->header),PKT_HEADER_SIZE);
-	memcpy(buff+PKT_HEADER_SIZE,tx_desc->pPayload,(tx_desc->pkt_length - PKT_HEADER_SIZE));
-#else
-    memcpy(buff,tx_desc->pPayload,(tx_desc->pkt_length - PKT_HEADER_SIZE));
-#endif
-
-#if 0
-	printk("------------------buff_len(%d)---------------------------\n",tx_desc->header.length);
-	for(i=0;i<tx_desc->header.length;i++)
-	{
-		printk("%02d\t",buff[i]);
-	}
-	printk("\n");
-	printk("---------------------------------------------\n");
-#endif
-
-	sx1276_Send_Packet(buff,tx_desc->pkt_length-PKT_HEADER_SIZE);
-
-	return;
-}
-
-
-void sendTxDesciprotList()
-{
-	txDescriptor* p = txHead->pNext;
-	txDescriptor* q = txHead;
-	while(NULL != p)
-	{
-		q = p;
-		p = p->pNext;
-		sendTxDescriptor(q);
-		printk(".");
-	}
-	printk("\n");
-	
-	return;
-}
-
-uint8 isSiLoopbackTest()
-{
-	return 0;
-}
-
-
-int createTxDescriptorList(uint8 *p, uint32 mem_size)
-{
-	uint32 integer = 0;
-	uint8 mod = 0;
-	uint32 index = 0;
-	int result = 0;
-	txDescriptor *txDesc = NULL;
-	uint32 total_cnt = 0;
-
-	integer = mem_size/PKT_PAYLOAD_MAX_SIZE;
-	mod = mem_size%PKT_PAYLOAD_MAX_SIZE;
-	printk("--> integer = %d, mod = %d\n",integer,mod);
-	total_cnt = integer + (mod?1:0);
-	for(index = 0;index < total_cnt;index++)
-	{
-		txDesc = (txDescriptor*)kmalloc(sizeof(txDescriptor),GFP_KERNEL);
-		if (!txDesc)
-		{
-			printk("%s-> txDesc alloc failed\n",__func__);
-		}
-		
-		txDesc->index = index;
-		if((0 != mod)&&((total_cnt-1) == index))	
-			txDesc->pkt_length = mod + PKT_HEADER_SIZE;
-		else
-			txDesc->pkt_length = PKT_PAYLOAD_MAX_SIZE + PKT_HEADER_SIZE;
-
-		if(total_cnt == 1)
-		{
-			if(isSiLoopbackTest())
-				txDesc->header.type = LP_SINGLE;
-			else
-				txDesc->header.type = A1_SINGLE;
-		}else if((total_cnt-1) == index)
-		{
-			if(isSiLoopbackTest())
-				txDesc->header.type = LP_AGGREGATION_END;   //
-			else
-				txDesc->header.type = A1_AGGREGATION_END;   //
-		}else
-		{
-			if(isSiLoopbackTest())
-				txDesc->header.type = LP_AGGREGATION;
-			else
-				txDesc->header.type = A1_AGGREGATION;
-		}
-		
-		//txDesc->header.length = txDesc->pkt_length; // length = length + type + seq_number + payload	
-
-		txDesc->header.seq_number = index;
-		
-		txDesc->pPayload= p+(index*PKT_PAYLOAD_MAX_SIZE);
-		txDesc->pNext = NULL;
-		addNode(txDesc);
-	}
-	
-	return result;
-}
-
-
-
 
 
 int hal_tx(uint8 *tx_mem, int size)
@@ -266,16 +124,7 @@ int hal_tx(uint8 *tx_mem, int size)
 
   sx1276_tx(tx_mem,size);      
 
-#if 0  
-  //allocate tx_descriptor linked list
-  createTxHead();
-  createTxDescriptorList(tx_mem,size);
-  //printTxDescriptorList();
-  printk("Kick off send....\n");
-  sendTxDesciprotList();
-  //destroy txNodeList
-  destroyTxNodeList();
-#endif    
+
   //after sent done, go back to RX status
   printk("Done, turn to receive\n");
   hal_start_rx(); 
@@ -290,46 +139,45 @@ static rxDescriptor *copyRxBuff2RxMem(uint8 rx_length)
         uint8 seq_number;
         
         sx1276_getRecvBuff(rxBuff,rx_length);
-        
-        seq_number = 0;// = rxBuff[RX_HEADER_SEQ_NUMBER_INDEX];
-        rxDesc = getRxDescByIndex(seq_number);
-        if(NULL == rxDesc)
+
+        seq_number = lastWIdx+1;
+
+    
+        if(seq_number>=RX_MEM_BLK_TOTAL_NUMBER)
         {
-            printk("%s, NULL == rxDesc\n",__func__);
+           seq_number = 0;
+           printf("[DrvRx] writindx roveover\n");
+        }
+
+        
+    
+        rxDesc = getRxDescByIndex(seq_number);
+        if((NULL == rxDesc) || (rxDesc->flag == FLAG_READ_OK))
+        {
+            printk("[DrvRx] rxDesc Fail indx=%d\n",seq_number);
             goto end_loop;
         }
-        memcpy(rxDesc->pRxMem,rxBuff,rx_length);
-        rxDesc->length = rx_length;
+        else
+        {
+            printf("[DrvRx] Rec Data Idx=%d\n", seq_number);
+            rxDesc->flag = FLAG_READ_OK;
 
-
+            memcpy(rxDesc->pRxMem,rxBuff,rx_length);
+            rxDesc->length = rx_length;
+            lastWIdx = seq_number;
+            RecvPktCnt++;
+            hal_state.last_seq_number = seq_number;
+            
+        }
         
-        hal_state.last_seq_number = seq_number;
-
 end_loop:
         return rxDesc;
         
 }
 
-static bool isSingleOrLastPkt(rxDescriptor *rxDesc)
-{
-	if( A1_SINGLE == rxDesc->pRxMem[RX_HEADER_TYPE_INDEX] || \
-		A1_AGGREGATION_END == rxDesc->pRxMem[RX_HEADER_TYPE_INDEX] || \
-		LP_SINGLE == rxDesc->pRxMem[RX_HEADER_TYPE_INDEX] || \
-		LP_AGGREGATION_END == rxDesc->pRxMem[RX_HEADER_TYPE_INDEX] ) 
-	{
-		return true;
-	}else{
-		return false;
-	}
-}
 
 static void lastPktHandle(rxDescriptor *rxDesc)
 {
-
-	hal_state.total_pkt = 1;//rxDesc->pRxMem[RX_HEADER_SEQ_NUMBER_INDEX] + 1;
-	hal_state.mem_size = rxDesc->length; //(hal_state.total_pkt - 1)*PKT_PAYLOAD_MAX_SIZE + (rxDesc->length - PKT_HEADER_SIZE);
-
-    printk("notify app to fetch buffer\n");
     signalRX();
 	
 	return;
@@ -337,12 +185,27 @@ static void lastPktHandle(rxDescriptor *rxDesc)
 
 uint32 getTotalMemSize()
 {
-	return hal_state.mem_size;
+    if(RecvPktCnt>0)
+    {
+       hal_state.total_pkt = 1;
+       hal_state.last_seq_number = lastRIdx;
+
+       seq = lastRIdx+1;
+       if(seq>= RX_MEM_BLK_TOTAL_NUMBER)
+       {
+          seq = 0;
+       }
+       printf("[DrvRx]Refill to read seq=%d\n", seq);
+       pRxDesc = getRxDesc(seq);
+       hal_state.mem_size = pRxDesc->length;
+    }
+
+ 	return hal_state.mem_size;
 }
 
 uint8 getTotalPktNumber()
 {
-        return hal_state.total_pkt;
+     return hal_state.total_pkt;
 }
 
 
@@ -373,14 +236,14 @@ void hal_rx(unsigned long dev_id)
                 goto fail_receive;
         }
         
-        printk("recv=%d\n",rx_length);
+    
 
         /*****
             last pkt handle
         *****/
-#if 1
-   //     if(isSingleOrLastPkt(rxDesc))
-	{
+
+   // if(isSingleOrLastPkt(rxDesc))
+	  {
 		//printRxDescriptorList();
 		lastPktHandle(rxDesc);
         /***** print pkt RSSI ******/
@@ -388,8 +251,8 @@ void hal_rx(unsigned long dev_id)
                 
         rssi = SX1276LoRaReadRssi();
         printk("recv-> (%d dBm)\n", rssi);			//print rssi
-	}
- #endif       
+        
+	  }
 
 fail_receive:
     //go back to receive mode

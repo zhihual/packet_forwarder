@@ -307,6 +307,17 @@ static void waitSentDone(uint8 datasize)
 void sx1276_tx(uint8 *txbuf, unsigned int length)
 {
 	unsigned char addr,temp;
+	int i;
+
+    print("[DrvTx]Dump Tx Packet\n");
+
+    for(i=0; i<length; i++)
+    {
+      printf("%02x ", txbuf[i]);
+      if((i+1)%8 == 0) printf("\n");
+	
+    }
+    
 	
 	//tx_en=1;						// open tx antenna switch
 	//rx_en=0;
@@ -338,19 +349,7 @@ void sx1276_tx(uint8 *txbuf, unsigned int length)
 
 void sx1276_Send_Packet(uint8 *txbuf, unsigned int length)
 {
-#if 0
-     int i;
-        
 
-     printk("------------------buff_len(%d)-----------------\n",length);
-     for(i=0;i<length;i++)
-     {
-       printk("%02d\t",txbuf[i]);
-       if((i+1)%8 == 0) printk("\n");
-     }
-     printk("\n");
-     printk("---------------------------------------------\n");
-#endif
      sx1276_tx(txbuf,length);
 
 }
@@ -659,7 +658,7 @@ void sx1276_getRecvBuff(uint8 *p,uint8 length)
         
     for(i=0;i<length;i++)
     {
-       printk("%02x\t",p[i]);
+       printk("[DrvRx]%02x\t",p[i]);
        if((i+1)%8 == 0) printk("\n");
     }
     printk("\n");
