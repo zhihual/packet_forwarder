@@ -309,12 +309,12 @@ void sx1276_tx(uint8 *txbuf, unsigned int length)
 	unsigned char addr,temp;
 	int i;
 
-    print("[DrvTx]Dump Tx Packet\n");
+    printk("[DrvTx]Dump Tx Packet\n");
 
     for(i=0; i<length; i++)
     {
-      printf("%02x ", txbuf[i]);
-      if((i+1)%8 == 0) printf("\n");
+      printk("%02x ", txbuf[i]);
+      if((i+1)%8 == 0) printk("\n");
 	
     }
     
