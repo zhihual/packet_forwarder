@@ -20,6 +20,7 @@ Maintainer: Miguel Luis ( Semtech ), Gregory Cristian ( Semtech ) and Daniel Jä
 //#include "board.h"
 #include "stdint.h"
 #include <stdbool.h>
+#include <time.h> 
 
 #include "timer.h"
 #include "LoRaMacCrypto.h"
@@ -1306,7 +1307,7 @@ static uint8_t DevEui[] =
  */
 static uint8_t AppEui[] = 
 {
-    0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00 
+    0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01 
 };
 
 /*!
@@ -1314,7 +1315,7 @@ static uint8_t AppEui[] =
  */
 static uint8_t AppKey[] = 
 {
- 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16
+ 0x01, 0x01,  0x01, 0x01, 0x01, 0x01,  0x01, 0x01,0x01, 0x01,  0x01, 0x01,0x01, 0x01,  0x01, 0x01
 };
 
 
@@ -2722,10 +2723,11 @@ LoRaMacStatus_t PrepareFrame( LoRaMacHeader_t *macHdr, LoRaMacFrameCtrl_t *fCtrl
             memcpyr( LoRaMacBuffer + LoRaMacBufferPktLen, LoRaMacDevEui, 8 );
             LoRaMacBufferPktLen += 8;
 
-            Rand1 = rand();
-            Rand2 = rand();
+            Rand1 = rand1();
+    
             //LoRaMacDevNonce = Radio.Random( );
-            LoRaMacDevNonce = (uint16_t)(Rand1*Rand2);
+            LoRaMacDevNonce = Rand1;
+            printf("rand1=%x\n",Rand1 );
 
             LoRaMacBuffer[LoRaMacBufferPktLen++] = LoRaMacDevNonce & 0xFF;
             LoRaMacBuffer[LoRaMacBufferPktLen++] = ( LoRaMacDevNonce >> 8 ) & 0xFF;
@@ -2911,8 +2913,13 @@ LoRaMacStatus_t SendFrameOnChannel( ChannelParams_t channel )
     return LORAMAC_STATUS_OK;
 }
 
+
+
 LoRaMacStatus_t LoRaMacInitialization( LoRaMacPrimitives_t *primitives, LoRaMacCallback_t *callbacks )
 {
+    time_t t;
+    uint32_t ranval = 0;
+
     if( primitives == NULL )
     {
         return LORAMAC_STATUS_PARAMETER_INVALID;
@@ -3031,7 +3038,15 @@ LoRaMacStatus_t LoRaMacInitialization( LoRaMacPrimitives_t *primitives, LoRaMacC
 //    Radio.Init( &RadioEvents );
 
     // Random seed initialization
-//    srand1( Radio.Random( ) );
+    //srand1( Radio.Random( ) );
+
+    time(&t);
+    printf("time=%ld\n", t);
+
+    ranval = t&0xFFFFFFFF;
+    printf("ranval=%d\n", ranval);
+    srand1(ranval);
+
 
     // Initialize channel index.
     Channel = LORA_MAX_NB_CHANNELS;
