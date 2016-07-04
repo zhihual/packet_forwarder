@@ -1030,7 +1030,24 @@ void thread_up(void) {
 		// This should be real code, just get packet from hw. actually from client side.
 		// nb_pkt = lgw_receive(NB_PKT_MAX, rxpkt);
 
+      
         nb_pkt = AR9331Drv_RecvPkt(NB_PKT_MAX, rxpkt);
+
+          p = &rxpkt[0];
+		   p->freq_hz=903000000;
+	       p->if_chain=10;
+	       p->status=STAT_CRC_OK;
+	       p->count_us= 1;
+	       p->rf_chain=4;
+	       p->modulation=MOD_LORA;
+	       p->bandwidth=BW_500KHZ;
+	       p->datarate=DR_LORA_SF8;
+	       p->coderate=CR_LORA_4_5;
+	       p->rssi=8;
+	       p->snr=5;
+	       p->snr_min=1;
+	       p->snr_max=10;
+	       p->crc=0;
 
 		pthread_mutex_unlock(&mx_concent);
 		if (nb_pkt == LGW_HAL_ERROR) {

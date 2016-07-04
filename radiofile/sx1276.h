@@ -172,7 +172,7 @@
 #define RX_HEADER_TYPE_INDEX 0
 #define RX_HEADER_SEQ_NUMBER_INDEX 1
 
-
+void sx1276_tx(uint8 *txbuf, unsigned int length);
 
 struct _rssi_value{
         int integer;

@@ -276,8 +276,19 @@ static int SendPkt(int fd,int length, uint8* buff)
 int AR9331Drv_SendPkt(struct lgw_pkt_tx_s pkt_data)
 {
 
+   int k = 0;
    printf("AR9331Drv_SendPkt  Send=%p (size=%d)\n)", pkt_data.payload,pkt_data.size);
-   SendPkt(g_fd, pkt_data.payload, pkt_data.size);
+
+   for(k=0; k<pkt_data.size; k++)
+   {
+     printf("%d ",pkt_data.payload[k]);
+     if((k+1)%8 ==0) printf("\n");
+
+   }
+   printf("\n");
+   
+   SendPkt(g_fd, pkt_data.size, pkt_data.payload);
+   return 0;
 }
 
 int AR9331Drv_RecvPkt(uint8 max_pkt, struct lgw_pkt_rx_s *pkt_data)

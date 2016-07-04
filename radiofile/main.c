@@ -180,8 +180,10 @@ static ssize_t globalmem_write(struct file *filp, const char __user *buf, size_t
     uint8 *p_mem;
 	int ret = 0;
 
-    printk("%s+\n",__func__);
+    printk("%s+ %d\n",__func__, size);
 	/* …Í«Î ƒ⁄¥Ê*/
+
+    
 	p_mem = kmalloc(size, GFP_KERNEL);
 	/*…Í«Î ß∞‹*/
 	if (!p_mem)

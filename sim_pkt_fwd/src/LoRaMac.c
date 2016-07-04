@@ -2725,7 +2725,7 @@ LoRaMacStatus_t PrepareFrame( LoRaMacHeader_t *macHdr, LoRaMacFrameCtrl_t *fCtrl
             Rand1 = rand();
             Rand2 = rand();
             //LoRaMacDevNonce = Radio.Random( );
-            LoRaMacDevNonce = (uint16_t)(Rand1*Rand2);
+            LoRaMacDevNonce = 7;
 
             LoRaMacBuffer[LoRaMacBufferPktLen++] = LoRaMacDevNonce & 0xFF;
             LoRaMacBuffer[LoRaMacBufferPktLen++] = ( LoRaMacDevNonce >> 8 ) & 0xFF;

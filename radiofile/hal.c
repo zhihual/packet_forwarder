@@ -263,7 +263,10 @@ int hal_tx(uint8 *tx_mem, int size)
     printk("mem_size(%d) overload the MAX_RX_MEM_SIZE(%d)\n",size,MAX_RX_MEM_SIZE);
     return -EINVAL;
   }
-        
+
+  sx1276_tx(tx_mem,size);      
+
+#if 0  
   //allocate tx_descriptor linked list
   createTxHead();
   createTxDescriptorList(tx_mem,size);
@@ -272,7 +275,7 @@ int hal_tx(uint8 *tx_mem, int size)
   sendTxDesciprotList();
   //destroy txNodeList
   destroyTxNodeList();
-    
+#endif    
   //after sent done, go back to RX status
   printk("Done, turn to receive\n");
   hal_start_rx(); 

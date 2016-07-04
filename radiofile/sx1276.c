@@ -304,7 +304,7 @@ static void waitSentDone(uint8 datasize)
 }
 
 
-static void sx1276_tx(uint8 *txbuf, unsigned int length)
+void sx1276_tx(uint8 *txbuf, unsigned int length)
 {
 	unsigned char addr,temp;
 	
