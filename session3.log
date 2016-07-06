@@ -1,0 +1,1049 @@
+hejilao board init finished.
+hejilao lora radio app after board init.
+AAAAAAAAAA
+Write 0x9=0
+
+           Write 0x3b=c2
+
+                        hejilao set channel freq 868000000.
+Write 0x6=d9
+
+            Write 0x7=0
+
+                       Write 0x8=0
+
+                                  Write 0x3b=c2
+
+                                               Write 0x9=4f
+
+                                                           hejilao set channel freq 434000000.
+Write 0x6=6c
+
+            Write 0x7=80
+
+                        Write 0x8=0
+
+                                   Write 0x1=8
+
+                                              Write 0xc=23
+
+                                                          Write 0xd=1e
+
+                                                                      Write 0xe=d2
+
+ Write 0x1a=1
+
+             Write 0x1f=aa
+
+                          Write 0x24=7
+
+                                      Write 0x27=12
+
+                                                   Write 0x28=c1
+
+                                                                Write 0x29=94
+
+                                                                             Write 0x2a=c1
+
+         Write 0x30=d8
+
+                      Write 0x35=8f
+
+                                   Write 0x3b=2
+
+                                               Write 0x40=0
+
+                                                           Write 0x41=30
+
+                                                                        Write 0x1=8
+
+  Write 0x1=88
+
+              Write 0x40=0
+
+                          Write 0x41=0
+
+                                      Write 0x23=40
+
+                                                   Write 0x1=88
+
+                                                               Write 0x1=8
+
+                                                                          Write 0x40=0
+
+     Write 0x41=30
+
+                  hejilao version is 0x12.
+hejilao set channel freq 490000000.
+Write 0x6=7a
+
+            Write 0x7=80
+
+                        Write 0x8=0
+
+                                   hejilao SX1276SetTxConfig_hack.
+hejilao SX1276SetRxConfig_hack.
+Write 0x1=8
+
+           Write 0x1=0
+
+                      Write 0x4b=9
+
+                                  Write 0x1=88
+
+                                              Write 0x6=7a
+
+                                                          Write 0x7=80
+
+                                                                      Write 0x8=0
+
+Write 0x9=ff
+
+            Write 0xb=b
+
+                       Write 0xc=23
+
+                                   Write 0x1d=92
+
+                                                Write 0x1e=87
+
+                                                             Write 0x26=8
+
+                                                                         Write 0x1f=ff
+
+     Write 0x20=0
+
+                 Write 0x21=10
+
+                              Write 0x4d=87
+
+                                           Write 0x24=0
+
+                                                       Write 0x41=1
+
+                                                                   Write 0x1=1
+
+                                                                              Write 0x40=0
+
+         Write 0x11=3e
+
+                      Write 0x12=ff
+
+                                   Write 0xf=0
+
+                                              Write 0xd=0
+
+                                                         Write 0x1=5
+
+                                                                    SX1276SetRx
+                                                                               hejilao receive other packet 1 size 64.
+
+SX1276SetRx
+hejilao board init finished.
+hejilao lora radio app after board init.
+AAAAAAAAAA
+Write 0x9=0
+
+           Write 0x3b=c2
+
+                        hejilao set channel freq 868000000.
+Write 0x6=d9
+
+            Write 0x7=0
+
+                       Write 0x8=0
+
+                                  Write 0x3b=c2
+
+                                               Write 0x9=4f
+
+                                                           hejilao set channel freq 434000000.
+Write 0x6=6c
+
+            Write 0x7=80
+
+                        Write 0x8=0
+
+                                   Write 0x1=8
+
+                                              Write 0xc=23
+
+                                                          Write 0xd=1e
+
+                                                                      Write 0xe=d2
+
+ Write 0x1a=1
+
+             Write 0x1f=aa
+
+                          Write 0x24=7
+
+                                      Write 0x27=12
+
+                                                   Write 0x28=c1
+
+                                                                Write 0x29=94
+
+                                                                             Write 0x2a=c1
+
+         Write 0x30=d8
+
+                      Write 0x35=8f
+
+                                   Write 0x3b=2
+
+                                               Write 0x40=0
+
+                                                           Write 0x41=30
+
+                                                                        Write 0x1=8
+
+  Write 0x1=88
+
+              Write 0x40=0
+
+                          Write 0x41=0
+
+                                      Write 0x23=40
+
+                                                   Write 0x1=88
+
+                                                               Write 0x1=8
+
+                                                                          Write 0x40=0
+
+     Write 0x41=30
+
+                  hejilao version is 0x12.
+hejilao set channel freq 490000000.
+Write 0x6=7a
+
+            Write 0x7=80
+
+                        Write 0x8=0
+
+                                   hejilao SX1276SetTxConfig_hack.
+hejilao SX1276SetRxConfig_hack.
+Write 0x1=8
+
+           Write 0x1=0
+
+                      Write 0x4b=9
+
+                                  Write 0x1=88
+
+                                              Write 0x6=7a
+
+                                                          Write 0x7=80
+
+                                                                      Write 0x8=0
+
+Write 0x9=ff
+
+            Write 0xb=b
+
+                       Write 0xc=23
+
+                                   Write 0x1d=92
+
+                                                Write 0x1e=87
+
+                                                             Write 0x26=8
+
+                                                                         Write 0x1f=ff
+
+     Write 0x20=0
+
+                 Write 0x21=10
+
+                              Write 0x4d=87
+
+                                           Write 0x24=0
+
+                                                       Write 0x41=1
+
+                                                                   Write 0x1=1
+
+                                                                              Write 0x40=0
+
+         Write 0x11=3e
+
+                      Write 0x12=ff
+
+                                   Write 0xf=0
+
+                                              Write 0xd=0
+
+                                                         Write 0x1=5
+
+                                                                    SX1276SetRx
+                                                                               hejilao receive other packet 1 size 64.
+
+SX1276SetRx
+hejilao board init finished.
+hejilao lora radio app after board init.
+AAAAAAAAAA
+Write 0x9=0
+
+           Write 0x3b=c2
+
+                        hejilao set channel freq 868000000.
+Write 0x6=d9
+
+            Write 0x7=0
+
+                       Write 0x8=0
+
+                                  Write 0x3b=c2
+
+                                               Write 0x9=4f
+
+                                                           hejilao set channel freq 434000000.
+Write 0x6=6c
+
+            Write 0x7=80
+
+                        Write 0x8=0
+
+                                   Write 0x1=8
+
+                                              Write 0xc=23
+
+                                                          Write 0xd=1e
+
+                                                                      Write 0xe=d2
+
+ Write 0x1a=1
+
+             Write 0x1f=aa
+
+                          Write 0x24=7
+
+                                      Write 0x27=12
+
+                                                   Write 0x28=c1
+
+                                                                Write 0x29=94
+
+                                                                             Write 0x2a=c1
+
+         Write 0x30=d8
+
+                      Write 0x35=8f
+
+                                   Write 0x3b=2
+
+                                               Write 0x40=0
+
+                                                           Write 0x41=30
+
+                                                                        Write 0x1=8
+
+  Write 0x1=88
+
+              Write 0x40=0
+
+                          Write 0x41=0
+
+                                      Write 0x23=40
+
+                                                   Write 0x1=88
+
+                                                               Write 0x1=8
+
+                                                                          Write 0x40=0
+
+     Write 0x41=30
+
+                  hejilao version is 0x12.
+hejilao set channel freq 490000000.
+Write 0x6=7a
+
+            Write 0x7=80
+
+                        Write 0x8=0
+
+                                   Write 0x1=8
+
+                                              Write 0x1=88
+
+                                                          Write 0x40=0
+
+                                                                      Write 0x41=0
+
+ Write 0x9=ff
+
+             Write 0x4d=87
+
+                          Write 0x1d=92
+
+                                       Write 0x1e=84
+
+                                                    Write 0x26=c
+
+                                                                Write 0x20=0
+
+                                                                            Write 0x21=10
+
+        Write 0x31=c3
+
+                     Write 0x37=a
+
+                                 hejilao lora register 92 84 c 7a 80 0 9. 
+hejilao SX1276SetTxConfig_hack.
+hejilao SX1276SetRxConfig_hack.
+Write 0x1=8
+
+           Write 0x1=0
+
+                      Write 0x4b=9
+
+                                  Write 0x1=88
+
+                                              Write 0x6=7a
+
+                                                          Write 0x7=80
+
+                                                                      Write 0x8=0
+
+Write 0x9=ff
+
+            Write 0xb=b
+
+                       Write 0xc=23
+
+                                   Write 0x1d=92
+
+                                                Write 0x1e=87
+
+                                                             Write 0x26=8
+
+                                                                         Write 0x1f=ff
+
+     Write 0x20=0
+
+                 Write 0x21=10
+
+                              Write 0x4d=87
+
+                                           Write 0x24=0
+
+                                                       Write 0x41=1
+
+                                                                   Write 0x1=1
+
+                                                                              Write 0x40=0
+
+         Write 0x11=3e
+
+                      Write 0x12=ff
+
+                                   Write 0xf=0
+
+                                              Write 0xd=0
+
+                                                         Write 0x1=5
+
+                                                                    SX1276SetRx
+                                                                               hejilao receive other packet 1 size 64.
+
+SX1276SetRx
+           hejilao board init finished.
+hejilao lora radio app after board init.
+AAAAAAAAAA
+hejilao set channel freq 868000000.
+hejilao set channel freq 434000000.
+hejilao version is 0x12.
+hejilao set channel freq 490000000.
+hejilao lora register 92 84 c 7a 80 0 9. 
+hejilao SX1276SetTxConfig_hack.
+hejilao SX1276SetRxConfig_hack.
+hejilao board init finished.
+hejilao lora mac application.
+hejilao set channel freq 868000000.
+hejilao set channel freq 434000000.
+hejilao version is 0x12.
+hejilao lora mac state INIT.
+hejilao set channel freq 490000000.
+hejilao lora register 92 84 c 7a 80 0 9. 
+hejilao SX1276SetTxConfig_hack.
+hejilao add Timer timestamp 11625.
+hejilao TimerSetTimeout timer 20000b08 timestamp 11625.
+0 1 1 1 1 1 1 1 1 8 7 6 5 4 3 2 1 7 0 75 107 56 190 
+hejilao add new Timer timestamp 3006 and elaspsed time 6 and head time 11625
+hejilao add Timer timestamp 3006 remaining time 11619.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 3006.
+hejilao SendFrameOnChannel send a frame 23.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10008 and elaspsed time 11 and head time 3006
+hejilao add Timer timestamp 10008 remaining time 2995.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 1.
+hejilao TimerSetTimeout timer 20000b6c timestamp 9981.
+hejilao SX1276OnDio0Irq tx complete.
+hejilao OnRadioTxDone.
+hejilao OnRadioTxDone start RxWindowsTimer1 20000b30.
+hejilao add new Timer timestamp 5003 and elaspsed time 11 and head time 9981
+hejilao add Timer timestamp 5003 remaining time 9970.
+hejilao TimerSetTimeout timer 20000b30 timestamp 5003.
+hejilao add new Timer timestamp 5997 and elaspsed time 0 and head time 5003
+hejilao add Timer timestamp 5997 remaining time 5003.
+hejilao lora mac state SLEEP 2.
+hejilao lora mac state SLEEP 3.
+hejilao lora mac state SLEEP 4.
+hejilao lora mac state SLEEP 5.
+hejilao TimerIrqHandler elapsed time 5003, head timer 20000b30, timestamp 5003.
+hejilao OnRxWindow1TimerEvent.
+hejilao RxWindowSetup freq 490000000 datarate 8 bw 2 rxcontinous 0.
+hejilao set channel freq 490000000.
+hejilao SX1276SetRxConfig_hack.
+hejilao add new Timer timestamp 8027.
+hejilao add Timer timestamp 8027 remaining time 994.
+hejilao TimerIrqHandler timer head 20000b44 running 0.
+hejilao TimerSetTimeout timer 20000b44 timestamp 994.
+hejilao lora mac state SLEEP 6.
+hejilao TimerIrqHandler elapsed time 994, head timer 20000b44, timestamp 994.
+hejilao RxWindowSetup freq 434665000 datarate 12 bw 0 rxcontinous 0.
+hejilao set channel freq 434665000.
+hejilao SX1276SetRxConfig_hack.
+hejilao add new Timer timestamp 4015.
+hejilao add Timer timestamp 4015 remaining time 3973.
+hejilao TimerIrqHandler timer head 20000b6c running 0.
+hejilao TimerSetTimeout timer 20000b6c timestamp 3973.
+hejilao lora mac state SLEEP 7.
+hejilao lora mac state SLEEP 8.
+hejilao lora mac state SLEEP 9.
+hejilao lora mac state SLEEP 10.
+hejilao TimerIrqHandler elapsed time 3973, head timer 20000b6c, timestamp 3973.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000b08 running 0.
+hejilao TimerSetTimeout timer 20000b08 timestamp 1600.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10059 and elaspsed time 63 and head time 1600
+hejilao add Timer timestamp 10059 remaining time 1537.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 11.
+hejilao lora mac state SLEEP 12.
+hejilao TimerIrqHandler elapsed time 1600, head timer 20000b08, timestamp 1600.
+hejilao lora mac MlmeConfirm enter.
+hejilao lora mac MlmeConfirm exit.
+hejilao TimerIrqHandler timer head 20000b6c running 0.
+hejilao TimerSetTimeout timer 20000b6c timestamp 8522.
+hejilao lora mac state SLEEP 13.
+hejilao lora mac state SLEEP 14.
+hejilao lora mac state SLEEP 15.
+hejilao lora mac state SLEEP 16.
+hejilao lora mac state SLEEP 17.
+hejilao lora mac state SLEEP 18.
+hejilao lora mac state SLEEP 19.
+hejilao lora mac state SLEEP 20.
+hejilao lora mac state SLEEP 21.
+hejilao TimerIrqHandler elapsed time 8522, head timer 20000b6c, timestamp 8522.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao set channel freq 490000000.
+hejilao lora register 92 84 c 7a 80 0 9. 
+hejilao SX1276SetTxConfig_hack.
+hejilao add Timer timestamp 10534.
+hejilao TimerSetTimeout timer 20000b08 timestamp 10534.
+0 1 1 1 1 1 1 1 1 8 7 6 5 4 3 2 1 7 0 75 107 56 190 
+hejilao board init finished.
+hejilao lora mac application.
+hejilao set channel freq 868000000.
+hejilao set channel freq 434000000.
+hejilao version is 0x12.
+hejilao lora mac state INIT.
+hejilao set channel freq 490000000.
+hejilao lora register 92 84 c 7a 80 0 9. 
+hejilao SX1276SetTxConfig_hack.
+hejilao add Timer timestamp 11625.
+hejilao TimerSetTimeout timer 20000b08 timestamp 11625.
+0 1 1 1 1 1 1 1 1 8 7 6 5 4 3 2 1 7 0 75 107 56 190 
+hejilao add new Timer timestamp 3006 and elaspsed time 6 and head time 11625
+hejilao add Timer timestamp 3006 remaining time 11619.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 3006.
+hejilao SendFrameOnChannel send a frame 23.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10008 and elaspsed time 11 and head time 3006
+hejilao add Timer timestamp 10008 remaining time 2995.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 1.
+hejilao TimerSetTimeout timer 20000b6c timestamp 9981.
+hejilao SX1276OnDio0Irq tx complete.
+hejilao OnRadioTxDone.
+hejilao OnRadioTxDone start RxWindowsTimer1 20000b30.
+hejilao add new Timer timestamp 5003 and elaspsed time 11 and head time 9981
+hejilao add Timer timestamp 5003 remaining time 9970.
+hejilao TimerSetTimeout timer 20000b30 timestamp 5003.
+hejilao add new Timer timestamp 5997 and elaspsed time 0 and head time 5003
+hejilao add Timer timestamp 5997 remaining time 5003.
+hejilao lora mac state SLEEP 2.
+hejilao lora mac state SLEEP 3.
+hejilao lora mac state SLEEP 4.
+hejilao lora mac state SLEEP 5.
+hejilao TimerIrqHandler elapsed time 5003, head timer 20000b30, timestamp 5003.
+hejilao OnRxWindow1TimerEvent.
+hejilao RxWindowSetup freq 490000000 datarate 8 bw 2 rxcontinous 0.
+hejilao set channel freq 490000000.
+hejilao SX1276SetRxConfig_hack.
+hejilao add new Timer timestamp 8027.
+hejilao add Timer timestamp 8027 remaining time 994.
+hejilao TimerIrqHandler timer head 20000b44 running 0.
+hejilao TimerSetTimeout timer 20000b44 timestamp 994.
+hejilao lora mac state SLEEP 6.
+hejilao TimerIrqHandler elapsed time 994, head timer 20000b44, timestamp 994.
+hejilao RxWindowSetup freq 434665000 datarate 12 bw 0 rxcontinous 0.
+hejilao set channel freq 434665000.
+hejilao SX1276SetRxConfig_hack.
+hejilao add new Timer timestamp 4015.
+hejilao add Timer timestamp 4015 remaining time 3973.
+hejilao TimerIrqHandler timer head 20000b6c running 0.
+hejilao TimerSetTimeout timer 20000b6c timestamp 3973.
+hejilao lora mac state SLEEP 7.
+hejilao lora mac state SLEEP 8.
+hejilao lora mac state SLEEP 9.
+hejilao lora mac state SLEEP 10.
+hejilao TimerIrqHandler elapsed time 3973, head timer 20000b6c, timestamp 3973.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000b08 running 0.
+hejilao TimerSetTimeout timer 20000b08 timestamp 1600.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10055 and elaspsed time 58 and head time 1600
+hejilao add Timer timestamp 10055 remaining time 1542.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 11.
+hejilao lora mac state SLEEP 12.
+hejilao TimerIrqHandler elapsed time 1600, head timer 20000b08, timestamp 1600.
+hejilao lora mac MlmeConfirm enter.
+hejilao lora mac MlmeConfirm exit.
+hejilao TimerIrqHandler timer head 20000b6c running 0.
+hejilao TimerSetTimeout timer 20000b6c timestamp 8513.
+hejilao lora mac state SLEEP 13.
+hejilao lora mac state SLEEP 14.
+hejilao lora mac state SLEEP 15.
+hejilao lora mac state SLEEP 16.
+hejilao lora mac state SLEEP 17.
+hejilao lora mac state SLEEP 18.
+hejilao lora mac state SLEEP 19.
+hejilao lora mac state SLEEP 20.
+hejilao lora mac state SLEEP 21.
+hejilao TimerIrqHandler elapsed time 8513, head timer 20000b6c, timestamp 8513.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao set channel freq 490000000.
+hejilao lora register 92 84 c 7a 80 0 9. 
+hejilao SX1276SetTxConfig_hack.
+hejilao add Timer timestamp 11475.
+hejilao TimerSetTimeout timer 20000b08 timestamp 11475.
+0 1 1 1 1 1 1 1 1 8 7 6 5 4 3 2 1 7 0 75 107 56 190 
+hejilao TimerIrqHandler elapsed time 128211, head timer 20000b08, timestamp 11475.
+hejilao lora mac MlmeConfirm enter.
+hejilao lora mac MlmeConfirm exit.
+hejilao add Timer timestamp 131247.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 131247.
+hejilao SendFrameOnChannel send a frame 23.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10007 and elaspsed time 11 and head time 131247
+hejilao add Timer timestamp 10007 remaining time 131236.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10007.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 22.
+hejilao lora mac state SLEEP 23.
+hejilao lora mac state SLEEP 24.
+hejilao lora mac state SLEEP 25.
+hejilao lora mac state SLEEP 26.
+hejilao lora mac state SLEEP 27.
+hejilao TimerIrqHandler elapsed time 10007, head timer 20000b6c, timestamp 10007.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 121229.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10325 and elaspsed time 328 and head time 121229
+hejilao add Timer timestamp 10325 remaining time 120901.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10325.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 28.
+hejilao lora mac state SLEEP 29.
+hejilao lora mac state SLEEP 30.
+hejilao lora mac state SLEEP 31.
+hejilao lora mac state SLEEP 32.
+hejilao lora mac state SLEEP 33.
+hejilao lora mac state SLEEP 34.
+hejilao lora mac state SLEEP 35.
+hejilao lora mac state SLEEP 36.
+hejilao lora mac state SLEEP 37.
+hejilao lora mac state SLEEP 38.
+hejilao TimerIrqHandler elapsed time 10325, head timer 20000b6c, timestamp 10325.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 110576.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10708 and elaspsed time 712 and head time 110576
+hejilao add Timer timestamp 10708 remaining time 109864.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10708.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 39.
+hejilao lora mac state SLEEP 40.
+hejilao lora mac state SLEEP 41.
+hejilao lora mac state SLEEP 42.
+hejilao lora mac state SLEEP 43.
+hejilao lora mac state SLEEP 44.
+hejilao lora mac state SLEEP 45.
+hejilao lora mac state SLEEP 46.
+hejilao lora mac state SLEEP 47.
+hejilao lora mac state SLEEP 48.
+hejilao lora mac state SLEEP 49.
+hejilao TimerIrqHandler elapsed time 10708, head timer 20000b6c, timestamp 10708.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 99156.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10327 and elaspsed time 330 and head time 99156
+hejilao add Timer timestamp 10327 remaining time 98826.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10327.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 50.
+hejilao lora mac state SLEEP 51.
+hejilao lora mac state SLEEP 52.
+hejilao lora mac state SLEEP 53.
+hejilao lora mac state SLEEP 54.
+hejilao lora mac state SLEEP 55.
+hejilao lora mac state SLEEP 56.
+hejilao lora mac state SLEEP 57.
+hejilao lora mac state SLEEP 58.
+hejilao lora mac state SLEEP 59.
+hejilao lora mac state SLEEP 60.
+hejilao TimerIrqHandler elapsed time 10327, head timer 20000b6c, timestamp 10327.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 88499.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10707 and elaspsed time 710 and head time 88499
+hejilao add Timer timestamp 10707 remaining time 87789.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10707.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 61.
+hejilao lora mac state SLEEP 62.
+hejilao lora mac state SLEEP 63.
+hejilao lora mac state SLEEP 64.
+hejilao lora mac state SLEEP 65.
+hejilao lora mac state SLEEP 66.
+hejilao lora mac state SLEEP 67.
+hejilao lora mac state SLEEP 68.
+hejilao lora mac state SLEEP 69.
+hejilao lora mac state SLEEP 70.
+hejilao lora mac state SLEEP 71.
+hejilao TimerIrqHandler elapsed time 10707, head timer 20000b6c, timestamp 10707.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 77082.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10326 and elaspsed time 330 and head time 77082
+hejilao add Timer timestamp 10326 remaining time 76752.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10326.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 72.
+hejilao lora mac state SLEEP 73.
+hejilao lora mac state SLEEP 74.
+hejilao lora mac state SLEEP 75.
+hejilao lora mac state SLEEP 76.
+hejilao lora mac state SLEEP 77.
+hejilao lora mac state SLEEP 78.
+hejilao lora mac state SLEEP 79.
+hejilao lora mac state SLEEP 80.
+hejilao lora mac state SLEEP 81.
+hejilao lora mac state SLEEP 82.
+hejilao TimerIrqHandler elapsed time 10326, head timer 20000b6c, timestamp 10326.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 66426.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10711 and elaspsed time 715 and head time 66426
+hejilao add Timer timestamp 10711 remaining time 65711.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10711.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 83.
+hejilao lora mac state SLEEP 84.
+hejilao lora mac state SLEEP 85.
+hejilao lora mac state SLEEP 86.
+hejilao lora mac state SLEEP 87.
+hejilao lora mac state SLEEP 88.
+hejilao lora mac state SLEEP 89.
+hejilao lora mac state SLEEP 90.
+hejilao lora mac state SLEEP 91.
+hejilao lora mac state SLEEP 92.
+hejilao lora mac state SLEEP 93.
+hejilao TimerIrqHandler elapsed time 10711, head timer 20000b6c, timestamp 10711.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 55000.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10320 and elaspsed time 323 and head time 55000
+hejilao add Timer timestamp 10320 remaining time 54677.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10320.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 94.
+hejilao lora mac state SLEEP 95.
+hejilao lora mac state SLEEP 96.
+hejilao lora mac state SLEEP 97.
+hejilao lora mac state SLEEP 98.
+hejilao lora mac state SLEEP 99.
+hejilao lora mac state SLEEP 100.
+hejilao lora mac state SLEEP 101.
+hejilao lora mac state SLEEP 102.
+hejilao lora mac state SLEEP 103.
+hejilao lora mac state SLEEP 104.
+hejilao TimerIrqHandler elapsed time 10320, head timer 20000b6c, timestamp 10320.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 44357.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10713 and elaspsed time 717 and head time 44357
+hejilao add Timer timestamp 10713 remaining time 43640.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10713.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 105.
+hejilao lora mac state SLEEP 106.
+hejilao lora mac state SLEEP 107.
+hejilao lora mac state SLEEP 108.
+hejilao lora mac state SLEEP 109.
+hejilao lora mac state SLEEP 110.
+hejilao lora mac state SLEEP 111.
+hejilao lora mac state SLEEP 112.
+hejilao lora mac state SLEEP 113.
+hejilao lora mac state SLEEP 114.
+hejilao lora mac state SLEEP 115.
+hejilao TimerIrqHandler elapsed time 10713, head timer 20000b6c, timestamp 10713.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 32927.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10318 and elaspsed time 321 and head time 32927
+hejilao add Timer timestamp 10318 remaining time 32606.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10318.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 116.
+hejilao lora mac state SLEEP 117.
+hejilao lora mac state SLEEP 118.
+hejilao lora mac state SLEEP 119.
+hejilao lora mac state SLEEP 120.
+hejilao lora mac state SLEEP 121.
+hejilao lora mac state SLEEP 122.
+hejilao lora mac state SLEEP 123.
+hejilao lora mac state SLEEP 124.
+hejilao lora mac state SLEEP 125.
+hejilao lora mac state SLEEP 126.
+hejilao TimerIrqHandler elapsed time 10318, head timer 20000b6c, timestamp 10318.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 22288.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10717 and elaspsed time 720 and head time 22288
+hejilao add Timer timestamp 10717 remaining time 21568.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10717.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 127.
+hejilao lora mac state SLEEP 128.
+hejilao lora mac state SLEEP 129.
+hejilao lora mac state SLEEP 130.
+hejilao lora mac state SLEEP 131.
+hejilao lora mac state SLEEP 132.
+hejilao lora mac state SLEEP 133.
+hejilao lora mac state SLEEP 134.
+hejilao lora mac state SLEEP 135.
+hejilao lora mac state SLEEP 136.
+hejilao lora mac state SLEEP 137.
+hejilao TimerIrqHandler elapsed time 10717, head timer 20000b6c, timestamp 10717.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 10851.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add new Timer timestamp 10315 and elaspsed time 318 and head time 10851
+hejilao add Timer timestamp 10315 remaining time 10533.
+hejilao TimerSetTimeout timer 20000b6c timestamp 10315.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 138.
+hejilao lora mac state SLEEP 139.
+hejilao lora mac state SLEEP 140.
+hejilao lora mac state SLEEP 141.
+hejilao lora mac state SLEEP 142.
+hejilao lora mac state SLEEP 143.
+hejilao lora mac state SLEEP 144.
+hejilao lora mac state SLEEP 145.
+hejilao lora mac state SLEEP 146.
+hejilao lora mac state SLEEP 147.
+hejilao lora mac state SLEEP 148.
+hejilao TimerIrqHandler elapsed time 10315, head timer 20000b6c, timestamp 10315.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao TimerIrqHandler timer head 20000bd0 running 0.
+hejilao TimerSetTimeout timer 20000bd0 timestamp 218.
+hejilao TimerIrqHandler elapsed time 218, head timer 20000bd0, timestamp 218.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add Timer timestamp 15592.
+hejilao TimerSetTimeout timer 20000b6c timestamp 15592.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 149.
+hejilao lora mac state SLEEP 150.
+hejilao lora mac state SLEEP 151.
+hejilao lora mac state SLEEP 152.
+hejilao lora mac state SLEEP 153.
+hejilao lora mac state SLEEP 154.
+hejilao lora mac state SLEEP 155.
+hejilao lora mac state SLEEP 156.
+hejilao lora mac state SLEEP 157.
+hejilao lora mac state SLEEP 158.
+hejilao lora mac state SLEEP 159.
+hejilao lora mac state SLEEP 160.
+hejilao lora mac state SLEEP 161.
+hejilao lora mac state SLEEP 162.
+hejilao lora mac state SLEEP 163.
+hejilao lora mac state SLEEP 164.
+hejilao TimerIrqHandler elapsed time 15592, head timer 20000b6c, timestamp 15592.
+hejilao lora mac OnTxNextPacketTimerEvent entered.
+hejilao lora mac OnTxNextPacketTimerEvent exit 1.
+hejilao LoRaMacMlmeRequest TX running.
+hejilao lora mac state JOIN.
+hejilao next packet timer 20000b6c.
+hejilao add Timer timestamp 26061.
+hejilao TimerSetTimeout timer 20000b6c timestamp 26061.
+hejilao lora mac state CYCLE.
+hejilao lora mac state SLEEP 165.
+hejilao lora mac state SLEEP 166.
+hejilao lora mac state SLEEP 167.
+hejilao lora mac state SLEEP 168.
+hejilao lora mac state SLEEP 169.
+hejilao lora mac state SLEEP 170.
+hejilao lora mac state SLEEP 171.
+hejilao lora mac state SLEEP 172.
+hejilao lora mac state SLEEP 173.
+hejilao lora mac state SLEEP 174.
+hejilao lora mac state SLEEP 175.
+hejilao lora mac state SLEEP 176.
+hejilao lora mac state SLEEP 177.
+hejilao lora mac state SLEEP 178.
+hejilao lora mac state SLEEP 179.
+hejilao lora mac state SLEEP 180.
+hejilao lora mac state SLEEP 181.
+hejilao lora mac state SLEEP 182.
+hejilao lora mac state SLEEP 183.
+hejilao lora mac state SLEEP 184.
+hejilao lora mac state SLEEP 185.
+hejilao lora mac state SLEEP 186.
+hejilao lora mac state SLEEP 187.
+hejilao lora mac state SLEEP 188.
+hejilao lora mac state SLEEP 189.
+hejilao lora mac state SLEEP 190.
+hejilao lora mac state SLEEP 191.
+hejilao lora mac state SLEEP 192.
+hejilao lora mac state SLEEP 193.
+hejilao lora mac state SLEEP 194.
+hejilao lora mac state SLEEP 195.
+hejilao lora mac state SLEEP 196.
+hejilao lora mac state SLEEP 197.
+hejilao lora mac state SLEEP 198.
+hejilao lora mac state SLEEP 199.
+hejilao lora mac state SLEEP 200.
+hejilao lora mac state SLEEP 201.
+hejilao lora mac state SLEEP 202.
+hejilao lora mac state SLEEP 203.
+hejilao lora mac state SLEEP 204.
+hejilao lora mac state SLEEP 205.
+hejilao lora mac state SLEEP 206.
+hejilao lora mac state SLEEP 207.
+hejilao lora mac state SLEEP 208.
+hejilao lora mac state SLEEP 209.
+hejilao lora mac state SLEEP 210.
+hejilao lora mac state SLEEP 211.
+hejilao lora mac state SLEEP 212.
+hejilao lora mac state SLEEP 213.
+hejilao lora mac state SLEEP 214.
+hejilao lora mac state SLEEP 215.
+hejilao lora mac state SLEEP 216.
+hejilao lora mac state SLEEP 217.
+hejilao lora mac state SLEEP 218.
+hejilao lora mac state SLEEP 219.
+hejilao lora mac state SLEEP 220.
+hejilao lora mac state SLEEP 221.
+hejilao lora mac state SLEEP 222.
+hejilao lora mac state SLEEP 223.
+hejilao lora mac state SLEEP 224.
+hejilao lora mac state SLEEP 225.
+hejilao lora mac state SLEEP 226.
+hejilao lora mac state SLEEP 227.
+hejilao lora mac state SLEEP 228.
+hejilao lora mac state SLEEP 229.
+hejilao lora mac state SLEEP 230.
+hejilao lora mac state SLEEP 231.
+hejilao lora mac state SLEEP 232.
+hejilao lora mac state SLEEP 233.
+hejilao lora mac state SLEEP 234.
+hejilao lora mac state SLEEP 235.
+hejilao lora mac state SLEEP 236.
+hejilao lora mac state SLEEP 237.
+hejilao lora mac state SLEEP 238.
+hejilao lora mac state SLEEP 239.
+hejilao lora mac state SLEEP 240.
+hejilao lora mac state SLEEP 241.
+hejilao lora mac state SLEEP 242.
+hejilao lora mac state SLEEP 243.
+hejilao lora mac state SLEEP 244.
+hejilao lora mac state SLEEP 245.
+hejilao lora mac state SLEEP 246.
+hejilao lora mac state SLEEP 247.
+hejilao lora mac state SLEEP 248.
+hejilao lora mac state SLEEP 249.
+hejilao lora mac state SLEEP 250.
+hejilao lora mac state SLEEP 251.
+hejilao lora mac state SLEEP 252.
+hejilao lora mac state SLEEP 253.
+hejilao lora mac state SLEEP 254.
+hejilao lora mac state SLEEP 255.
+hejilao lora mac state SLEEP 0.
+hejilao lora mac state SLEEP 1.
+hejilao lora mac state SLEEP 2.
+hejilao lora mac state SLEEP 3.

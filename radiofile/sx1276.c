@@ -60,7 +60,9 @@ static unsigned char SpiInOut(unsigned char data)
 
 // SPI write register
 void SPIWriteReg(unsigned char addr, unsigned char value)                
-{                                                       
+{                                                    
+
+    printk("Write [0x%x]=0x%x\n", addr, value);
 	addr |= 0x80;			// write register,MSB=1
 
 	//SCK=0;

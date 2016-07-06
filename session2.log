@@ -1,0 +1,149 @@
+hejilao board init finished.
+hejilao lora radio app after board init.
+AAAAAAAAAA
+Write 0x9=0
+
+           Write 0x3b=c2
+
+                        hejilao set channel freq 868000000.
+Write 0x6=d9
+
+            Write 0x7=0
+
+                       Write 0x8=0
+
+                                  Write 0x3b=c2
+
+                                               Write 0x9=4f
+
+                                                           hejilao set channel freq 434000000.
+Write 0x6=6c
+
+            Write 0x7=80
+
+                        Write 0x8=0
+
+                                   Write 0x1=8
+
+                                              Write 0xc=23
+
+                                                          Write 0xd=1e
+
+                                                                      Write 0xe=d2
+
+ Write 0x1a=1
+
+             Write 0x1f=aa
+
+                          Write 0x24=7
+
+                                      Write 0x27=12
+
+                                                   Write 0x28=c1
+
+                                                                Write 0x29=94
+
+                                                                             Write 0x2a=c1
+
+         Write 0x30=d8
+
+                      Write 0x35=8f
+
+                                   Write 0x3b=2
+
+                                               Write 0x40=0
+
+                                                           Write 0x41=30
+
+                                                                        Write 0x1=8
+
+  Write 0x1=88
+
+              Write 0x40=0
+
+                          Write 0x41=0
+
+                                      Write 0x23=40
+
+                                                   Write 0x1=88
+
+                                                               Write 0x1=8
+
+                                                                          Write 0x40=0
+
+     Write 0x41=30
+
+                  hejilao version is 0x12.
+hejilao set channel freq 490000000.
+Write 0x6=7a
+
+            Write 0x7=80
+
+                        Write 0x8=0
+
+                                   hejilao SX1276SetTxConfig_hack.
+Write 0x1=8
+
+           Write 0x1=0
+
+                      Write 0x4b=9
+
+                                  Write 0x1=88
+
+                                              Write 0x6=7a
+
+                                                          Write 0x7=80
+
+                                                                      Write 0x8=0
+
+Write 0x9=ff
+
+            Write 0xb=b
+
+                       Write 0xc=23
+
+                                   Write 0x1d=92
+
+                                                Write 0x1e=87
+
+                                                             Write 0x26=8
+
+                                                                         Write 0x1f=ff
+
+     Write 0x20=0
+
+                 Write 0x21=10
+
+                              Write 0x4d=87
+
+                                           Write 0x24=0
+
+                                                       Write 0x41=1
+
+                                                                   Write 0x1=1
+
+                                                                              Write 0x40=0
+
+         Write 0x11=3e
+
+                      Write 0x12=ff
+
+                                   Write 0xf=0
+
+                                              Write 0xd=0
+
+                                                         Write 0x1=5
+
+                                                                    hejilao SX1276SetRxConfig_hack.
+SX1276SetRx
+           Write 0x40=c
+
+                       Write 0x41=c1
+
+                                    Write 0xd=1e
+
+                                                hejilao TimerSetTimeout timer 20000514 timestamp 10983.
+Write 0x1=85
+
+            hejilao add new Timer timestamp 0 and elaspsed time 1 and head time 10983
+hejilao TimerSetTimeout timer 20000528 timestamp 0.
