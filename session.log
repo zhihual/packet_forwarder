@@ -86,9 +86,9 @@ Write 0x8=0
 TX CFG
 
 // SX1276SetModem( modem );
-Write 0x1=8
-Write 0x1=88
-Write 0x40=0
+Write 0x1=8  LF+sleep
+Write 0x1=88  LORA+SLEEP+HF
+Write 0x40=0  
 Write 0x41=0
 
 //SX1276Write( REG_PACONFIG, paConfig );
@@ -97,16 +97,16 @@ Write 0x9=ff
 Write 0x4d=87
 
 // REG_LR_MODEMCONFIG1/2/3
-Write 0x1d=92
-Write 0x1e=84
-Write 0x26=c
+Write 0x1d=92  500K+Explict+4/5
+Write 0x1e=84  256Chip+ TX Continues
+Write 0x26=c   enable optimize+internal
 
 // PREAMBLE
 Write 0x20=0
 Write 0x21=10
 
 // REG_LR_DETECTOPTIMIZE optimze and REG_LR_DETECTIONTHRESHOLD
-Write 0x31=c3
+Write 0x31=c3  
 Write 0x37=a
 
 
@@ -126,9 +126,9 @@ hejilao SX1276SetTxConfig_hack. //done
 
 //this is 9331 settings.
 Write 0x1=8
-Write 0x1=0
-Write 0x4b=9
-Write 0x1=88
+Write 0x1=0 //set to sleep
+Write 0x4b=9 // tco ,frequency
+Write 0x1=88 // loar mode and LF Test +sleep
 
 
 //Freq
@@ -137,41 +137,43 @@ Write 0x7=80
 Write 0x8=0
 
 //output power
-Write 0x9=ff
+Write 0x9=ff  // amx power
 
-// 
+// LNA current
 Write 0xb=b // what's ocp for?
 Write 0xc=23 // LNA
 
 // band, sperading LNA
-Write 0x1d=92
-Write 0x1e=87 //??? what's this for...
-Write 0x26=8 // ?? what's???
+Write 0x1d=92  // 500K, Explicit header + 4/5 coding rate
+Write 0x1e=87 //??? what's this for,  256 chips+header indicate CRC on
+Write 0x26=8 // ?? what's???  Rate optimiaze on
 
 
 Write 0x1f=ff // max rx timeout
 
-Write 0x20=0  // preamble
+Write 0x20=0  // preamble  // 16 premble
 Write 0x21=10
 
 Write 0x4d=87 // txpower padac
-Write 0x24=0 // no hopping ???
+Write 0x24=0 // no hopping 
 
 Write 0x41=1 // Interrupt setting, // DIO5=ModeReady,DIO4=CadDetected
-Write 0x1=1 
-Write 0x40=0
-Write 0x11=3e
+
+
+Write 0x1=1 //standby + High+
+Write 0x40=0 //DIO
+Write 0x11=3e //TX Iterrupt, no, it's wrong
 Write 0x12=ff
 Write 0xf=0
 Write 0xd=0
-Write 0x1=5 // mode == 5
+Write 0x1=5 // mode == 5 Rx continues, HL, 
 
 hejilao SX1276SetRxConfig_hack.
 SX1276SetRx
 // set RX start.
 Write 0x40=c // DIO MAP
 Write 0x41=c1 // DIO MAP
-Write 0xd=1e // FIFO addr
+Write 0xd=1e // FIFO addr ?? why this
 
 hejilao TimerSetTimeout timer 20000514 timestamp 10984.
 Write 0x1=85 // Mode
