@@ -61,6 +61,7 @@ void desctoryRxDescriptorArray(void)
 		
 		if (gRxDescArray[i].pRxMem)
 		{
+           printk("i=%d mem=%x\n", i, gRxDescArray[i].pRxMem);
 		   kfree(gRxDescArray[i].pRxMem);
 		}
 	
