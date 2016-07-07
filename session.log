@@ -1,149 +1,180 @@
 hejilao board init finished.
 hejilao lora radio app after board init.
 AAAAAAAAAA
-Write 0x9=0
 
-           Write 0x3b=c2
+RxChainCalibration()
+Write 0x9=0  
+SX1276Write( REG_PACONFIG, 0x00 );
 
-                        hejilao set channel freq 868000000.
+// Launch Rx chain calibration for LF band
+SX1276Write( REG_IMAGECAL, ( SX1276Read( REG_IMAGECAL ) & RF_IMAGECAL_IMAGECAL_MASK ) | RF_IMAGECAL_IMAGECAL_START );
+Write 0x3b=c2
+
+// Set frequency
+hejilao set channel freq 868000000.
 Write 0x6=d9
+Write 0x7=0
+Write 0x8=0
 
-            Write 0x7=0
+// Launch Rx chain calibration for HF band
+Write 0x3b=c2
 
-                       Write 0x8=0
 
-                                  Write 0x3b=c2
+// Restore context
+SX1276Write( REG_PACONFIG, regPaConfigInitVal );
+Write 0x9=4f
 
-                                               Write 0x9=4f
-
-                                                           hejilao set channel freq 434000000.
+hejilao set channel freq 434000000.
 Write 0x6=6c
+Write 0x7=80
+Write 0x8=0
 
-            Write 0x7=80
+// flash default register
+Write 0x1=8  //mode
+Write 0xc=23
+Write 0xd=1e
+Write 0xe=d2
+Write 0x1a=1
+Write 0x1f=aa
+Write 0x24=7
+Write 0x27=12
 
-                        Write 0x8=0
+Write 0x28=c1
 
-                                   Write 0x1=8
+Write 0x29=94
 
-                                              Write 0xc=23
+Write 0x2a=c1
 
-                                                          Write 0xd=1e
+Write 0x30=d8
 
-                                                                      Write 0xe=d2
+Write 0x35=8f
 
- Write 0x1a=1
+Write 0x3b=2
 
-             Write 0x1f=aa
+Write 0x40=0
 
-                          Write 0x24=7
+Write 0x41=30
 
-                                      Write 0x27=12
 
-                                                   Write 0x28=c1
-
-                                                                Write 0x29=94
-
-                                                                             Write 0x2a=c1
-
-         Write 0x30=d8
-
-                      Write 0x35=8f
-
-                                   Write 0x3b=2
-
-                                               Write 0x40=0
-
-                                                           Write 0x41=30
-
-                                                                        Write 0x1=8
-
-  Write 0x1=88
-
-              Write 0x40=0
-
-                          Write 0x41=0
-
-                                      Write 0x23=40
-
-                                                   Write 0x1=88
-
-                                                               Write 0x1=8
-
-                                                                          Write 0x40=0
-
-     Write 0x41=30
-
-                  hejilao version is 0x12.
-hejilao set channel freq 490000000.
-Write 0x6=7a
-
-            Write 0x7=80
-
-                        Write 0x8=0
-
-                                   hejilao SX1276SetTxConfig_hack.
 Write 0x1=8
 
-           Write 0x1=0
+Write 0x1=88
 
-                      Write 0x4b=9
+Write 0x40=0
 
-                                  Write 0x1=88
+Write 0x41=0
 
-                                              Write 0x6=7a
+Write 0x23=40
 
-                                                          Write 0x7=80
+Write 0x1=88
 
-                                                                      Write 0x8=0
+// Set FSK
+Write 0x1=8
 
+Write 0x40=0
+
+Write 0x41=30
+
+hejilao version is 0x12.
+				  
+// set channel				  
+hejilao set channel freq 490000000.
+Write 0x6=7a
+Write 0x7=80
+Write 0x8=0
+/////////////////////////////
+TX CFG
+
+// SX1276SetModem( modem );
+Write 0x1=8
+Write 0x1=88
+Write 0x40=0
+Write 0x41=0
+
+//SX1276Write( REG_PACONFIG, paConfig );
+//SX1276Write( REG_PADAC, paDac );
+Write 0x9=ff
+Write 0x4d=87
+
+// REG_LR_MODEMCONFIG1/2/3
+Write 0x1d=92
+Write 0x1e=84
+Write 0x26=c
+
+// PREAMBLE
+Write 0x20=0
+Write 0x21=10
+
+// REG_LR_DETECTOPTIMIZE optimze and REG_LR_DETECTIONTHRESHOLD
+Write 0x31=c3
+Write 0x37=a
+
+
+/*
+reg1d = SX1276Read( REG_LR_MODEMCONFIG1 );
+reg1e = SX1276Read( REG_LR_MODEMCONFIG2 );
+reg26 = SX1276Read( REG_LR_MODEMCONFIG3 );
+reg6 = SX1276Read( REG_FRFMSB );
+reg7 = SX1276Read( REG_LR_FRFMID );
+reg8 = SX1276Read( REG_LR_FRFLSB );
+reg4b = SX1276Read( 0x4b ); //#define REG_LR_TCXO                                 0x4B
+printf("hejilao lora register %x %x %x %x %x %x %x. \r\n", reg1d, reg1e,reg26, reg6, reg7, reg8, reg4b);
+*/
+hejilao lora register 92 84 c 7a 80 0 9. 
+
+hejilao SX1276SetTxConfig_hack. //done
+
+//this is 9331 settings.
+Write 0x1=8
+Write 0x1=0
+Write 0x4b=9
+Write 0x1=88
+
+
+//Freq
+Write 0x6=7a
+Write 0x7=80
+Write 0x8=0
+
+//output power
 Write 0x9=ff
 
-            Write 0xb=b
+// 
+Write 0xb=b // what's ocp for?
+Write 0xc=23 // LNA
 
-                       Write 0xc=23
+// band, sperading LNA
+Write 0x1d=92
+Write 0x1e=87 //??? what's this for...
+Write 0x26=8 // ?? what's???
 
-                                   Write 0x1d=92
 
-                                                Write 0x1e=87
+Write 0x1f=ff // max rx timeout
 
-                                                             Write 0x26=8
+Write 0x20=0  // preamble
+Write 0x21=10
 
-                                                                         Write 0x1f=ff
+Write 0x4d=87 // txpower padac
+Write 0x24=0 // no hopping ???
 
-     Write 0x20=0
+Write 0x41=1 // Interrupt setting, // DIO5=ModeReady,DIO4=CadDetected
+Write 0x1=1 
+Write 0x40=0
+Write 0x11=3e
+Write 0x12=ff
+Write 0xf=0
+Write 0xd=0
+Write 0x1=5 // mode == 5
 
-                 Write 0x21=10
-
-                              Write 0x4d=87
-
-                                           Write 0x24=0
-
-                                                       Write 0x41=1
-
-                                                                   Write 0x1=1
-
-                                                                              Write 0x40=0
-
-         Write 0x11=3e
-
-                      Write 0x12=ff
-
-                                   Write 0xf=0
-
-                                              Write 0xd=0
-
-                                                         Write 0x1=5
-
-                                                                    hejilao SX1276SetRxConfig_hack.
+hejilao SX1276SetRxConfig_hack.
 SX1276SetRx
-           Write 0x40=c
+// set RX start.
+Write 0x40=c // DIO MAP
+Write 0x41=c1 // DIO MAP
+Write 0xd=1e // FIFO addr
 
-                       Write 0x41=c1
+hejilao TimerSetTimeout timer 20000514 timestamp 10984.
+Write 0x1=85 // Mode
 
-                                    Write 0xd=1e
-
-                                                hejilao TimerSetTimeout timer 20000514 timestamp 10984.
-Write 0x1=85
-
-            hejilao add new Timer timestamp 0 and elaspsed time 1 and head time 10984
+hejilao add new Timer timestamp 0 and elaspsed time 1 and head time 10984
 hejilao TimerSetTimeout timer 20000528 timestamp 0.

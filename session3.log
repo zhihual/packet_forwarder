@@ -84,10 +84,8 @@ Write 0x6=7a
                                    hejilao SX1276SetTxConfig_hack.
 hejilao SX1276SetRxConfig_hack.
 Write 0x1=8
-
-           Write 0x1=0
-
-                      Write 0x4b=9
+Write 0x1=0
+Write 0x4b=9
 
                                   Write 0x1=88
 
@@ -359,96 +357,98 @@ Write 0x6=6c
 hejilao set channel freq 490000000.
 Write 0x6=7a
 
-            Write 0x7=80
+Write 0x7=80
 
-                        Write 0x8=0
+Write 0x8=0
 
-                                   Write 0x1=8
 
-                                              Write 0x1=88
+TX CFG
 
-                                                          Write 0x40=0
+// SX1276SetModem( modem );
+Write 0x1=8
+Write 0x1=88
+Write 0x40=0
+Write 0x41=0
 
-                                                                      Write 0x41=0
+//SX1276Write( REG_PACONFIG, paConfig );
+//SX1276Write( REG_PADAC, paDac );
+Write 0x9=ff
+Write 0x4d=87
 
- Write 0x9=ff
+// REG_LR_MODEMCONFIG1/2/3
+Write 0x1d=92
+Write 0x1e=84
+Write 0x26=c
 
-             Write 0x4d=87
+// PREAMBLE
+Write 0x20=0
+Write 0x21=10
 
-                          Write 0x1d=92
+// REG_LR_DETECTOPTIMIZE optimze and REG_LR_DETECTIONTHRESHOLD
+Write 0x31=c3
+Write 0x37=a
 
-                                       Write 0x1e=84
 
-                                                    Write 0x26=c
+/*
+reg1d = SX1276Read( REG_LR_MODEMCONFIG1 );
+reg1e = SX1276Read( REG_LR_MODEMCONFIG2 );
+reg26 = SX1276Read( REG_LR_MODEMCONFIG3 );
+reg6 = SX1276Read( REG_FRFMSB );
+reg7 = SX1276Read( REG_LR_FRFMID );
+reg8 = SX1276Read( REG_LR_FRFLSB );
+reg4b = SX1276Read( 0x4b ); //#define REG_LR_TCXO                                 0x4B
+printf("hejilao lora register %x %x %x %x %x %x %x. \r\n", reg1d, reg1e,reg26, reg6, reg7, reg8, reg4b);
+*/
+hejilao lora register 92 84 c 7a 80 0 9. 
 
-                                                                Write 0x20=0
-
-                                                                            Write 0x21=10
-
-        Write 0x31=c3
-
-                     Write 0x37=a
-
-                                 hejilao lora register 92 84 c 7a 80 0 9. 
 hejilao SX1276SetTxConfig_hack.
 hejilao SX1276SetRxConfig_hack.
 Write 0x1=8
+Write 0x1=0
+Write 0x4b=9
+Write 0x1=88
 
-           Write 0x1=0
 
-                      Write 0x4b=9
+//Freq
+Write 0x6=7a
+Write 0x7=80
+Write 0x8=0
 
-                                  Write 0x1=88
-
-                                              Write 0x6=7a
-
-                                                          Write 0x7=80
-
-                                                                      Write 0x8=0
-
+//output power
 Write 0x9=ff
 
-            Write 0xb=b
+// 
+Write 0xb=b // what's ocp for?
+Write 0xc=23 // LNA
 
-                       Write 0xc=23
+// band, sperading LNA
+Write 0x1d=92
+Write 0x1e=87 //??? what's this for...
+Write 0x26=8 // ?? what's???
 
-                                   Write 0x1d=92
 
-                                                Write 0x1e=87
+Write 0x1f=ff // max rx timeout
 
-                                                             Write 0x26=8
+Write 0x20=0  // preamble
+Write 0x21=10
 
-                                                                         Write 0x1f=ff
+Write 0x4d=87 // txpower padac
+Write 0x24=0 // no hopping ???
 
-     Write 0x20=0
-
-                 Write 0x21=10
-
-                              Write 0x4d=87
-
-                                           Write 0x24=0
-
-                                                       Write 0x41=1
-
-                                                                   Write 0x1=1
-
-                                                                              Write 0x40=0
-
-         Write 0x11=3e
-
-                      Write 0x12=ff
-
-                                   Write 0xf=0
-
-                                              Write 0xd=0
-
-                                                         Write 0x1=5
-
-                                                                    SX1276SetRx
-                                                                               hejilao receive other packet 1 size 64.
+Write 0x41=1 // Interrupt setting, // DIO5=ModeReady,DIO4=CadDetected
+Write 0x1=1 
+Write 0x40=0
+Write 0x11=3e
+Write 0x12=ff
+Write 0xf=0
+Write 0xd=0
+Write 0x1=5 // mode == 5
 
 SX1276SetRx
-           hejilao board init finished.
+hejilao receive other packet 1 size 64.
+SX1276SetRx
+
+hejilao board init finished.
 hejilao lora radio app after board init.
 AAAAAAAAAA
 hejilao set channel freq 868000000.
