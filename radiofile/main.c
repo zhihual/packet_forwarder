@@ -287,6 +287,7 @@ fail_malloc: unregister_chrdev_region(devno, 1);
 /*模块卸载函数*/
 void globalmem_exit(void)
 {
+  
 	cdev_del(&globalmem_devp->cdev); /*注销 cdev*/
         hal_release();
 #if 0
@@ -298,7 +299,7 @@ void globalmem_exit(void)
 	s46_GPIO_Release();
 #endif
 	/*释放设备结构体内存*/
-	desctoryRxDescriptorArray();
+	
 	kfree(globalmem_devp);
 	unregister_chrdev_region(MKDEV(globalmem_major, 0), 1); /*释放备号*/
 }

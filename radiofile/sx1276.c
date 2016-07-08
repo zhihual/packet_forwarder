@@ -363,7 +363,8 @@ void rx_init(void)
 	unsigned char addr; 
     uint8 RegDioMapping1;
     uint8 RegIrqFlagsMask;
-	
+    uint8 regval=0;
+    
 	//tx_en=0;
 	//rx_en=1;						// open rx antenna switch
 	
@@ -395,6 +396,10 @@ void rx_init(void)
 	SPIWriteReg(LR_RegFifoAddrPtr,addr);		// RxBaseAddr->FifoAddrPtr
 	//SPIWriteReg(LR_RegOpMode,0x0d);			// enter rx continuous mode
 	sx1276LoRaSetOpMode(RFLR_OPMODE_RECEIVER);	// enter rx continuous mode
+
+    regval = SPIReadReg(LR_RegOpMode);
+    printk("in last read RegMod=0x%x\n", regval);
+    
 }
 
 
@@ -547,7 +552,7 @@ void sx1276LoRaSetOpMode( uint8 opMode )
         {
                 sx1276_status.currState = ( sx1276_status.currState & RFLR_OPMODE_MASK ) | opMode;
                 SPIWriteReg( LR_RegOpMode, sx1276_status.currState ); 
-                //printk("%s--> 0x%02x\n",__func__,sx1276_status.currState);
+                printk("%s--> 0x%02x\n",__func__,sx1276_status.currState);
         }
         first_touch++;
 }
