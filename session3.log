@@ -448,16 +448,7 @@ SX1276SetRx
 hejilao receive other packet 1 size 64.
 SX1276SetRx
 
-hejilao board init finished.
-hejilao lora radio app after board init.
-AAAAAAAAAA
-hejilao set channel freq 868000000.
-hejilao set channel freq 434000000.
-hejilao version is 0x12.
-hejilao set channel freq 490000000.
-hejilao lora register 92 84 c 7a 80 0 9. 
-hejilao SX1276SetTxConfig_hack.
-hejilao SX1276SetRxConfig_hack.
+
 hejilao board init finished.
 hejilao lora mac application.
 hejilao set channel freq 868000000.
