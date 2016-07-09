@@ -62,7 +62,7 @@ static unsigned char SpiInOut(unsigned char data)
 void SPIWriteReg(unsigned char addr, unsigned char value)                
 {                                                    
 
-    printk("Write [0x%x]=0x%x\n", addr, value);
+    printk("SX1276-Write [0x%x]=0x%x\n", addr, value);
 	addr |= 0x80;			// write register,MSB=1
 
 	//SCK=0;
@@ -661,12 +661,12 @@ void sx1276_getRecvBuff(uint8 *p,uint8 length)
     SPIBurstRead(0x00, p, length);     // read from fifo
         
 #if 1
-    printk("rx_length = %d\n",length);
+    printk("rx_length =%d\n",length);
         
     for(i=0;i<length;i++)
     {
        printk("[DrvRx]%02x\t",p[i]);
-       if((i+1)%8 == 0) printk("\n");
+       if((i+1)%4 == 0) printk("\n");
     }
     printk("\n");
 #endif
